@@ -33,8 +33,8 @@ const SiteNav = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-ink/95 backdrop-blur-md border-b border-border'
-          : 'bg-ink/80 backdrop-blur-md border-b border-white/20'
+          ? 'bg-ink/20 backdrop-blur-md border-b border-border'
+          : 'bg-ink/10 backdrop-blur-md border-b border-white/20'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
