@@ -7,7 +7,6 @@ module.exports = {
   ],
   theme: {
   	extend: {
-<<<<<<< HEAD
   		fontFamily: {
   			sans: [
   				'Host Grotesk',
@@ -37,15 +36,12 @@ module.exports = {
   			'heading-h2': '-0.015em',
   			'heading-tight': '-0.01em',
   		},
-=======
->>>>>>> 86bf1def2d30dd3d6e69e897f3a11ea0d1a0ef39
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
-<<<<<<< HEAD
   			// Hybrid Dark Theme
   			ink: 'hsl(var(--bg))',
   			surface: 'hsl(var(--surface))',
@@ -61,8 +57,6 @@ module.exports = {
   				border: 'hsl(var(--lightBorder))',
   			},
   			// Legacy shadcn compatibility
-=======
->>>>>>> 86bf1def2d30dd3d6e69e897f3a11ea0d1a0ef39
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
@@ -93,15 +87,10 @@ module.exports = {
   				DEFAULT: 'hsl(var(--destructive))',
   				foreground: 'hsl(var(--destructive-foreground))'
   			},
-<<<<<<< HEAD
-  			input: 'hsl(var(--input))',
-  			ring: 'hsl(var(--ring))',
-  			success: 'hsl(var(--success))',
-=======
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
->>>>>>> 86bf1def2d30dd3d6e69e897f3a11ea0d1a0ef39
+  			success: 'hsl(var(--success))',
   			chart: {
   				'1': 'hsl(var(--chart-1))',
   				'2': 'hsl(var(--chart-2))',
@@ -110,19 +99,12 @@ module.exports = {
   				'5': 'hsl(var(--chart-5))'
   			}
   		},
-<<<<<<< HEAD
   		fontSize: {
   			'h1': ['2.5rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }], // 40px mobile – weight/tracking via .cg-h1
   			'h1-lg': ['3.5rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }], // 56px desktop
   			'h2': ['1.625rem', { lineHeight: '1.15', letterSpacing: '-0.015em' }], // 26px mobile – weight/tracking via .cg-h2
   			'h2-lg': ['2.5rem', { lineHeight: '1.15', letterSpacing: '-0.015em' }], // 40px desktop
   		},
-  		borderRadius: {
-  			'xl': '1rem', // 16px
-  			'2xl': '1.5rem', // 24px
-  		},
-=======
->>>>>>> 86bf1def2d30dd3d6e69e897f3a11ea0d1a0ef39
   		keyframes: {
   			'accordion-down': {
   				from: {
@@ -139,7 +121,6 @@ module.exports = {
   				to: {
   					height: '0'
   				}
-<<<<<<< HEAD
   			},
   			'fade-in': {
   				from: {
@@ -160,19 +141,13 @@ module.exports = {
   					opacity: '1',
   					transform: 'translateX(0)'
   				}
-=======
->>>>>>> 86bf1def2d30dd3d6e69e897f3a11ea0d1a0ef39
   			}
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-<<<<<<< HEAD
   			'accordion-up': 'accordion-up 0.2s ease-out',
   			'fade-in': 'fade-in 0.25s ease-out',
   			'slide-in': 'slide-in 0.25s ease-out'
-=======
-  			'accordion-up': 'accordion-up 0.2s ease-out'
->>>>>>> 86bf1def2d30dd3d6e69e897f3a11ea0d1a0ef39
   		}
   	}
   },

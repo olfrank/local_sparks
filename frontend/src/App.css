@@ -117,7 +117,6 @@ html {
     }
 }
 
-<<<<<<< HEAD
 /* Font – aligned with Tailwind theme (Host Grotesk) */
 .font-sans {
     font-family: 'Host Grotesk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -225,9 +224,4 @@ html {
 /* Section Spacing */
 section {
     scroll-margin-top: 80px;
-=======
-/* Font */
-.font-sans {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
->>>>>>> 86bf1def2d30dd3d6e69e897f3a11ea0d1a0ef39
 }
