@@ -2,6 +2,7 @@ import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Clock, Facebook, Instagram } from 'lucide-react';
 import { businessInfo } from '../data/mock';
+import Logo from './Logo';
 
 const Footer = () => {
   const location = useLocation();
@@ -29,12 +30,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-white font-bold">BE</span>
-              </div>
-              <span className="font-semibold text-lg text-text">{businessInfo.name}</span>
-            </div>
+            <Logo size="md" />
             <p className="text-muted mb-6 max-w-md leading-relaxed">
             The safety net that stops missed calls turning into lost jobs
             </p>
