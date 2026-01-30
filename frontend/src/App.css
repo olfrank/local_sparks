@@ -1,0 +1,227 @@
+.App-logo {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
+}
+
+.App-header {
+    background-color: #0f0f10;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.App-link {
+    color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Custom Animations */
+@keyframes slowZoom {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animation-delay-100 {
+    animation-delay: 100ms;
+}
+
+.animation-delay-200 {
+    animation-delay: 200ms;
+}
+
+.animation-delay-300 {
+    animation-delay: 300ms;
+}
+
+.animation-delay-400 {
+    animation-delay: 400ms;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
+/* Prevent layout shift from mobile call button */
+@media (max-width: 767px) {
+    body {
+        padding-bottom: 80px;
+    }
+}
+
+/* Font – aligned with Tailwind theme (Host Grotesk) */
+.font-sans {
+    font-family: 'Host Grotesk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Premium Animations */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+    }
+}
+
+.animate-slide-in-up {
+    animation: slideInUp 0.6s ease-out forwards;
+}
+
+.animate-fade-in-scale {
+    animation: fadeInScale 0.5s ease-out forwards;
+}
+
+.animate-glow {
+    animation: glow 2s ease-in-out infinite;
+}
+
+/* Hero: breathing highlight sweep on demo card (10s loop, very subtle) */
+@keyframes heroBreathingSweep {
+    0% { opacity: 0; transform: translateX(-100%) scaleX(0.4); }
+    45% { opacity: 0.06; transform: translateX(0) scaleX(1); }
+    55% { opacity: 0.06; transform: translateX(0) scaleX(1); }
+    100% { opacity: 0; transform: translateX(100%) scaleX(0.4); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-breathing-sweep { animation: none !important; }
+}
+
+/* Hero cause→effect line: subtle shimmer traveling across every ~11s */
+@keyframes heroFlowShimmer {
+    0% { opacity: 0; transform: translateX(-80%); }
+    8% { opacity: 0.35; transform: translateX(-20%); }
+    12% { opacity: 0.45; transform: translateX(0); }
+    16% { opacity: 0.35; transform: translateX(20%); }
+    25% { opacity: 0; transform: translateX(120%); }
+    100% { opacity: 0; transform: translateX(120%); }
+}
+
+/* CTA button: hover sheen (gradient sweep on hover only) */
+@keyframes buttonHoverSheen {
+    0% { transform: translateX(-100%) skewX(-12deg); }
+    100% { transform: translateX(200%) skewX(-12deg); }
+}
+
+/* Premium Hover Effects */
+.hover-lift {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.hover-glow:hover {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+}
+
+/* Glass Effect */
+.glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Smooth Scroll Behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Section Spacing */
+section {
+    scroll-margin-top: 80px;
+}

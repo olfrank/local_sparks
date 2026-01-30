@@ -1,0 +1,219 @@
+/* Host Grotesk – primary sans-serif (400, 500, 600 only) */
+@font-face {
+  font-family: 'Host Grotesk';
+  src: url('../public/fonts/Host_Grotesk/HostGrotesk-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Host Grotesk';
+  src: url('../public/fonts/Host_Grotesk/HostGrotesk-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Host Grotesk';
+  src: url('../public/fonts/Host_Grotesk/HostGrotesk-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* CallGuard typography utilities – premium, calm, consistent */
+@layer components {
+  .cg-h1 {
+    font-family: inherit;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .cg-h2 {
+    font-family: inherit;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+  }
+  .cg-body {
+    font-weight: 400;
+    line-height: 1.55;
+  }
+  .cg-label {
+    font-weight: 500;
+  }
+  .cg-subhead {
+    font-weight: 400;
+  }
+  /* Demo UI: system font only (chat preview, demo card) */
+  .font-system {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+}
+
+code {
+    font-family:
+        source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+@layer base {
+    :root {
+        /* Hybrid Dark Theme Tokens */
+        /* Dark Backgrounds */
+        --bg: 220 25% 8%; /* #0B1220 */
+        --surface: 220 25% 12%; /* #111827 */
+        --surface2: 220 25% 20%; /* #1E293B */
+        
+        /* Dark Text */
+        --text: 220 13% 91%; /* #E5E7EB */
+        --muted: 215 20% 65%; /* #94A3B8 */
+        --border: 215 20% 65% / 0.18; /* rgba(148,163,184,0.18) */
+        
+        /* Brand Colors */
+        --primary: 217 91% 60%; /* #2563EB */
+        --success: 142 71% 45%; /* #22C55E */
+        
+        /* Light Section Colors */
+        --lightBg: 210 40% 98%; /* #F8FAFC */
+        --lightSurface: 0 0% 100%; /* #FFFFFF */
+        --lightText: 222 47% 11%; /* #0F172A */
+        --lightMuted: 215 25% 27%; /* #475569 */
+        --lightBorder: 222 47% 11% / 0.08; /* rgba(15,23,42,0.08) */
+        
+        /* Legacy shadcn compatibility */
+        --background: var(--bg);
+        --foreground: var(--text);
+        --card: var(--surface);
+        --card-foreground: var(--text);
+        --popover: var(--surface);
+        --popover-foreground: var(--text);
+        --primary-foreground: 0 0% 98%;
+        --secondary: var(--surface2);
+        --secondary-foreground: var(--text);
+        --muted-foreground: var(--muted);
+        --accent: var(--surface2);
+        --accent-foreground: var(--text);
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 0 0% 98%;
+        --input: var(--surface2);
+        --ring: var(--primary);
+        --radius: 1rem; /* 16px default */
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply font-sans bg-[#0B1220] text-[#E5E7EB];
+        background-color: hsl(var(--bg));
+        color: hsl(var(--text));
+        line-height: 1.55;
+    }
+}
+
+/* Utility Classes for Hybrid Dark Theme */
+@layer utilities {
+    /* Dark Backgrounds */
+    .bg-ink {
+        background-color: hsl(var(--bg));
+    }
+    .bg-surface {
+        background-color: hsl(var(--surface));
+    }
+    .bg-surface2 {
+        background-color: hsl(var(--surface2));
+    }
+    
+    /* Light Backgrounds */
+    .bg-light {
+        background-color: hsl(var(--lightBg));
+    }
+    .bg-light-surface {
+        background-color: hsl(var(--lightSurface));
+    }
+    
+    /* Text Colors */
+    .text-muted {
+        color: hsl(var(--muted));
+    }
+    .text-light {
+        color: hsl(var(--lightText));
+    }
+    .text-light-muted {
+        color: hsl(var(--lightMuted));
+    }
+    
+    /* Glass Card Effect */
+    .glass-card {
+        background: rgba(17, 24, 39, 0.55);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid hsl(var(--border));
+    }
+    
+    /* Premium Card Hover */
+    .card-hover {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-hover:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+        border-color: hsl(var(--primary) / 0.3);
+    }
+    
+    /* Section Spacing */
+    .section-padding {
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+    }
+    @media (min-width: 768px) {
+        .section-padding {
+            padding-top: 7rem;
+            padding-bottom: 7rem;
+        }
+    }
+}
+
+@layer base {
+    [data-debug-wrapper="true"] {
+        display: contents !important;
+    }
+
+    [data-debug-wrapper="true"] > * {
+        margin-left: inherit;
+        margin-right: inherit;
+        margin-top: inherit;
+        margin-bottom: inherit;
+        padding-left: inherit;
+        padding-right: inherit;
+        padding-top: inherit;
+        padding-bottom: inherit;
+        column-gap: inherit;
+        row-gap: inherit;
+        gap: inherit;
+        border-left-width: inherit;
+        border-right-width: inherit;
+        border-top-width: inherit;
+        border-bottom-width: inherit;
+        border-left-style: inherit;
+        border-right-style: inherit;
+        border-top-style: inherit;
+        border-bottom-style: inherit;
+        border-left-color: inherit;
+        border-right-color: inherit;
+        border-top-color: inherit;
+        border-bottom-color: inherit;
+    }
+}
