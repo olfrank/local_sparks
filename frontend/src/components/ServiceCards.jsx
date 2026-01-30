@@ -12,6 +12,7 @@ const iconMap = {
 
 const ServiceCards = () => {
   return (
+<<<<<<< HEAD
     <section id="services" className="section-padding bg-light">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
@@ -23,6 +24,19 @@ const ServiceCards = () => {
             How Can We Help?
           </h2>
           <p className="text-light-muted max-w-2xl mx-auto">
+=======
+    <section id="services" className="py-20 md:py-28 bg-slate-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center mb-12 md:mb-16">
+          <span className="inline-block text-blue-600 font-semibold text-sm uppercase tracking-wider mb-3">
+            Our Services
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">
+            How Can We Help?
+          </h2>
+          <p className="text-slate-600 max-w-2xl mx-auto">
+>>>>>>> 86bf1def2d30dd3d6e69e897f3a11ea0d1a0ef39
             Select the service that best matches your needs. Emergency calls are always prioritised.
           </p>
         </div>
@@ -36,10 +50,17 @@ const ServiceCards = () => {
             return (
               <Card
                 key={service.id}
+<<<<<<< HEAD
                 className={`group relative overflow-hidden p-6 md:p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer rounded-2xl ${
                   isUrgent
                     ? 'bg-gradient-to-br from-primary to-primary/90 text-white border-0'
                     : 'bg-light-surface border border-light-border hover:border-primary/30'
+=======
+                className={`group relative overflow-hidden p-6 md:p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer ${
+                  isUrgent
+                    ? 'bg-gradient-to-br from-blue-600 to-blue-700 text-white border-0'
+                    : 'bg-white border border-slate-200 hover:border-blue-200'
+>>>>>>> 86bf1def2d30dd3d6e69e897f3a11ea0d1a0ef39
                 }`}
                 style={{ animationDelay: `${index * 100}ms` }}
               >
@@ -63,23 +84,38 @@ const ServiceCards = () => {
                 </div>
 
                 {/* Content */}
+<<<<<<< HEAD
                 <h3 className={`text-xl font-bold mb-3 ${isUrgent ? 'text-white' : 'text-light-text'}`}>
                   {service.title}
                 </h3>
                 <p className={`mb-6 leading-relaxed ${isUrgent ? 'text-white/90' : 'text-light-muted'}`}>
+=======
+                <h3 className={`text-xl font-bold mb-3 ${isUrgent ? 'text-white' : 'text-slate-800'}`}>
+                  {service.title}
+                </h3>
+                <p className={`mb-6 leading-relaxed ${isUrgent ? 'text-blue-100' : 'text-slate-600'}`}>
+>>>>>>> 86bf1def2d30dd3d6e69e897f3a11ea0d1a0ef39
                   {service.description}
                 </p>
 
                 {/* CTA */}
                 {isUrgent ? (
                   <a href={`tel:${businessInfo.phone}`}>
+<<<<<<< HEAD
                     <Button className="w-full bg-white text-primary hover:bg-white/90 font-semibold py-5 group-hover:shadow-lg transition-all rounded-xl">
+=======
+                    <Button className="w-full bg-white text-blue-600 hover:bg-blue-50 font-semibold py-5 group-hover:shadow-lg transition-all">
+>>>>>>> 86bf1def2d30dd3d6e69e897f3a11ea0d1a0ef39
                       <Phone className="w-4 h-4 mr-2" />
                       Call Now
                     </Button>
                   </a>
                 ) : (
+<<<<<<< HEAD
                   <button className="flex items-center gap-2 text-primary font-semibold group-hover:gap-3 transition-all">
+=======
+                  <button className="flex items-center gap-2 text-blue-600 font-semibold group-hover:gap-3 transition-all">
+>>>>>>> 86bf1def2d30dd3d6e69e897f3a11ea0d1a0ef39
                     Learn More
                     <ArrowRight className="w-4 h-4" />
                   </button>
@@ -97,7 +133,11 @@ const ServiceCards = () => {
         </div>
 
         {/* Note */}
+<<<<<<< HEAD
         <p className="text-center text-light-muted mt-8 text-sm">
+=======
+        <p className="text-center text-slate-500 mt-8 text-sm">
+>>>>>>> 86bf1def2d30dd3d6e69e897f3a11ea0d1a0ef39
           Not sure what you need? Give us a call and we'll guide you through your options.
         </p>
       </div>

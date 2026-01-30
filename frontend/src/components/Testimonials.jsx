@@ -5,6 +5,7 @@ import { testimonials, accreditations, businessInfo } from '../data/mock';
 
 const Testimonials = () => {
   return (
+<<<<<<< HEAD
     <section id="reviews" className="section-padding bg-light-surface">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
@@ -13,6 +14,16 @@ const Testimonials = () => {
             Customer Reviews
           </span>
           <h2 className="text-h2 md:text-h2-lg font-bold text-light-text mb-4">
+=======
+    <section id="reviews" className="py-20 md:py-28 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center mb-12 md:mb-16">
+          <span className="inline-block text-blue-600 font-semibold text-sm uppercase tracking-wider mb-3">
+            Customer Reviews
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">
+>>>>>>> 86bf1def2d30dd3d6e69e897f3a11ea0d1a0ef39
             What Our Customers Say
           </h2>
           <div className="flex items-center justify-center gap-2 mb-4">
@@ -21,9 +32,15 @@ const Testimonials = () => {
                 <Star key={star} className="w-5 h-5 text-amber-400 fill-amber-400" />
               ))}
             </div>
+<<<<<<< HEAD
             <span className="text-light-muted font-semibold">{businessInfo.rating} out of 5</span>
           </div>
           <p className="text-light-muted">Based on verified customer reviews</p>
+=======
+            <span className="text-slate-600 font-semibold">{businessInfo.rating} out of 5</span>
+          </div>
+          <p className="text-slate-500">Based on verified customer reviews</p>
+>>>>>>> 86bf1def2d30dd3d6e69e897f3a11ea0d1a0ef39
         </div>
 
         {/* Testimonials Grid */}
@@ -31,10 +48,17 @@ const Testimonials = () => {
           {testimonials.map((testimonial) => (
             <Card
               key={testimonial.id}
+<<<<<<< HEAD
               className="relative p-6 md:p-8 bg-light border border-light-border hover:shadow-lg transition-all duration-300 rounded-2xl"
             >
               {/* Quote Icon */}
               <Quote className="absolute top-6 right-6 w-8 h-8 text-primary/20" />
+=======
+              className="relative p-6 md:p-8 bg-slate-50 border-0 hover:shadow-lg transition-all duration-300"
+            >
+              {/* Quote Icon */}
+              <Quote className="absolute top-6 right-6 w-8 h-8 text-blue-100" />
+>>>>>>> 86bf1def2d30dd3d6e69e897f3a11ea0d1a0ef39
 
               {/* Rating */}
               <div className="flex gap-1 mb-4">
@@ -44,34 +68,53 @@ const Testimonials = () => {
               </div>
 
               {/* Review Text */}
+<<<<<<< HEAD
               <p className="text-light-text leading-relaxed mb-6">
+=======
+              <p className="text-slate-700 leading-relaxed mb-6">
+>>>>>>> 86bf1def2d30dd3d6e69e897f3a11ea0d1a0ef39
                 "{testimonial.text}"
               </p>
 
               {/* Reviewer Info */}
               <div className="flex items-center justify-between">
                 <div>
+<<<<<<< HEAD
                   <p className="font-semibold text-light-text">{testimonial.name}</p>
                   <div className="flex items-center gap-1 text-light-muted text-sm">
+=======
+                  <p className="font-semibold text-slate-800">{testimonial.name}</p>
+                  <div className="flex items-center gap-1 text-slate-500 text-sm">
+>>>>>>> 86bf1def2d30dd3d6e69e897f3a11ea0d1a0ef39
                     <MapPin className="w-3 h-3" />
                     {testimonial.location}
                   </div>
                 </div>
+<<<<<<< HEAD
                 <span className="text-light-muted text-sm">{testimonial.date}</span>
+=======
+                <span className="text-slate-400 text-sm">{testimonial.date}</span>
+>>>>>>> 86bf1def2d30dd3d6e69e897f3a11ea0d1a0ef39
               </div>
             </Card>
           ))}
         </div>
 
         {/* Accreditations */}
+<<<<<<< HEAD
         <div className="bg-light rounded-2xl p-8 md:p-12 border border-light-border">
           <p className="text-center text-light-muted mb-8 font-medium">
+=======
+        <div className="bg-slate-50 rounded-2xl p-8 md:p-12">
+          <p className="text-center text-slate-600 mb-8 font-medium">
+>>>>>>> 86bf1def2d30dd3d6e69e897f3a11ea0d1a0ef39
             Trusted by homeowners and businesses across {businessInfo.location}
           </p>
           <div className="flex flex-wrap justify-center items-center gap-6 md:gap-12">
             {accreditations.map((acc, index) => (
               <div
                 key={index}
+<<<<<<< HEAD
                 className="flex items-center gap-3 bg-light-surface px-6 py-3 rounded-lg border border-light-border hover:border-primary/30 hover:shadow-md transition-all duration-300"
               >
                 <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
@@ -79,6 +122,15 @@ const Testimonials = () => {
                 </div>
                 <span className="text-light-text font-medium text-sm hidden sm:block">{acc.name}</span>
                 <span className="text-light-text font-medium text-sm sm:hidden">{acc.abbr}</span>
+=======
+                className="flex items-center gap-3 bg-white px-6 py-3 rounded-lg border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all duration-300"
+              >
+                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <span className="text-blue-600 font-bold text-xs">{acc.abbr.substring(0, 2)}</span>
+                </div>
+                <span className="text-slate-700 font-medium text-sm hidden sm:block">{acc.name}</span>
+                <span className="text-slate-700 font-medium text-sm sm:hidden">{acc.abbr}</span>
+>>>>>>> 86bf1def2d30dd3d6e69e897f3a11ea0d1a0ef39
               </div>
             ))}
           </div>
