@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom';
  */
 const LogoMark = ({ size }) => {
   const isSm = size === 'sm';
-  const w = isSm ? 28 : 34;
-  const h = isSm ? 28 : 34;
+  const w = isSm ? 28 : 40;
+  const h = isSm ? 28 : 40;
   const stroke = isSm ? 2.5 : 3;
   const r = isSm ? 2.5 : 3;
   return (
@@ -23,11 +23,11 @@ const LogoMark = ({ size }) => {
     >
       {/* C – open on the right, thick rounded stroke */}
       <path
-        d="M26 9 C12 9 8 17 8 17 C8 17 12 25 26 25"
+    //   d="M26 9 C12 9 8 17 8 17 C8 17 12 25 26 25"
+        d="M24 8 A 9 9 0 0 0 24 26"
         stroke="currentColor"
         strokeWidth={stroke}
         strokeLinecap="round"
-        strokeLinejoin="round"
       />
       {/* Dot in the opening – one call, guarded */}
       <circle cx="24" cy="17" r={r} fill="currentColor" />
