@@ -6,11 +6,11 @@ const PageTitle = () => {
 
   useEffect(() => {
     if (location.pathname === '/system') {
-      document.title = 'Revenue-Capture System for Electricians | Bucks Electricians';
+      document.title = 'CallGuard';
     } else if (location.pathname === '/demo-electrician-site') {
-      document.title = 'Demo Electrician Website | Bucks Electricians';
+      document.title = 'CallGuard';
     } else {
-      document.title = 'Bucks Electricians';
+      document.title = 'CallGuard';
     }
   }, [location]);
 
