@@ -109,9 +109,9 @@ const ChatDemo = () => {
 
   const messages = {
     friendly: {
-      auto: "Hey, sorry I missed your call, I'm on a job nearby. \n To make sure I get back to you as soon as possible, could you reply: \n \n 1 - Emergency\n2 - Needed today\n3 - Quote\n\nThen a short description + your postcode. \n \n  I’ll be in touch shortly.",
-      customer: "1 Emergency – lights gone out at HP22 6HH",
-      whatsapp: "CallGuard • 1 EMERGENCY\nLights out – HP22 6HH. Customer ready today."
+      auto: "Hi, it's John from Local Electrics \n \n Sorry I missed you, I'm on a job right now.  \n \n Text me what you need, postcode, and if it's urgent, today, or a quote. \n \nFor example: 'today, consumer unit issue, SW12 1AB' \n \n  I'll get back to you as soon as I'm free!",
+      customer: "Hey John, there's no power in the house at all, but fuse board says on, you free today? hp226xx",
+      whatsapp: "MISSED CALL ENQUIRY - NEEDED TODAY \n \n 📞+447901234567 \n \n 📍HP226HH \n \n 💬 No power in house at all, but fuse board is showing on. Customer requested a visit today"
     },
 
   };
