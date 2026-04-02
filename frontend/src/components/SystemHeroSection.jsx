@@ -272,7 +272,7 @@ const SystemHeroSection = () => {
                 >
                   <div className="bg-surface2 text-text rounded-2xl rounded-tr-sm px-4 py-3 max-w-[80%] shadow-sm border border-border">
                     <p className="leading-relaxed">
-                      1 Emergency – lights gone out at HP5 1AB
+                      Hey John, there's a burning smell from socket in kitchen, a bit worried, you free now? hp249hh
                     </p>
                   </div>
                 </motion.div>
@@ -291,14 +291,21 @@ const SystemHeroSection = () => {
                     <div className="flex items-center justify-between gap-2">
                       <span className="text-emerald-100 font-medium text-sm">WhatsApp alert</span>
                       <span className="px-2 py-0.5 rounded-full bg-emerald-400/20 text-emerald-200 text-[10px] font-semibold">
-                        1 • EMERGENCY
+                        <CheckCircle2 className="w-3 h-3 mr-1" />
+                      Job held
                       </span>
                     </div>
-                    <p className="text-emerald-50 text-sm">
-                      Power out – HP5 1AB. Customer ready today.
+                    <p className=" text-sm">
+                      MISSED CALL ENQUIRY - URGENT
+                    </p>
+                    <p className=" text-sm">
+                      📞+447901234567
+                    </p>
+                    <p className=" text-sm">
+                      📍HP226XX 
                     </p>
                     <p className="text-[11px]">
-                      Call back when free. CallGuard has held the job for you.
+                      💬 Burning smell from kitchen socket. Customer requested a visit immediately
                     </p>
                   </div>
                 </motion.div>

@@ -110,8 +110,8 @@ const ChatDemo = () => {
   const messages = {
     friendly: {
       auto: "Hi, it's John from Local Electrics \n \n Sorry I missed you, I'm on a job right now.  \n \n Text me what you need, postcode, and if it's urgent, today, or a quote. \n \nFor example: 'today, consumer unit issue, SW12 1AB' \n \n  I'll get back to you as soon as I'm free!",
-      customer: "Hey John, there's no power in the house at all, but fuse board says on, you free today? hp226xx",
-      whatsapp: "MISSED CALL ENQUIRY - NEEDED TODAY \n \n 📞+447901234567 \n \n 📍HP226HH \n \n 💬 No power in house at all, but fuse board is showing on. Customer requested a visit today"
+      customer: "Hey John, power’s gone in half the house, fuse box keeps tripping, free today? hp226xx",
+      whatsapp: "MISSED CALL ENQUIRY - NEEDED TODAY \n \n 📞+447901234567 \n \n 📍HP226XX \n \n 💬 No power in house at all, but fuse board is showing on. Customer requested a visit today"
     },
 
   };
@@ -224,7 +224,7 @@ const ChatDemo = () => {
                     animate={badgeControls}
                     initial={{ scale: 1, boxShadow: '0 0 0 rgba(34,197,94,0)' }}
                   >
-                    <Badge className="bg-emerald-400/20 text-emerald-200 border-emerald-300/30 px-2 py-1 text-[10px]">
+                    <Badge className="bg-emerald-400/20 text-emerald-200 border-emerald-300/30 px-2 py-1 text-[10px] inline-flex items-center">
                       <CheckCircle2 className="w-3 h-3 mr-1" />
                       Job held
                     </Badge>
