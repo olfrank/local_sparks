@@ -404,9 +404,7 @@ export function RevenueLeakCalculator() {
                   <p className="cg-body mt-3 text-base text-muted">
                     {humanTranslation}
                   </p>
-                  <p className="cg-body mt-2 text-xs text-muted/80">
-                    These are calls that likely went to the next electrician on Google.
-                  </p>
+                  
                   <p className="cg-body mt-2 text-xs text-muted/70">
                     Conservative estimate — depends on call quality and seasonality.
                   </p>

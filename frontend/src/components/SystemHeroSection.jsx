@@ -1,5 +1,5 @@
 import React, { useRef, useCallback, useState, useEffect } from 'react';
-import { Phone, ArrowRight, MessageCircle, Zap, MapPin } from 'lucide-react';
+import { Phone, ArrowRight, MessageCircle, Zap, MapPin, CheckCircle2 } from 'lucide-react';
 import { motion, useInView, useReducedMotion, useMotionValue, useTransform } from 'framer-motion';
 import { Button } from './ui/button';
 import { heroImages } from '../data/mock';
