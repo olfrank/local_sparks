@@ -51,7 +51,7 @@ const SiteNav = () => {
                   isScrolled ? 'text-muted' : 'text-white/90'
                 }`}
               >
-                See the 10-second demo
+                See the 5-second demo
               </a>
             )}
           </nav>
@@ -93,7 +93,7 @@ const SiteNav = () => {
                   onClick={() => setMobileMenuOpen(false)}
                   className="block py-3 px-4 text-text font-medium rounded-lg hover:bg-surface2 transition-colors"
                 >
-                  See the 10-second demo
+                  See the 5-second demo
                 </a>
               </>
             )}
