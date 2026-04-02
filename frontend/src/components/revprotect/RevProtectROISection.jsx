@@ -18,7 +18,7 @@ const CallGuardROISection = () => {
     if (prefersReducedMotion) {
       setLossMin(250);
       setLossMax(500);
-      setCallguardPrice(390);
+      setCallguardPrice(59);
       return;
     }
 
@@ -50,7 +50,7 @@ const CallGuardROISection = () => {
         const elapsed = now - start2;
         const progress = Math.min(elapsed / duration2, 1);
         const eased = 1 - Math.pow(1 - progress, 3);
-        setCallguardPrice(Math.round(390 * eased));
+        setCallguardPrice(Math.round(59 * eased));
         if (progress < 1) {
           frame2 = requestAnimationFrame(tick2);
         }
@@ -107,7 +107,7 @@ const CallGuardROISection = () => {
                   <p className="text-sm text-muted mt-1">per missed emergency call</p>
                 </div>
                 <p className="text-sm text-muted leading-relaxed">
-                  Typical emergency call-out value. Most customers don&apos;t leave voicemail.
+                  Typical emergency call-out value. 
                 </p>
               </motion.div>
 
@@ -131,7 +131,7 @@ const CallGuardROISection = () => {
                   <p className="text-sm text-muted mt-1">per month</p>
                 </div>
                 <p className="text-sm text-muted leading-relaxed">
-                  Break-even: one recovered call-out. Everything after is found money.
+                  One job recovered = covers the cost of the service for at least 3 months.
                 </p>
               </motion.div>
             </div>
@@ -144,10 +144,10 @@ const CallGuardROISection = () => {
               className="mt-8 pt-6 border-t border-white/0 text-center"
             >
               <p className="text-base md:text-lg text-muted mb-2">
-                One job recovered = break-even.
+                Cancel anytime. Live in ~2 minutes. 
               </p>
               <p className="text-sm text-muted/80">
-                Cancel anytime. Live in ~10 minutes.
+                
               </p>
             </motion.div>
           </div>

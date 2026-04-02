@@ -62,14 +62,7 @@ const Footer = () => {
                   {businessInfo.email}
                 </a>
               </li>
-              <li className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 text-primary mt-1 min-w-4 min-h-4" />
-                <span>{businessInfo.location} and surrounding areas</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Clock className="w-4 h-4 text-primary" />
-                <span>24/7 Emergency Service</span>
-              </li>
+              
             </ul>
           </div>
         </div>

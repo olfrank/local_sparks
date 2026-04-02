@@ -11,7 +11,7 @@ const trialIncludes = [
 ];
 
 const timelineSteps = [
-  { icon: PlugZap, label: 'Install (10 min)', subtext: 'We wire it into your number', accent: 'blue' },
+  { icon: PlugZap, label: 'Install (2 min)', subtext: 'We wire it into your number', accent: 'blue' },
   { icon: Clock3, label: 'Observe (30 days)', subtext: 'Missed calls become visible jobs', accent: 'emerald' },
   { icon: CheckCircle2, label: 'Decide', subtext: 'Keep the revenue — or walk away', accent: 'blue' }
 ];
@@ -234,7 +234,7 @@ const CallGuardTrialSection = () => {
               See what your missed calls are really worth (free for 30 days)
             </h2>
             <p className="cg-body text-lg md:text-xl text-muted max-w-2xl">
-              We install CallGuard on your number and let it run quietly. You&apos;ll see which missed calls turn into real jobs — and how much revenue they represent — then decide if it earns its place.
+              You&apos;ll see which missed calls turn into real jobs — and how much revenue they represent — then decide if it earns its place.
             </p>
             <p className="cg-body text-sm text-muted/90 mt-2 mb-5">
               No behaviour change. No app. Just visibility.
@@ -380,13 +380,6 @@ const CallGuardTrialSection = () => {
                   Start my 30-day audit
                 </button>
               </motion.div>
-              <button
-                type="button"
-                onClick={scrollToFaq}
-                className="cg-label text-sm text-muted hover:text-text transition-colors underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface rounded"
-              >
-                What happens during the audit?
-              </button>
             </div>
             <p className="cg-body text-xs text-muted mt-3 max-w-xl">
               I&apos;ll personally set this up with you — no tickets, no handoffs.

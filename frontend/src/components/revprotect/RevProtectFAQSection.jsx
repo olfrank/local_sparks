@@ -21,11 +21,6 @@ const faqs = [
     answer: 'No — everything goes to WhatsApp.'
   },
   {
-    question: "What if it doesn't work?",
-    answer:
-      "If the system fails to capture a genuine enquiry, you don't pay for that month."
-  },
-  {
     question: "What if I'm already fully booked?",
     answer:
       "You still see the urgency and details so you can decide whether to take it, schedule it, or ignore it — the point is visibility and control."

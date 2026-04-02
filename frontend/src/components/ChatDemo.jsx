@@ -244,7 +244,7 @@ const ChatDemo = () => {
         {/* Note and CTA */}
         <div className="font-system text-center mt-6 space-y-4">
           <p className="text-sm text-muted italic">
-            Demo interface. Messages are sent via SMS and land in WhatsApp.
+            Demo interface. Messages to the customer are sent via SMS and their reply lands in your WhatsApp.
           </p>
           <a
             href="#contact"
