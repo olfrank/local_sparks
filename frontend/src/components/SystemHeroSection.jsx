@@ -250,17 +250,15 @@ const SystemHeroSection = () => {
                 >
                   <div className="bg-primary/90 text-white rounded-2xl rounded-tl-sm px-4 py-3 max-w-[85%] shadow-lg shadow-primary/30">
                     <p className="leading-relaxed">
-                      Hi, sorry I missed your call, I&apos;m on a job nearby. To make sure I get back to you as soon as possible, could you reply:
+                      Hi, it's John from Local Electrics
                       <br />
-                      1 - Emergency
+                      Sorry I missed you, I&apos;m on a job right now. 
                       <br />
-                      2 - Needed today
+                      Text me what you need, postcode, and if it's urgent, today, or a quote.
                       <br />
-                      3 - Quote
+                      For example: "today, consumer unit issue, SW12 1AB"
                       <br />
-                      Then a short description + your postcode.
-                      <br />
-                      I’ll be in touch shortly.
+                      I'll get back to you as soon as I'm free!
                     </p>
                   </div>
                 </motion.div>
