@@ -29,8 +29,8 @@ const OUTCOME_CARDS = [
   {
     icon: MessageSquare,
     title: 'We acknowledge the customer instantly',
-    body: 'An SMS goes out in ~10 seconds so they don\'t ring the next electrician.',
-    badge: '~10 seconds',
+    body: 'An SMS goes out in ~5 seconds so they don\'t ring the next electrician.',
+    badge: '~5 seconds',
     accent: 'blue',
     bgColor: 'bg-blue-500/20',
     borderColor: 'border-blue-500/30',
@@ -86,7 +86,7 @@ const STEPS = [
     icon: MessageSquare,
     title: '3. SMS sent',
     supporting: 'Acknowledges the call and asks for urgency (1 Emergency / 2 Today / 3 Quote).',
-    timeTag: '~10 seconds',
+    timeTag: '~5 seconds',
     bgColor: 'bg-blue-500/20',
     borderColor: 'border-blue-500/30',
     textColor: 'text-blue-400',
@@ -199,7 +199,7 @@ const SystemFlowSection = () => {
             How CallGuard works after a missed call
           </h2>
           <p className="text-lg md:text-xl text-muted max-w-3xl mx-auto leading-relaxed">
-            In less than 10 seconds, the customer is acknowledged, urgency is captured, and you get a short description where you already work.
+            In less than 5 seconds, the customer is acknowledged, urgency is captured, and you get a short description where you already work.
           </p>
         </div>
 

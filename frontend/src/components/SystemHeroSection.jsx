@@ -7,7 +7,7 @@ import HeroLeakBadge from './revprotect/HeroLeakBadge';
 
 // Proof chips: inline-flex, rounded-full, glass, icon left
 const PROOF_CHIPS = [
-  { label: 'SMS in ~10 seconds', icon: Zap },
+  { label: 'SMS in ~5 seconds', icon: Zap },
   { label: 'Captures urgency + postcode', icon: MapPin },
   { label: 'Delivered to WhatsApp', icon: MessageCircle },
 ];
@@ -120,7 +120,7 @@ const SystemHeroSection = () => {
                   <span className="relative z-10 flex items-center gap-1.5">
                     <span>Missed call</span>
                     <span className="text-muted/50" aria-hidden>→</span>
-                    <span>10-second reply</span>
+                    <span>5-second reply</span>
                     <span className="text-muted/50" aria-hidden>→</span>
                     <span>Job held</span>
                     <span className="text-muted/50" aria-hidden>→</span>
@@ -162,7 +162,7 @@ const SystemHeroSection = () => {
                   onClick={handleSecondaryClick}
                   className="cg-label w-full sm:w-auto inline-flex items-center justify-center gap-2 text-sm md:text-base text-muted hover:text-text transition-colors"
                 >
-                  <span>See the 10-second demo</span>
+                  <span>See the 5-second demo</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -250,14 +250,14 @@ const SystemHeroSection = () => {
                 >
                   <div className="bg-primary/90 text-white rounded-2xl rounded-tl-sm px-4 py-3 max-w-[85%] shadow-lg shadow-primary/30">
                     <p className="leading-relaxed">
-                      Hi, it's John from Local Electrics
-                      <br />
+                      Hi, it's John from Local Electrics.
+                      <br /><br />
                       Sorry I missed you, I&apos;m on a job right now. 
-                      <br />
+                      <br /><br />
                       Text me what you need, postcode, and if it's urgent, today, or a quote.
-                      <br />
+                      <br /><br />
                       For example: "today, consumer unit issue, SW12 1AB"
-                      <br />
+                      <br /><br />
                       I'll get back to you as soon as I'm free!
                     </p>
                   </div>
@@ -272,7 +272,7 @@ const SystemHeroSection = () => {
                 >
                   <div className="bg-surface2 text-text rounded-2xl rounded-tr-sm px-4 py-3 max-w-[80%] shadow-sm border border-border">
                     <p className="leading-relaxed">
-                      Hey John, there's a burning smell from socket in kitchen, a bit worried, you free now? hp249hh
+                      Hey John, there's a burning smell from socket in kitchen, i'm a bit worried, you free now? hp249hh
                     </p>
                   </div>
                 </motion.div>
@@ -290,21 +290,21 @@ const SystemHeroSection = () => {
                   <div className="space-y-1 text-xs text-muted">
                     <div className="flex items-center justify-between gap-2">
                       <span className="text-emerald-100 font-medium text-sm">WhatsApp alert</span>
-                      <span className="px-2 py-0.5 rounded-full bg-emerald-400/20 text-emerald-200 text-[10px] font-semibold">
+                      <span className="inline-flex text-center px-2 py-0.5 rounded-full bg-emerald-400/20 text-emerald-200 text-[10px] font-semibold">
                         <CheckCircle2 className="w-3 h-3 mr-1" />
                       Job held
                       </span>
                     </div>
-                    <p className=" text-sm">
+                    <p className="text-emerald-50 text-sm">
                       MISSED CALL ENQUIRY - URGENT
                     </p>
-                    <p className=" text-sm">
+                    <p className="text-emerald-50 text-sm">
                       📞+447901234567
                     </p>
-                    <p className=" text-sm">
-                      📍HP226XX 
+                    <p className="text-emerald-50 text-sm">
+                      📍HP24 9HH
                     </p>
-                    <p className="text-[11px]">
+                    <p className="text-emerald-50 text-sm">
                       💬 Burning smell from kitchen socket. Customer requested a visit immediately
                     </p>
                   </div>
