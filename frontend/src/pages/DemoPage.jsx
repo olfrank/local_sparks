@@ -4,7 +4,9 @@ import { MessageCircle, RotateCcw } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 
-const API_BASE = process.env.REACT_APP_DEMO_API_URL || 'http://localhost:8000';
+const API_BASE = process.env.NODE_ENV === 'development'
+  ? (process.env.REACT_APP_DEMO_API_URL || 'http://localhost:8000')
+  : '';
 const POLL_INTERVAL = 3000;
 const POLL_TIMEOUT_MS = 3 * 60 * 1000;
 
