@@ -6,7 +6,7 @@ import { Input } from '../components/ui/input';
 
 const API_BASE = process.env.REACT_APP_DEMO_API_URL || 'http://localhost:8000';
 const POLL_INTERVAL = 3000;
-const POLL_TIMEOUT_MS = 3 * 60 * 1000;
+const POLL_TIMEOUT_MS = 6 * 60 * 1000;
 
 function isValidUKMobile(number) {
   const cleaned = number.replace(/[\s\-().]/g, '');
@@ -138,8 +138,8 @@ function PhoneFrame({ children, floating = false }) {
 
 // ─── SMS conversation ─────────────────────────────────────────────────────────
 
-function SMSConversation({ businessName, customerReply, showReply }) {
-  const triageText = `Hi, it's ${businessName}. Sorry I missed you, I'm on a job right now. Text me what you need, postcode, and if it's urgent, today, or a quote. For example: 'today, consumer unit issue, SW11 1AB'. I'll get back to you as soon as I'm free!`;
+function SMSConversation({ contactName, businessName, customerReply, showReply }) {
+  const triageText = `Hi, it's ${contactName} from ${businessName}. Sorry I missed you, I'm on a job right now. Text me what you need, postcode, and if it's urgent, today, or a quote. For example: 'today, consumer unit issue, SW11 1AB'. I'll get back to you as soon as I'm free!`;
 
   return (
     <div className="font-system">
@@ -504,7 +504,7 @@ function Stage1Form({ onSubmit, loading, apiError }) {
 
 // ─── Stage 2: SMS sent, waiting for reply ─────────────────────────────────────
 
-function Stage2Waiting({ demoId, businessName, onComplete, onTimeout }) {
+function Stage2Waiting({ demoId, contactName, businessName, onComplete, onTimeout }) {
   const [customerReply, setCustomerReply] = useState('');
   const [showReply, setShowReply] = useState(false);
   const pollRef = useRef(null);
@@ -544,6 +544,7 @@ function Stage2Waiting({ demoId, businessName, onComplete, onTimeout }) {
     <div className="animate-fade-in flex flex-col items-center gap-8">
       <PhoneFrame floating>
         <SMSConversation
+          contactName={contactName}
           businessName={businessName}
           customerReply={customerReply}
           showReply={showReply}
@@ -739,6 +740,7 @@ export default function DemoPage() {
       return (
         <Stage2Waiting
           demoId={demoId}
+          contactName={formData?.contactName}
           businessName={formData?.businessName || 'Your Business'}
           onComplete={handleReplyReceived}
           onTimeout={handleTimeout}
