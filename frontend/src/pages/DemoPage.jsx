@@ -430,7 +430,7 @@ function Stage1Form({ onSubmit, loading, apiError, initialValues }) {
     <div className="animate-fade-in">
       <div className="mb-8 text-center">
         <h1 className="cg-h1 text-h1 md:text-h1-lg text-text mb-3 max-w-sm mx-auto leading-tight">
-          Find out what happens when you miss a call
+          Miss the call. Win the job anyway.
         </h1>
         <p className="cg-body text-sm md:text-base text-muted max-w-xs mx-auto leading-relaxed">
           Enter your number and we'll show you exactly what happens when a customer can't reach you
