@@ -110,13 +110,6 @@ html {
     background: #64748b;
 }
 
-/* Prevent layout shift from mobile call button */
-@media (max-width: 767px) {
-    body {
-        padding-bottom: 80px;
-    }
-}
-
 /* Font – aligned with Tailwind theme (Host Grotesk) */
 .font-sans {
     font-family: 'Host Grotesk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -224,4 +217,16 @@ html {
 /* Section Spacing */
 section {
     scroll-margin-top: 80px;
+}
+
+/* Demo page: phone mockup floating bob */
+@keyframes phoneFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+/* Demo page: typing indicator dots */
+@keyframes pulseDot {
+    0%, 100% { opacity: 0.35; transform: scale(0.80); }
+    50% { opacity: 0.90; transform: scale(1.05); }
 }

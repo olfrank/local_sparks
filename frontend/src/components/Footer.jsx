@@ -1,27 +1,10 @@
 import React from 'react';
-import { useLocation, Link } from 'react-router-dom';
-import { Phone, Mail, MapPin, Clock, Facebook, Instagram } from 'lucide-react';
+import { Phone, Mail } from 'lucide-react';
 import { businessInfo } from '../data/mock';
 import Logo from './Logo';
 
 const Footer = () => {
-  const location = useLocation();
   const currentYear = new Date().getFullYear();
-  const isDemoPage = location.pathname === '/demo-electrician-site';
-  
-  const quickLinks = isDemoPage 
-    ? [
-        { label: 'Services', href: '#services' },
-        { label: 'Why Us', href: '#why-us' },
-        { label: 'Reviews', href: '#reviews' },
-        { label: 'Contact', href: '#contact' }
-      ]
-    : [
-        { label: 'System', href: '/system' },
-        { label: 'How It Works', href: '/system#how-it-works' },
-        { label: 'Proof', href: '/system#proof' },
-        { label: 'Contact', href: '/system#contact' }
-      ];
 
   return (
     <footer className="bg-ink text-muted border-t border-border">
