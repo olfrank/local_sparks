@@ -250,7 +250,7 @@ const SystemHeroSection = () => {
                 >
                   <div className="bg-primary/90 text-white rounded-2xl rounded-tl-sm px-4 py-3 max-w-[85%] shadow-lg shadow-primary/30">
                     <p className="leading-relaxed">
-                      Hi, it's John from Local Electrics.
+                      Hi, it's John from Local Electrics 👋
                       <br /><br />
                       Sorry I missed you, I&apos;m on a job right now. 
                       <br /><br />
@@ -258,7 +258,7 @@ const SystemHeroSection = () => {
                       <br /><br />
                       For example: "today, consumer unit issue, SW12 1AB"
                       <br /><br />
-                      I'll get back to you as soon as I'm free!
+                      I'll get back to you as soon as I'm free! 🔨
                     </p>
                   </div>
                 </motion.div>

@@ -109,7 +109,7 @@ const ChatDemo = () => {
 
   const messages = {
     friendly: {
-      auto: "Hi, it's John from Local Electrics \n \n Sorry I missed you, I'm on a job right now.  \n \n Text me what you need, postcode, and if it's urgent, today, or a quote. \n \nFor example: 'today, consumer unit issue, SW12 1AB' \n \n  I'll get back to you as soon as I'm free!",
+      auto: "Hi, it's John from Local Electrics 👋 \n \n Sorry I missed you, I'm on a job right now.  \n \n Text me what you need, postcode, and if it's urgent, today, or a quote. \n \nFor example: 'today, consumer unit issue, SW12 1AB' \n \n  I'll get back to you as soon as I'm free! 🔨",
       customer: "Hey John, power’s gone in half the house, fuse box keeps tripping, free today? hp226xx",
       whatsapp: "MISSED CALL ENQUIRY - NEEDED TODAY \n \n 📞+447901234567 \n \n 📍HP226XX \n \n 💬 No power in house at all, and fuse box keeps tripping. Customer requested a visit today."
     },
