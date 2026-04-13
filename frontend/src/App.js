@@ -5,14 +5,18 @@ import SiteNav from "./components/SiteNav";
 import Footer from "./components/Footer";
 import PageTitle from "./components/PageTitle";
 import SystemPage from "./pages/SystemPage";
-import DemoElectricianSitePage from "./pages/DemoElectricianSitePage";
+import DemoPage from "./pages/DemoPage";
 
 function App() {
   return (
     <div className="App font-sans bg-ink min-h-screen">
       <PageTitle />
       <SiteNav />
-      <SystemPage />
+      <Routes>
+        <Route path="/" element={<SystemPage />} />
+        <Route path="/demo" element={<DemoPage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
       <Footer />
     </div>
   );

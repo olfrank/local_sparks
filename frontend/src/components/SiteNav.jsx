@@ -12,7 +12,7 @@ const SiteNav = () => {
   const navigate = useNavigate();
   
   const isSystemPage = location.pathname === '/system';
-  const isDemoPage = location.pathname === '/demo-electrician-site';
+  const isLiveDemoPage = location.pathname === '/demo';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -58,6 +58,17 @@ const SiteNav = () => {
 
           {/* CTA Button */}
           <div className="flex items-center gap-3">
+            {!isLiveDemoPage && (
+              <Link
+                to="/demo"
+                className={`cg-label text-sm font-medium transition-colors ${
+                  isScrolled ? 'text-primary hover:text-primary/80' : 'text-white/90 hover:text-white'
+                }`}
+              >
+                <span className="hidden sm:inline">Try live demo</span>
+                <span className="sm:hidden">Demo</span>
+              </Link>
+            )}
             <Button
               onClick={handleCTAClick}
               className={`transition-all rounded-xl ${
@@ -97,32 +108,7 @@ const SiteNav = () => {
                 </a>
               </>
             )}
-            {isDemoPage && (
-              <>
-                <a
-                  href="#services"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block py-3 px-4 text-text font-medium rounded-lg hover:bg-surface2 transition-colors"
-                >
-                  Services
-                </a>
-                <a
-                  href="#reviews"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block py-3 px-4 text-text font-medium rounded-lg hover:bg-surface2 transition-colors"
-                >
-                  Reviews
-                </a>
-                <a
-                  href="#contact"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block py-3 px-4 text-text font-medium rounded-lg hover:bg-surface2 transition-colors"
-                >
-                  Contact
-                </a>
-              </>
-            )}
-            <Button
+<Button
               onClick={handleCTAClick}
               className="w-full mt-4 bg-primary hover:bg-primary/90 text-white py-6 rounded-xl"
             >
