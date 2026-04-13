@@ -627,11 +627,13 @@ export default function DemoPage() {
       }
       if (!res.ok) throw new Error('start failed');
       const data = await res.json();
-      if (!data.success || !data.demoId) throw new Error('unexpected response');
+      console.log('[Demo] start response:', data);
+      if (!data.success || !data.demoId) throw new Error(`unexpected response shape: ${JSON.stringify(data)}`);
       setFormData(form);
       setDemoId(data.demoId);
       setStage(2);
-    } catch (_) {
+    } catch (err) {
+      console.error('[Demo] submit error:', err);
       setApiError('Something went wrong — try again in a moment');
     } finally {
       setLoading(false);
