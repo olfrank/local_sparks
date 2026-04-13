@@ -5,8 +5,12 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 
 const API_BASE = process.env.REACT_APP_DEMO_API_URL || 'http://localhost:8000';
+const SUPPORT_WA = process.env.REACT_APP_SUPPORT_WHATSAPP || 'https://wa.me/447901837771';
 const POLL_INTERVAL = 3000;
 const POLL_TIMEOUT_MS = 6 * 60 * 1000;
+const FALLBACK_DELAY_MS = 15000;
+const RESEND_COOLDOWN_MS = 30000;
+const MAX_RESENDS = 2;
 
 function isValidUKMobile(number) {
   const cleaned = number.replace(/[\s\-().]/g, '');
@@ -378,13 +382,21 @@ function WhatsAppConversation({ urgency, phoneNumber, postcode, summary, loading
 
 // ─── Stage 1: input form ──────────────────────────────────────────────────────
 
-function Stage1Form({ onSubmit, loading, apiError }) {
+function Stage1Form({ onSubmit, loading, apiError, initialValues }) {
+  const mobileRef = useRef(null);
   const [form, setForm] = useState({
-    contactName: '',
-    businessName: '',
-    mobileNumber: '',
+    contactName: initialValues?.contactName || '',
+    businessName: initialValues?.businessName || '',
+    mobileNumber: initialValues?.mobileNumber || '',
   });
   const [errors, setErrors] = useState({});
+
+  // Auto-focus mobile field when pre-filled (retry flow)
+  useEffect(() => {
+    if (initialValues?.focusMobile) {
+      mobileRef.current?.focus();
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const validate = () => {
     const e = {};
@@ -461,6 +473,7 @@ function Stage1Form({ onSubmit, loading, apiError }) {
             <Input
               type="tel"
               placeholder="07xxx xxx xxx"
+              ref={mobileRef}
               value={form.mobileNumber}
               onChange={update('mobileNumber')}
               inputMode="tel"
@@ -507,12 +520,22 @@ function Stage1Form({ onSubmit, loading, apiError }) {
 
 // ─── Stage 2: SMS sent, waiting for reply ─────────────────────────────────────
 
-function Stage2Waiting({ demoId, contactName, businessName, onComplete, onTimeout }) {
+function Stage2Waiting({ demoId, contactName, businessName, formData, onComplete, onTimeout, onRetryNumber }) {
   const [customerReply, setCustomerReply] = useState('');
   const [showReply, setShowReply] = useState(false);
   const pollRef = useRef(null);
   const startRef = useRef(Date.now());
   const doneRef = useRef(false);
+
+  // Fallback state
+  const [fallbackVisible, setFallbackVisible] = useState(false);
+  const [fallbackExpanded, setFallbackExpanded] = useState(false);
+  const [resendCount, setResendCount] = useState(0);
+  const [resendLoading, setResendLoading] = useState(false);
+  const [resendConfirmed, setResendConfirmed] = useState(false);
+  const [resendCooldown, setResendCooldown] = useState(false);
+  const fallbackTimerRef = useRef(null);
+  const cooldownTimerRef = useRef(null);
 
   const poll = useCallback(async () => {
     if (doneRef.current) return;
@@ -540,8 +563,40 @@ function Stage2Waiting({ demoId, contactName, businessName, onComplete, onTimeou
 
   useEffect(() => {
     pollRef.current = setInterval(poll, POLL_INTERVAL);
-    return () => clearInterval(pollRef.current);
+    // Show fallback after delay, but only if not already complete
+    fallbackTimerRef.current = setTimeout(() => {
+      if (!doneRef.current) setFallbackVisible(true);
+    }, FALLBACK_DELAY_MS);
+    return () => {
+      clearInterval(pollRef.current);
+      clearTimeout(fallbackTimerRef.current);
+      clearTimeout(cooldownTimerRef.current);
+    };
   }, [poll]);
+
+  const handleResend = async () => {
+    if (resendLoading || resendCooldown || resendCount >= MAX_RESENDS || !formData) return;
+    setResendLoading(true);
+    setResendConfirmed(false);
+    try {
+      await fetch(`${API_BASE}/api/demo/start`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+    } catch (_) {
+      // Best-effort — show confirmed regardless
+    } finally {
+      setResendLoading(false);
+      setResendConfirmed(true);
+      setResendCount((c) => c + 1);
+      setResendCooldown(true);
+      cooldownTimerRef.current = setTimeout(() => {
+        setResendCooldown(false);
+        setResendConfirmed(false);
+      }, RESEND_COOLDOWN_MS);
+    }
+  };
 
   return (
     <div className="animate-fade-in flex flex-col items-center gap-8">
@@ -558,9 +613,77 @@ function Stage2Waiting({ demoId, contactName, businessName, onComplete, onTimeou
         className="cg-body text-center text-muted text-sm leading-relaxed"
         style={{ maxWidth: '280px' }}
       >
-        Check your phone — you've just received an SMS. Reply to it with a job description and 
+        Check your phone — you've just received an SMS. Reply to it with a job description and
         postcode, to continue the demo.
       </p>
+
+      {/* Fallback — fades in after FALLBACK_DELAY_MS */}
+      <div
+        className="w-full text-center"
+        style={{
+          maxWidth: '280px',
+          opacity: fallbackVisible ? 1 : 0,
+          transition: 'opacity 500ms ease',
+          pointerEvents: fallbackVisible ? 'auto' : 'none',
+        }}
+      >
+        {!fallbackExpanded ? (
+          <button
+            onClick={() => setFallbackExpanded(true)}
+            className="text-[13px] text-muted hover:text-text transition-colors underline underline-offset-4"
+          >
+            Didn't get the text?
+          </button>
+        ) : (
+          <div
+            className="glass-card rounded-xl p-4 text-left space-y-3"
+            style={{ animation: 'fadeInUp 0.3s ease-out forwards' }}
+          >
+            {/* Option 1: Resend */}
+            {resendCount < MAX_RESENDS && (
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-xs text-muted leading-snug">Send it again</span>
+                {resendConfirmed ? (
+                  <span className="text-xs text-green-400 font-medium">Sent ✓</span>
+                ) : (
+                  <button
+                    onClick={handleResend}
+                    disabled={resendLoading || resendCooldown}
+                    className="text-xs border border-border rounded-lg px-3 py-1.5 text-text hover:border-primary/50 hover:text-primary transition-colors disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
+                  >
+                    {resendLoading ? 'Sending…' : 'Send it again'}
+                  </button>
+                )}
+              </div>
+            )}
+
+            {/* Option 2: Different number */}
+            <div className="flex items-center justify-between gap-3">
+              <span className="text-xs text-muted leading-snug">Wrong number?</span>
+              <button
+                onClick={onRetryNumber}
+                className="text-xs border border-border rounded-lg px-3 py-1.5 text-text hover:border-primary/50 hover:text-primary transition-colors shrink-0"
+              >
+                Try a different number
+              </button>
+            </div>
+
+            {/* WhatsApp fallback */}
+            <p className="text-[11px] text-muted/60 leading-relaxed pt-1 border-t border-border">
+              Some networks delay automated texts by a minute or two. If it still hasn't arrived,{' '}
+              <a
+                href={SUPPORT_WA}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-2 hover:text-muted transition-colors"
+              >
+                drop me a message on WhatsApp
+              </a>
+              .
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -856,6 +979,20 @@ export default function DemoPage() {
 
   const handleTimeout = () => setTimedOut(true);
 
+  const [retryValues, setRetryValues] = useState(null);
+
+  const handleRetryNumber = () => {
+    setRetryValues({
+      contactName: formData?.contactName || '',
+      businessName: formData?.businessName || '',
+      mobileNumber: '',
+      focusMobile: true,
+    });
+    setStage(1);
+    setDemoId(null);
+    setApiError('');
+  };
+
   const handleRestart = () => {
     setStage(1);
     setFormData(null);
@@ -863,6 +1000,7 @@ export default function DemoPage() {
     setStageData(null);
     setTimedOut(false);
     setApiError('');
+    setRetryValues(null);
   };
 
   const renderStage = () => {
@@ -875,6 +1013,7 @@ export default function DemoPage() {
           onSubmit={handleFormSubmit}
           loading={loading}
           apiError={apiError}
+          initialValues={retryValues}
         />
       );
     }
@@ -884,8 +1023,10 @@ export default function DemoPage() {
           demoId={demoId}
           contactName={formData?.contactName}
           businessName={formData?.businessName || 'Your Business'}
+          formData={formData}
           onComplete={handleReplyReceived}
           onTimeout={handleTimeout}
+          onRetryNumber={handleRetryNumber}
         />
       );
     }
