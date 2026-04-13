@@ -4,9 +4,7 @@ import { MessageCircle, RotateCcw } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 
-const API_BASE = process.env.NODE_ENV === 'development'
-  ? (process.env.REACT_APP_DEMO_API_URL || 'http://localhost:8000')
-  : '';
+const API_BASE = process.env.REACT_APP_DEMO_API_URL || 'http://localhost:8000';
 const POLL_INTERVAL = 3000;
 const POLL_TIMEOUT_MS = 3 * 60 * 1000;
 
@@ -627,7 +625,7 @@ export default function DemoPage() {
       }
       if (!res.ok) throw new Error('start failed');
       const text = await res.text();
-      console.log('[Demo] start raw response:', text);
+      console.log('[Demo] start status:', res.status, 'body:', text);
       if (!text) throw new Error('empty response body');
       const data = JSON.parse(text);
       console.log('[Demo] start parsed:', data);
