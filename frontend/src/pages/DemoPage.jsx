@@ -626,8 +626,11 @@ export default function DemoPage() {
         return;
       }
       if (!res.ok) throw new Error('start failed');
-      const data = await res.json();
-      console.log('[Demo] start response:', data);
+      const text = await res.text();
+      console.log('[Demo] start raw response:', text);
+      if (!text) throw new Error('empty response body');
+      const data = JSON.parse(text);
+      console.log('[Demo] start parsed:', data);
       if (!data.success || !data.demoId) throw new Error(`unexpected response shape: ${JSON.stringify(data)}`);
       setFormData(form);
       setDemoId(data.demoId);
