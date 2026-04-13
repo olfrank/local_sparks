@@ -459,6 +459,7 @@ function Stage2Waiting({ demoId, businessName, onComplete, onTimeout }) {
       const res = await fetch(`${API_BASE}/api/demo/status/${demoId}`);
       if (!res.ok) return;
       const data = await res.json();
+      console.log('[Demo] stage2 poll:', JSON.stringify(data));
       if (data.status === 'replied' || data.status === 'complete') {
         doneRef.current = true;
         clearInterval(pollRef.current);
@@ -518,6 +519,7 @@ function Stage3Complete({ demoId, initialData }) {
         const res = await fetch(`${API_BASE}/api/demo/status/${demoId}`);
         if (!res.ok) return;
         const data = await res.json();
+        console.log('[Demo] stage3 poll:', JSON.stringify(data));
         if (data.status === 'complete') {
           doneRef.current = true;
           clearInterval(pollRef.current);
