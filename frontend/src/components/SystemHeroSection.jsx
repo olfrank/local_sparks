@@ -142,7 +142,7 @@ const SystemHeroSection = () => {
                     size="lg"
                     className="cg-label relative z-10 w-full sm:w-auto bg-primary hover:bg-primary/90 text-white text-lg px-8 py-6 shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all hover:scale-[1.02] rounded-xl group"
                   >
-                    <span className="relative z-10">Book 5-min fit check</span>
+                    <span className="relative z-10">Book 5 min fit check</span>
                     {/* Hover sheen: gradient sweep runs once per hover; disabled when reduced motion */}
                     {!prefersReducedMotion && (
                       <span

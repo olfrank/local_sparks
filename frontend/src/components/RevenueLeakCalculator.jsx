@@ -424,7 +424,7 @@ export function RevenueLeakCalculator() {
                     'shadow-lg shadow-primary/20 transition-all duration-200 hover:shadow-xl hover:shadow-primary/25 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-ink'
                   )}
                 >
-                  Run my 30-day Revenue Audit (free)
+                  Run my 30 day Revenue Audit (free)
                 </Button>
               </motion.div>
               <p className="cg-body text-center text-sm text-muted mt-2">
@@ -436,7 +436,7 @@ export function RevenueLeakCalculator() {
                   onClick={scrollToBooking}
                   className="cg-label text-xs text-muted/80 hover:text-muted transition-colors underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-ink rounded"
                 >
-                  Or book a 5-min fit check
+                  Or book a 5 min fit check
                 </button>
               </p>
             </div>
@@ -448,13 +448,3 @@ export function RevenueLeakCalculator() {
 }
 
 export default RevenueLeakCalculator;
-
-/*
-  SUMMARY OF CHANGES (RevenueLeakCalculator.jsx)
-  — Copy: Title → "How much money are missed calls costing you?"; subtitle → "Adjust the numbers..."; hint above first slider "Most electricians miss 3–8 calls a week — start here."
-  — Presets: PRESETS constant + applyPreset(); 3 pills (Solo / Busy week / Emergency heavy) above sliders; activePreset state; sliders/inputs clear preset on change.
-  — Result "alive": pulseKey triggers soft glow (blur), shimmer sweep on number area, scale 1→1.01→1 on card, tiny "updated" dot (fades out). Threshold styling at £500/£1000/£2000 (getThresholdLevel): warmer border + gradient (amber) for medium/high.
-  — Human translation: getHumanTranslation(revenueMid, jobsPerMonth) with bands (van+fuel, week of work, X emergency jobs). Muted line: "These are calls that likely went to the next electrician on Google."
-  — CTA: "Run my 30-day Revenue Audit (free)"; microcopy "We'll show you exactly which missed calls turn into real jobs."; secondary "Or book a 5-min fit check" (quieter, text-xs). CTA wrapper has whileHover y: -2.
-  — Visual: Section background accent orbs (primary + teal blur); left column inputs in rounded panels (bg-surface2/40, border-border/50); sliders thicker track (h-2.5), thumb shadow + border; result card larger type (lg:text-[2.5rem]), threshold-based className (amber border/gradient for medium/high). All motion respects prefersReducedMotion.
-*/

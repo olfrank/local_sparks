@@ -88,7 +88,7 @@ const FinalCTASection = () => {
         </p>
 
         <div className="glass-card rounded-2xl p-8 max-w-2xl mx-auto border-2 border-primary/20 shadow-2xl">
-          <h3 className="cg-h2 text-2xl text-text mb-2">Book a 5-min fit check</h3>
+          <h3 className="cg-h2 text-2xl text-text mb-2">Book a 5 min fit check</h3>
           <p className="cg-body text-muted mb-2 text-sm md:text-base">
             This takes 30 seconds. No obligation.
           </p>

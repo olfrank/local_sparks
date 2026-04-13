@@ -24,7 +24,7 @@ const SystemPage = () => {
         <section className="bg-ink">
           <ChatDemo />
         </section>
-        {/* 5. 30-day trial / revenue audit */}
+        {/* 5. 30 day trial / revenue audit */}
         <CallGuardTrialSection />
         {/* 6. ROI */}
         <CallGuardROISection />

@@ -77,7 +77,7 @@ const SiteNav = () => {
                   : 'bg-white text-ink hover:bg-white/90'
               }`}
             >
-              Book 5-min fit check
+              Book 5 min fit check
             </Button>
 
             {/* Mobile Menu Button */}
@@ -112,7 +112,7 @@ const SiteNav = () => {
               onClick={handleCTAClick}
               className="w-full mt-4 bg-primary hover:bg-primary/90 text-white py-6 rounded-xl"
             >
-              Book 5-min fit check
+              Book 5 min fit check
             </Button>
           </nav>
         </div>

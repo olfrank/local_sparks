@@ -139,7 +139,7 @@ function PhoneFrame({ children, floating = false }) {
 // ─── SMS conversation ─────────────────────────────────────────────────────────
 
 function SMSConversation({ contactName, businessName, customerReply, showReply }) {
-  const triageText = `Hi, it's ${contactName} from ${businessName}. Sorry I missed you, I'm on a job right now. Text me what you need, postcode, and if it's urgent, today, or a quote. For example: 'today, consumer unit issue, SW11 1AB'. I'll get back to you as soon as I'm free!`;
+  const triageText = `Hi, it's ${contactName} from ${businessName}. 👋 \n\n Sorry I missed you, I'm on a job right now. \n\n Text me what you need, postcode, and if it's urgent, today, or a quote. \n\n For example: 'urgent, plug socket sparking, SW11 1AB'. \n\n I'll get back to you as soon as I'm free! 🔨`;
 
   return (
     <div className="font-system">
@@ -342,10 +342,10 @@ function WhatsAppConversation({ urgency, phoneNumber, postcode, summary, loading
               <div className="flex justify-end items-center gap-1 mt-0.5">
                 <span className="text-[9px]" style={{ color: '#8696a0' }}>{timeStr}</span>
                 {/* Blue double tick */}
-                <svg viewBox="0 0 18 11" width="14" height="9" fill="none">
+                {/* <svg viewBox="0 0 18 11" width="14" height="9" fill="none">
                   <path d="M1 5.5L5.5 10L17 1" stroke="#53bdeb" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   <path d="M6 5.5L10.5 10L17 1" stroke="#53bdeb" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+                </svg> */}
               </div>
             </div>
           </div>
@@ -418,10 +418,10 @@ function Stage1Form({ onSubmit, loading, apiError }) {
     <div className="animate-fade-in">
       <div className="mb-8 text-center">
         <h1 className="cg-h1 text-h1 md:text-h1-lg text-text mb-3 max-w-sm mx-auto leading-tight">
-          See exactly what your customers experience
+          Find out what happens when you miss a call
         </h1>
         <p className="cg-body text-sm md:text-base text-muted max-w-xs mx-auto leading-relaxed">
-          Enter your details below. We'll show you the full flow in real time — takes about 30 seconds.
+          Enter your number and we'll show you exactly what happens when a customer can't reach you
         </p>
       </div>
 
@@ -489,12 +489,15 @@ function Stage1Form({ onSubmit, loading, apiError }) {
                 Sending…
               </span>
             ) : (
-              'Send me the demo'
+              'Try it with my number'
             )}
           </Button>
 
           <p className="text-center text-muted text-xs pt-1">
             We'll send one SMS to this number. That's it.
+          </p>
+          <p className="text-center text-muted text-xs pt-1">
+            So sign up required, takes 20 seconds. 
           </p>
         </form>
       </div>
@@ -555,16 +558,146 @@ function Stage2Waiting({ demoId, contactName, businessName, onComplete, onTimeou
         className="cg-body text-center text-muted text-sm leading-relaxed"
         style={{ maxWidth: '280px' }}
       >
-        Check your phone — you've just received an SMS. Reply to it with a job description,
-        postcode, and urgency to continue the demo.
+        Check your phone — you've just received an SMS. Reply to it with a job description and 
+        postcode, to continue the demo.
       </p>
+    </div>
+  );
+}
+
+// ─── Weekly report card ───────────────────────────────────────────────────────
+
+function WeeklyReportCard({ businessName, postcode, summary, customerReply }) {
+  // Current week Monday → Sunday
+  const now = new Date();
+  const dayOfWeek = now.getDay(); // 0 = Sun
+  const diffToMon = (dayOfWeek + 6) % 7;
+  const monday = new Date(now);
+  monday.setDate(now.getDate() - diffToMon);
+  const sunday = new Date(monday);
+  sunday.setDate(monday.getDate() + 6);
+  const fmt = (d) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+  const dateRange = `${fmt(monday)} – ${fmt(sunday)}`;
+
+  // Best line item: prefer parsed postcode+summary, fall back to raw reply
+  const hasParced = postcode || summary;
+
+  return (
+    <div className="w-full">
+      {/* Spacing gap between CTA and this section */}
+      <div style={{ height: '88px' }} />
+
+      <div className="text-center mb-6">
+        <p className="cg-h2 text-xl md:text-2xl text-text leading-snug">
+          After 7 days, you'll know exactly what you've been missing
+        </p>
+      </div>
+
+      {/* Report card */}
+      <div
+        className="rounded-xl text-left overflow-hidden"
+        style={{ background: '#111b21', border: '1px solid rgba(255,255,255,0.07)' }}
+      >
+        {/* Card header */}
+        <div
+          className="px-4 py-3"
+          style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', background: '#1f2c34' }}
+        >
+          <p className="text-xs font-semibold" style={{ color: '#e9edef' }}>
+            CallGuard Weekly Report — {businessName || 'Your Business'}
+          </p>
+          <p className="text-[10px] mt-0.5" style={{ color: '#8696a0' }}>
+            {dateRange}
+          </p>
+        </div>
+
+        {/* Stats */}
+        <div className="px-4 py-3 space-y-2.5">
+          <div className="flex justify-between items-baseline">
+            <span className="text-xs" style={{ color: '#8696a0' }}>Enquiries recovered</span>
+            <span className="text-sm font-semibold" style={{ color: '#e9edef' }}>6</span>
+          </div>
+          <div
+            className="flex justify-between items-baseline"
+            style={{ borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '10px' }}
+          >
+            <span className="text-xs" style={{ color: '#8696a0' }}>Estimated value</span>
+            <span className="text-sm font-semibold" style={{ color: '#00a884' }}>£400 – £800</span>
+          </div>
+          <div
+            className="flex justify-between items-baseline"
+            style={{ borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '10px' }}
+          >
+            <span className="text-xs" style={{ color: '#8696a0' }}>Busiest missed window</span>
+            <span className="text-sm font-semibold" style={{ color: '#e9edef' }}>Tue 9–11am</span>
+          </div>
+
+          {/* Demo reply line item */}
+          {(hasParced || customerReply) && (
+            <div
+              className="rounded-lg px-3 py-2.5 mt-1"
+              style={{
+                background: 'rgba(0,168,132,0.07)',
+                border: '1px solid rgba(0,168,132,0.15)',
+                borderTop: '1px solid rgba(255,255,255,0.05)',
+                marginTop: '12px',
+              }}
+            >
+              <p className="text-[9px] uppercase tracking-wide mb-1.5" style={{ color: '#8696a0' }}>
+                Recent enquiry
+              </p>
+              {hasParced ? (
+                <div className="space-y-0.5">
+                  {summary && (
+                    <p className="text-[11px] leading-snug" style={{ color: '#e9edef' }}>
+                      💬 {summary}
+                    </p>
+                  )}
+                  {postcode && (
+                    <p className="text-[11px]" style={{ color: '#8696a0' }}>
+                      📍 {postcode}
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <p className="text-[11px] leading-snug" style={{ color: '#e9edef' }}>
+                  💬 {customerReply}
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Footer copy */}
+      <p
+        className="cg-body text-center text-xs leading-relaxed mt-5"
+        style={{ color: '#8696a0' }}
+      >
+        Delivered to your WhatsApp every Monday morning. Automatically.
+      </p>
+
+      {/* Scroll-back link */}
+      <div className="text-center mt-3 mb-2">
+        <a
+          href="#demo-cta"
+          className="text-xs transition-colors"
+          style={{ color: 'hsl(var(--primary))', textDecoration: 'underline', textUnderlineOffset: '3px' }}
+          onClick={(e) => {
+            e.preventDefault();
+            document.getElementById('demo-cta')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }}
+        >
+          Start your free 30-day audit ↑
+        </a>
+      </div>
     </div>
   );
 }
 
 // ─── Stage 3: WhatsApp alert reveal ──────────────────────────────────────────
 
-function Stage3Complete({ demoId, initialData }) {
+function Stage3Complete({ demoId, initialData, businessName, customerReply }) {
   const initialAlert = extractAlert(initialData);
   const [alert, setAlert] = useState(initialAlert);
   const [ctaVisible, setCtaVisible] = useState(false);
@@ -613,27 +746,36 @@ function Stage3Complete({ demoId, initialData }) {
       </PhoneFrame>
 
       {ctaVisible && (
-        <div className="animate-fade-in-up w-full text-center">
-          <h2 className="cg-h2 text-h1 text-text mb-3 leading-tight">
-            That just happened in under 30 seconds.
-          </h2>
-          <p className="cg-body text-muted text-sm md:text-base mb-8 leading-relaxed">
-            Every missed call. Handled automatically. No app needed.
-          </p>
+        <div className="animate-fade-in-up w-full">
+          <div id="demo-cta" className="text-center">
+            <h2 className="cg-h2 text-h1 text-text mb-3 leading-tight">
+              That just happened in under 30 seconds.
+            </h2>
+            <p className="cg-body text-muted text-sm md:text-base mb-8 leading-relaxed">
+              Every missed call. Handled automatically. No app needed.
+            </p>
 
-          <div className="flex flex-col gap-3">
-            <Link to="/onboarding">
-              <Button className="cg-label w-full bg-primary hover:bg-primary/90 text-white py-6 text-base rounded-xl shadow-lg shadow-primary/25 transition-all hover:scale-[1.02]">
-                Start my free 30-day audit
-              </Button>
-            </Link>
-            <a
-              href="/#contact"
-              className="cg-label text-sm text-muted hover:text-text transition-colors underline underline-offset-4 block text-center"
-            >
-              Or book a 5-min fit check
-            </a>
+            <div className="flex flex-col gap-3">
+              <Link to="/onboarding">
+                <Button className="cg-label w-full bg-primary hover:bg-primary/90 text-white py-6 text-base rounded-xl shadow-lg shadow-primary/25 transition-all hover:scale-[1.02]">
+                  Start my free 30 day trial.
+                </Button>
+              </Link>
+              <a
+                href="/#contact"
+                className="cg-label text-sm text-muted hover:text-text transition-colors underline underline-offset-4 block text-center"
+              >
+                Or book a 5 min fit check
+              </a>
+            </div>
           </div>
+
+          <WeeklyReportCard
+            businessName={businessName}
+            postcode={alert?.postcode}
+            summary={alert?.summary}
+            customerReply={customerReply}
+          />
         </div>
       )}
     </div>
@@ -751,6 +893,8 @@ export default function DemoPage() {
       <Stage3Complete
         demoId={demoId}
         initialData={stageData}
+        businessName={formData?.businessName || 'Your Business'}
+        customerReply={stageData?.customerReply || stageData?.reply || ''}
       />
     );
   };
