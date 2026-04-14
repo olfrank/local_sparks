@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Link } from 'react-router-dom';
 import { MessageCircle, RotateCcw } from 'lucide-react';
+import OnboardingActivation from '../components/OnboardingActivation';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 
@@ -857,7 +857,7 @@ function WeeklyReportCard({ businessName, postcode, summary, customerReply }) {
 
 // ─── Stage 3: WhatsApp alert reveal ──────────────────────────────────────────
 
-function Stage3Complete({ demoId, initialData, businessName, customerReply }) {
+function Stage3Complete({ demoId, initialData, businessName, customerReply, onActivate }) {
   const initialAlert = extractAlert(initialData);
   const [alert, setAlert] = useState(initialAlert);
   const [ctaVisible, setCtaVisible] = useState(false);
@@ -916,11 +916,12 @@ function Stage3Complete({ demoId, initialData, businessName, customerReply }) {
             </p>
 
             <div className="flex flex-col gap-3">
-              <Link to="/onboarding">
-                <Button className="cg-label w-full bg-primary hover:bg-primary/90 text-white py-6 text-base rounded-xl shadow-lg shadow-primary/25 transition-all hover:scale-[1.02]">
-                  Start my free 30 day trial.
-                </Button>
-              </Link>
+              <Button
+                onClick={onActivate}
+                className="cg-label w-full bg-primary hover:bg-primary/90 text-white py-6 text-base rounded-xl shadow-lg shadow-primary/25 transition-all hover:scale-[1.02]"
+              >
+                Start my free 30 day trial.
+              </Button>
               <a
                 href="/#contact"
                 className="cg-label text-sm text-muted hover:text-text transition-colors underline underline-offset-4 block text-center"
@@ -1014,6 +1015,10 @@ export default function DemoPage() {
     setStage(3);
   };
 
+  const handleActivate = () => {
+    setStage(4);
+  };
+
   const handleTimeout = () => setTimedOut(true);
 
   const [retryValues, setRetryValues] = useState(null);
@@ -1067,12 +1072,22 @@ export default function DemoPage() {
         />
       );
     }
+    if (stage === 4) {
+      return (
+        <OnboardingActivation
+          contactName={formData?.contactName || ''}
+          businessName={formData?.businessName || 'Your Business'}
+          mobileNumber={formData?.mobileNumber || ''}
+        />
+      );
+    }
     return (
       <Stage3Complete
         demoId={demoId}
         initialData={stageData}
         businessName={formData?.businessName || 'Your Business'}
         customerReply={stageData?.customerReply || stageData?.reply || ''}
+        onActivate={handleActivate}
       />
     );
   };
