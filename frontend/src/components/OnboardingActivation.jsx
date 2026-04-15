@@ -369,11 +369,16 @@ export default function OnboardingActivation({
   whatsappNumber,
   jobValueLow = 150,
   jobValueHigh = 400,
+  onPhaseChange,
 }) {
   const [phase, setPhase] = useState('provisioning');
   const [provisionData, setProvisionData] = useState(null);
   const [errorMsg, setErrorMsg] = useState('');
   const mountedRef = useRef(true);
+
+  useEffect(() => {
+    onPhaseChange?.(phase);
+  }, [phase]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     mountedRef.current = true;

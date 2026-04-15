@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { Button } from './ui/button';
 import Logo from './Logo';
 
 const SiteNav = () => {
+  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   
   const isSystemPage = location.pathname === '/system';
   const isLiveDemoPage = location.pathname === '/demo';
+  const isOnboardPage = location.pathname === '/onboard';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,44 +42,37 @@ const SiteNav = () => {
           {/* Logo */}
           <Logo size="md" />
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
-            {isSystemPage && (
-              <a
-                href="#demo"
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  isScrolled ? 'text-muted' : 'text-white/90'
-                }`}
-              >
-                See the 5 second demo
-              </a>
-            )}
-          </nav>
+          
 
-          {/* CTA Button */}
+        
           <div className="flex items-center gap-3">
-            {!isLiveDemoPage && (
-              <Link
-                to="/demo"
-                className={`cg-label text-sm font-medium transition-colors ${
-                  isScrolled ? 'text-primary hover:text-primary/80' : 'text-white/90 hover:text-white'
-                }`}
-              >
-                <span className="hidden sm:inline">Try demo</span>
-                <span className="sm:hidden">Demo</span>
-              </Link>
-            )}
-            <Button
-              onClick={handleCTAClick}
-              variant="outline"
-              className={`transition-all rounded-xl ${
-                isScrolled
-                  ? 'border-border text-text hover:bg-surface2 bg-transparent'
-                  : 'border-white/40 text-white hover:bg-white/10 bg-transparent'
-              }`}
-            >
-              Book 5 min fit check
-            </Button>
+           
+              {!isOnboardPage && (
+                <Link
+                  to="/onboard"
+                  className={`cg-label text-sm font-medium transition-colors ${
+                    isScrolled ? 'text-primary hover:text-primary/80' : 'text-white/90 hover:text-white'
+                  }`}
+                >
+                  <span className="hidden sm:inline">Start free trial</span>
+                  <span className="sm:hidden">Start trial</span>
+                </Link>
+              )}
+
+              {!isLiveDemoPage && (
+                <Button
+                  onClick={() => navigate('/demo')}
+                  variant="outline"
+                  size="sm"
+                  className={`text-sm transition-all rounded-xl ${
+                    isScrolled
+                      ? 'border-border text-white hover:bg-surface2 bg-primary'
+                      : 'border-white/40 text-black hover:bg-white/10 bg-white'
+                  }`}
+                >
+                  Try demo
+                </Button>
+              )}
 
             {/* Mobile Menu Button */}
             <button

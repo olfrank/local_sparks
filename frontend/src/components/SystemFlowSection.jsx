@@ -127,14 +127,14 @@ const ChatDemo = () => {
 
   return (
     <section id="demo" className="section-padding bg-ink relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_80%,rgba(37,99,235,0.38),rgba(16,18,26,0.73)_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(37,99,235,0.38),rgba(16,18,26,0.73)_50%)]"/>
 
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
         <div className="text-center mb-6">
           <h2 className="cg-h2 text-h1 md:text-h1-lg text-text mb-4">
-            What happens when you miss a call
+            What happens when you miss a call?
           </h2>
           <p className="cg-body text-lg text-muted max-w-2xl mx-auto">
             In under 5 seconds, the customer is acknowledged and you get the full picture in WhatsApp.

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { MessageCircle, RotateCcw } from 'lucide-react';
+import { MessageCircle, RotateCcw, PhoneIncoming, CornerDownLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -136,6 +136,140 @@ function PhoneFrame({ children, floating = false }) {
           />
         </div>
       </div>
+    </div>
+  );
+}
+
+// ─── Demo phone mockup preview ───────────────────────────────────────────────
+
+function DemoPhoneMockupPreview() {
+  return (
+    <div className="relative opacity-80">
+      <PhoneFrame floating>
+        {/* WA header */}
+        <div
+          className="flex items-center gap-2.5 px-2 py-2.5 -mx-3 -mt-1"
+          style={{ background: '#1f2c34' }}
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="#aebac1">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+          </svg>
+          <img
+            src="/CallGuard_logo_mark.png"
+            alt=""
+            className="w-8 h-8 rounded-full flex-shrink-0"
+          />
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-semibold leading-tight" style={{ color: '#e9edef' }}>
+              CallGuard 360
+            </p>
+            <p className="text-[9px] leading-tight" style={{ color: '#8696a0' }}>
+              online
+            </p>
+          </div>
+        </div>
+
+        {/* Chat area */}
+        <div
+          className="-mx-3 px-2 pt-3 pb-2"
+          style={{ background: '#0b141a', minHeight: '360px' }}
+        >
+          {/* Sample alert bubble */}
+          <div
+            className="rounded-lg rounded-tl-none px-3 pt-2.5 pb-1.5 text-[11px] leading-relaxed relative"
+            style={{ background: '#202c33', maxWidth: '95%', color: '#e9edef' }}
+          >
+            <div
+              className="absolute"
+              style={{
+                top: 0, left: '-7px',
+                width: 0, height: 0,
+                borderTop: '8px solid #202c33',
+                borderLeft: '8px solid transparent',
+              }}
+            />
+            <p className="font-semibold text-[11px] mb-1.5" style={{ color: '#00a884' }}>
+              MISSED CALL ENQUIRY – URGENT
+            </p>
+            <p className="mb-0.5 select-none" style={{ color: '#00a884', textDecoration: 'underline', filter: 'blur(3px)' }}>
+              07911 123 456
+            </p>
+            <p className="mb-0.5 select-none" style={{ filter: 'blur(3px)' }}>📍 SW11 2AB</p>
+            <p className="mb-2 select-none" style={{ filter: 'blur(3px)' }}>💬 Total power cut, no lights, need someone ASAP</p>
+            <p
+              className="text-[9px] pb-0.5 select-none"
+              style={{ color: '#8696a0', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '6px', filter: 'blur(2.5px)' }}
+            >
+              This message was sent because the caller requested contact from your business.
+            </p>
+            <div className="flex justify-end mt-0.5">
+              <span className="text-[9px]" style={{ color: '#8696a0' }}>09:41</span>
+            </div>
+          </div>
+        </div>
+      </PhoneFrame>
+
+      {/* Overlay hint */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-12 flex justify-center">
+        <span className="text-[11px] text-white/50 bg-ink/70 backdrop-blur-sm rounded-full px-3 py-1 leading-snug">
+          Enter your details to see this live ↑
+        </span>
+      </div>
+    </div>
+  );
+}
+
+// ─── Demo step strip ─────────────────────────────────────────────────────────
+
+const DEMO_STEPS = [
+  {
+    Icon: PhoneIncoming,
+    color: '#2563eb',
+    bg: 'rgba(37,99,235,0.12)',
+    label: 'Enter your number',
+    sub: 'Takes 10 seconds',
+  },
+  {
+    Icon: CornerDownLeft,
+    color: '#F59E0B',
+    bg: 'rgba(245,158,11,0.12)',
+    label: 'Reply to the SMS',
+    sub: 'From your phone',
+  },
+  {
+    Icon: MessageCircle,
+    color: '#00A884',
+    bg: 'rgba(0,168,132,0.12)',
+    label: 'See your alert',
+    sub: 'Instant WhatsApp delivery',
+  },
+];
+
+function DemoStepStrip() {
+  return (
+    <div className="mb-2">
+      <div className="flex items-start justify-center gap-1.5 sm:gap-2">
+        {DEMO_STEPS.map(({ Icon, color, bg, label, sub }, i) => (
+          <React.Fragment key={label}>
+            <div className="flex flex-col items-center gap-1.5 flex-1 min-w-0 max-w-[90px]">
+              <div
+                className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
+                style={{ background: bg }}
+              >
+                <Icon className="w-[18px] h-[18px]" style={{ color }} strokeWidth={1.75} />
+              </div>
+              <p className="text-[11px] font-medium text-text/80 text-center leading-tight">{label}</p>
+              <p className="hidden sm:block text-[10px] text-muted/55 text-center leading-tight">{sub}</p>
+            </div>
+            {i < DEMO_STEPS.length - 1 && (
+              <span className="flex-shrink-0 text-muted/35 text-sm mt-2.5">→</span>
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+      <p className="text-center text-[11px] text-muted/50 mt-3">
+        30 seconds. Nothing to install.
+      </p>
     </div>
   );
 }
@@ -428,17 +562,22 @@ function Stage1Form({ onSubmit, loading, apiError, initialValues }) {
 
   return (
     <div className="animate-fade-in">
-      <div className="mb-8 text-center">
-        <h1 className="cg-h1 text-h1 md:text-h1-lg text-text mb-3 max-w-sm mx-auto leading-tight">
-          Miss the call. Win the job anyway.
+      <div className="mb-6 text-center lg:text-left">
+        <h1 className="cg-h1 text-h1 md:text-h1-lg text-text mb-3 leading-tight">
+          Try it with your real number
         </h1>
-        <p className="cg-body text-sm md:text-base text-muted max-w-xs mx-auto leading-relaxed">
-          Enter your number. See what your customers experience.
+        <p className="cg-body text-sm md:text-base text-muted leading-relaxed">
+          Enter your details and we'll show you exactly what your customers experience when they can't reach you.
         </p>
       </div>
 
-      <div className="glass-card rounded-2xl p-6 md:p-8">
-        <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+      <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 lg:gap-12 items-center">
+        {/* Form column */}
+        <div>
+          <DemoStepStrip />
+
+          <div className="glass-card rounded-2xl p-6 md:p-8">
+            <form onSubmit={handleSubmit} className="space-y-4" noValidate>
           <div>
             <Input
               type="text"
@@ -509,8 +648,20 @@ function Stage1Form({ onSubmit, loading, apiError, initialValues }) {
           <p className="text-center text-muted text-xs pt-1">
             One SMS. No signup. Takes 20 seconds.
           </p>
-         
-        </form>
+
+            </form>
+          </div>
+
+          {/* Mobile flow line — only shown below form on small screens */}
+          <p className="lg:hidden mt-5 text-center text-xs text-muted/50 leading-relaxed">
+            Missed call → SMS sent → WhatsApp alert. See it happen live.
+          </p>
+        </div>
+
+        {/* Mockup preview — desktop only */}
+        <div className="hidden lg:flex flex-col items-center justify-center">
+          <DemoPhoneMockupPreview />
+        </div>
       </div>
     </div>
   );
@@ -1099,7 +1250,7 @@ export default function DemoPage() {
         }}
       />
 
-      <div className="relative z-10 max-w-md mx-auto px-4 pt-28 pb-24">
+      <div className={`relative z-10 ${stage === 1 ? 'max-w-4xl' : 'max-w-md'} mx-auto px-4 pt-28 pb-24`}>
         {renderStage()}
       </div>
     </main>

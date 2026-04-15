@@ -31,7 +31,7 @@ const faqs = [
   {
     question: 'What does it cost?',
     answer:
-      "£59/month. No contract, cancel anytime. One recovered job covers the cost for three months."
+      "£59/month, everything included, no contract, cancel anytime. Full breakdown in the pricing section above."
   },
   {
     question: "Who sees my customers' details?",
@@ -50,7 +50,7 @@ const CallGuardFAQSection = () => {
 
   return (
     <section id="faq" className="section-padding bg-ink relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_90%_50%,rgba(37,99,235,0.38),rgba(16,18,26,0.73)_40%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_90%_50%,rgba(37,99,235,0.38),rgba(16,18,26,0.73)_35%)]" />
       <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 md:mb-10">
           <h2 className="text-h2 md:text-h2-lg font-bold text-text mb-3">Questions tradespeople ask</h2>

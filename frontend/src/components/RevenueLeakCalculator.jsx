@@ -187,7 +187,7 @@ export function RevenueLeakCalculator() {
       className="section-padding relative overflow-hidden bg-ink"
       aria-labelledby="revenue-calculator-heading"
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(37,99,235,0.38),rgba(16,18,26,0.73)_50%)]"/>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_80%,rgba(37,99,235,0.38),rgba(16,18,26,0.73)_50%)]" />
 
       <div className="absolute inset-0 pointer-events-none" aria-hidden>
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/8 blur-3xl rounded-full" />
@@ -393,7 +393,7 @@ export function RevenueLeakCalculator() {
                       value={revenueMid}
                       formatter={GBP.format}
                       reduceMotion={!!prefersReducedMotion}
-                      className="text-primary"
+                      className="text-red-500/80"
                     />
                   </p>
                   <p className="cg-body text-xs text-muted/70 mt-1 tabular-nums">
