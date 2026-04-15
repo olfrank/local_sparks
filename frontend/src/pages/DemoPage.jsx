@@ -563,10 +563,10 @@ function Stage1Form({ onSubmit, loading, apiError, initialValues }) {
   return (
     <div className="animate-fade-in">
       <div className="mb-6 text-center lg:text-left">
-        <h1 className="cg-h1 text-h1 md:text-h1-lg text-text mb-3 leading-tight">
+        <h1 className="cg-h1 text-h1 md:text-h1-lg text-text text-center mb-3 leading-tight">
           Try it with your real number
         </h1>
-        <p className="cg-body text-sm md:text-base text-muted leading-relaxed">
+        <p className="cg-body text-sm md:text-base text-muted text-center leading-relaxed">
           Enter your details and we'll show you exactly what your customers experience when they can't reach you.
         </p>
       </div>
