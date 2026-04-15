@@ -76,15 +76,15 @@ const FinalCTASection = () => {
 
   return (
     <section id="contact" className="section-padding bg-gradient-to-br from-ink to-[#0F172A] relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(37,99,235,0.1),transparent_50%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(37,99,235,0.38),rgba(16,18,26,0.73)_50%)]" />
+      {/* <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(37,99,235,0.1),transparent_50%)]" /> */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_50%,rgba(37,99,235,0.38),rgba(16,18,26,0.73)_40%)]" />
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="cg-h2 text-h1 md:text-h1-lg text-text mb-6">
           Want to see which jobs you're probably losing today?
         </h2>
         <p className="cg-body text-xl md:text-2xl text-muted mb-12 max-w-3xl mx-auto">
-          This is a quick sanity check — no selling, no setup. I'll show you exactly what happens after a missed call and whether this would even help you.
+          This is a quick sanity check, no selling, no setup. I'll show you exactly what happens after a missed call and whether this would even help you.
         </p>
 
         <div className="glass-card rounded-2xl p-8 max-w-2xl mx-auto border-2 border-primary/20 shadow-2xl">

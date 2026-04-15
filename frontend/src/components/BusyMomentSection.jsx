@@ -3,21 +3,18 @@ import { Phone, CheckCircle2, Calendar, PhoneOff, X, Clock } from 'lucide-react'
 
 const BusyMomentSection = () => {
   return (
-    <section className="section-padding bg-ink">
-      
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+    <section className="section-padding bg-ink relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(37,99,235,0.38),rgba(16,18,26,0.73)_50%)]" />
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-h1 font-bold text-text mb-6 leading-tight">
             The silent leak in every trade business
           </h2>
-          <p className="text-xl md:text-2xl text-muted mb-4 max-w-3xl mx-auto leading-relaxed">
-            Most customers won&apos;t leave a voicemail. If you don&apos;t answer, they ring the next electrician on Google — and you never even know which calls were real jobs.
+          <p className="text-xl md:text-2xl text-muted max-w-3xl mx-auto leading-relaxed">
+            Most customers won&apos;t leave a voicemail. They&apos;ll call the next electrician instead... and you&apos;ll never know.
           </p>
-          <div className="inline-flex items-center justify-center px-4 py-2 rounded-xl border border-amber-400/40 bg-amber-500/5 text-sm md:text-base text-amber-100 font-medium">
-            Miss just two emergency call-outs a month and you can leak £500–£1,000 in silent profit.
-          </div>
         </div>
 
         {/* Split Graphic Card */}

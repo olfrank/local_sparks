@@ -100,9 +100,9 @@ async function sendCustomerConfirmationEmail({ to, name }) {
     subject: "Your CallGuard fit check",
     html: `
       <h2>Hey, ${name}</h2>
-      <p>Thanks for requesting a 5‑minute fit check. We'll be in touch at the time you gave us.</p>
+      <p>Thanks for requesting a 5 minute fit check. We'll be in touch at the time you gave us.</p>
       <p>If anything changes, just reply to this email.</p>
-      <p>— Ollie, from CallGuard</p>
+      <p>Ollie, from CallGuard</p>
     `,
   });
 }
@@ -224,7 +224,7 @@ apiRouter.post('/contact', async (req, res) => {
       console.log('Contact form submitted (no email + no DB). Payload:', payload);
     }
 
-    res.status(201).json({ success: true, message: 'Thank you — we\'ll be in touch.' });
+    res.status(201).json({ success: true, message: 'Thank you, we\'ll be in touch.' });
   } catch (error) {
     console.error('Error processing contact form:', error);
     res.status(500).json({ error: 'Failed to submit. Please try again or call directly.' });

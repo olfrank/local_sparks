@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { Button } from './ui/button';
-import { businessInfo } from '../data/mock';
 import Logo from './Logo';
 
 const SiteNav = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
   
   const isSystemPage = location.pathname === '/system';
   const isLiveDemoPage = location.pathname === '/demo';
@@ -51,7 +49,7 @@ const SiteNav = () => {
                   isScrolled ? 'text-muted' : 'text-white/90'
                 }`}
               >
-                See the 5-second demo
+                See the 5 second demo
               </a>
             )}
           </nav>
@@ -65,16 +63,17 @@ const SiteNav = () => {
                   isScrolled ? 'text-primary hover:text-primary/80' : 'text-white/90 hover:text-white'
                 }`}
               >
-                <span className="hidden sm:inline">Try live demo</span>
+                <span className="hidden sm:inline">Try demo</span>
                 <span className="sm:hidden">Demo</span>
               </Link>
             )}
             <Button
               onClick={handleCTAClick}
+              variant="outline"
               className={`transition-all rounded-xl ${
                 isScrolled
-                  ? 'bg-primary hover:bg-primary/90 text-white'
-                  : 'bg-white text-ink hover:bg-white/90'
+                  ? 'border-border text-text hover:bg-surface2 bg-transparent'
+                  : 'border-white/40 text-white hover:bg-white/10 bg-transparent'
               }`}
             >
               Book 5 min fit check
@@ -104,7 +103,7 @@ const SiteNav = () => {
                   onClick={() => setMobileMenuOpen(false)}
                   className="block py-3 px-4 text-text font-medium rounded-lg hover:bg-surface2 transition-colors"
                 >
-                  See the 5-second demo
+                  See the 5 second demo
                 </a>
               </>
             )}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { MessageCircle, RotateCcw } from 'lucide-react';
-import OnboardingActivation from '../components/OnboardingActivation';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 
@@ -433,7 +433,7 @@ function Stage1Form({ onSubmit, loading, apiError, initialValues }) {
           Miss the call. Win the job anyway.
         </h1>
         <p className="cg-body text-sm md:text-base text-muted max-w-xs mx-auto leading-relaxed">
-          Enter your number and we'll show you exactly what happens when a customer can't reach you
+          Enter your number. See what your customers experience.
         </p>
       </div>
 
@@ -507,11 +507,9 @@ function Stage1Form({ onSubmit, loading, apiError, initialValues }) {
           </Button>
 
           <p className="text-center text-muted text-xs pt-1">
-            We'll send one SMS to this number. That's it.
+            One SMS. No signup. Takes 20 seconds.
           </p>
-          <p className="text-center text-muted text-xs pt-1">
-            So sign up required, takes 20 seconds. 
-          </p>
+         
         </form>
       </div>
     </div>
@@ -613,7 +611,7 @@ function Stage2Waiting({ demoId, contactName, businessName, formData, onComplete
         className="cg-body text-center text-muted text-sm leading-relaxed"
         style={{ maxWidth: '280px' }}
       >
-        Check your phone — you've just received an SMS. Reply to it with a job description and
+        Check your phone, you've just received an SMS. Reply to it with a job description and
         postcode, to continue the demo.
       </p>
 
@@ -848,7 +846,7 @@ function WeeklyReportCard({ businessName, postcode, summary, customerReply }) {
             document.getElementById('demo-cta')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
           }}
         >
-          Start your free 30-day audit ↑
+          Start your free 30 day trial ↑
         </a>
       </div>
     </div>
@@ -952,7 +950,7 @@ function TimeoutState({ onRestart }) {
         <MessageCircle className="w-10 h-10 text-muted mx-auto mb-4" />
         <p className="cg-label text-text text-base mb-2">No reply received yet.</p>
         <p className="cg-body text-muted text-sm mb-6 leading-relaxed">
-          Check your phone for the SMS and reply to continue — or try again.
+          Check your phone for the SMS and reply to continue, or try again.
         </p>
         <Button
           onClick={onRestart}
@@ -969,6 +967,7 @@ function TimeoutState({ onRestart }) {
 // ─── DemoPage ─────────────────────────────────────────────────────────────────
 
 export default function DemoPage() {
+  const navigate = useNavigate();
   const [stage, setStage] = useState(1);
   const [formData, setFormData] = useState(null);
   const [demoId, setDemoId] = useState(null);
@@ -988,7 +987,7 @@ export default function DemoPage() {
       });
       if (res.status === 409) {
         setApiError(
-          "Looks like you've already got a demo running — check your phone for the SMS"
+          "Looks like you've already got a demo running, check your phone for the SMS"
         );
         return;
       }
@@ -1016,7 +1015,13 @@ export default function DemoPage() {
   };
 
   const handleActivate = () => {
-    setStage(4);
+    navigate('/onboard', {
+      state: {
+        contactName: formData?.contactName || '',
+        businessName: formData?.businessName || '',
+        mobileNumber: formData?.mobileNumber || '',
+      },
+    });
   };
 
   const handleTimeout = () => setTimedOut(true);
@@ -1069,15 +1074,6 @@ export default function DemoPage() {
           onComplete={handleReplyReceived}
           onTimeout={handleTimeout}
           onRetryNumber={handleRetryNumber}
-        />
-      );
-    }
-    if (stage === 4) {
-      return (
-        <OnboardingActivation
-          contactName={formData?.contactName || ''}
-          businessName={formData?.businessName || 'Your Business'}
-          mobileNumber={formData?.mobileNumber || ''}
         />
       );
     }

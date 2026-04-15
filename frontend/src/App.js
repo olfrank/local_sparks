@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import PageTitle from "./components/PageTitle";
 import SystemPage from "./pages/SystemPage";
 import DemoPage from "./pages/DemoPage";
+import OnboardPage from "./pages/OnboardPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<SystemPage />} />
         <Route path="/demo" element={<DemoPage />} />
+        <Route path="/onboard" element={<OnboardPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <Footer />

@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Slider } from '@/components/ui/slider';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -120,6 +121,7 @@ function AnimatedNumber({ value, formatter = (v) => v, reduceMotion = false, cla
 
 export function RevenueLeakCalculator() {
   const prefersReducedMotion = useReducedMotion();
+  const navigate = useNavigate();
 
   const [missedCallsPerWeek, setMissedCallsPerWeek] = useState(DEFAULT_MISSED_CALLS);
   const [avgJobValue, setAvgJobValue] = useState(DEFAULT_AVG_JOB);
@@ -185,7 +187,7 @@ export function RevenueLeakCalculator() {
       className="section-padding relative overflow-hidden bg-ink"
       aria-labelledby="revenue-calculator-heading"
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(37,99,235,0.38),rgba(16,18,26,0.73)_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(37,99,235,0.38),rgba(16,18,26,0.73)_50%)]"/>
 
       <div className="absolute inset-0 pointer-events-none" aria-hidden>
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/8 blur-3xl rounded-full" />
@@ -230,7 +232,7 @@ export function RevenueLeakCalculator() {
                   Missed calls per week
                 </Label>
                 <p className="cg-body text-xs text-muted/90 mb-1">
-                  Most electricians miss 3–8 calls a week — start here.
+                  Most electricians miss 3–8 calls a week, start here.
                 </p>
                 <div className="flex gap-3 items-center">
                   <Input
@@ -386,27 +388,34 @@ export function RevenueLeakCalculator() {
                   <p className="cg-label text-xs text-muted uppercase tracking-wide mb-1">
                     Potential missed revenue per month
                   </p>
-                  <p className="cg-label text-3xl md:text-4xl lg:text-[2.5rem] text-text tabular-nums leading-tight">
+                  <p className="cg-label text-4xl md:text-5xl lg:text-6xl tabular-nums leading-tight">
+                    <AnimatedNumber
+                      value={revenueMid}
+                      formatter={GBP.format}
+                      reduceMotion={!!prefersReducedMotion}
+                      className="text-primary"
+                    />
+                  </p>
+                  <p className="cg-body text-xs text-muted/70 mt-1 tabular-nums">
+                    Range:{' '}
                     <AnimatedNumber
                       value={revenueLow}
                       formatter={GBP.format}
                       reduceMotion={!!prefersReducedMotion}
-                      className="text-primary"
                     />
                     {' – '}
                     <AnimatedNumber
                       value={revenueHigh}
                       formatter={GBP.format}
                       reduceMotion={!!prefersReducedMotion}
-                      className="text-primary"
                     />
+                    {' per month'}
                   </p>
                   <p className="cg-body mt-3 text-base text-muted">
                     {humanTranslation}
                   </p>
-                  
                   <p className="cg-body mt-2 text-xs text-muted/70">
-                    Conservative estimate — depends on call quality and seasonality.
+                    Based on industry averages for sole traders.
                   </p>
                 </motion.div>
               </div>
@@ -417,14 +426,14 @@ export function RevenueLeakCalculator() {
                 transition={{ duration: 0.2, ease: 'easeOut' }}
               >
                 <Button
-                  onClick={scrollToBooking}
+                  onClick={() => navigate('/onboard')}
                   className={cn(
                     'cg-label w-full py-6 text-base rounded-xl',
                     'bg-primary text-primary-foreground hover:bg-primary/90',
                     'shadow-lg shadow-primary/20 transition-all duration-200 hover:shadow-xl hover:shadow-primary/25 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-ink'
                   )}
                 >
-                  Run my 30 day Revenue Audit (free)
+                  Run my 30 day trial (free)
                 </Button>
               </motion.div>
               <p className="cg-body text-center text-sm text-muted mt-2">

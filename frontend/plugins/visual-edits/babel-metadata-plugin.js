@@ -25,7 +25,7 @@ function resolveImportPath(source, fromFile) {
   } else if (source.startsWith("./") || source.startsWith("../")) {
     base = path.resolve(path.dirname(fromFile), source);
   } else {
-    // bare specifier (node_modules) — skip analysis
+    // bare specifier (node_modules) skip analysis
     RESOLVE_CACHE.set(cacheKey, null);
     return null;
   }

@@ -6,24 +6,42 @@ const faqs = [
   {
     question: 'Is this just voicemail with extra steps?',
     answer:
-      "Voicemail tells you someone rang. CallGuard captures urgency + a short description so you know who to call back first."
+      "No, it's completely different. Voicemail waits for the customer to leave a message (most don't). CallGuard reaches out to them instantly, captures structured details, urgency, postcode, job type, and delivers it to your WhatsApp. You end up with a short, actionable brief, not a vague answerphone message."
   },
   {
     question: 'Do I need a new number?',
-    answer: 'No — it works on your existing number.'
+    answer:
+      "No. CallGuard works with your existing number. Nothing changes for your customers, they still ring the same number they always have."
   },
   {
     question: 'Will my phone stop ringing?',
-    answer: 'No. If you answer, nothing changes.'
+    answer:
+      "No. Your phone still rings as normal. CallGuard only kicks in when you can't answer."
   },
   {
     question: 'Do I need an app?',
-    answer: 'No — everything goes to WhatsApp.'
+    answer:
+      "No. Everything arrives in WhatsApp, which you already use. There's nothing to download, no dashboard to log into."
   },
   {
     question: "What if I'm already fully booked?",
     answer:
-      "You still see the urgency and details so you can decide whether to take it, schedule it, or ignore it — the point is visibility and control."
+      "Even when you're fully booked, knowing who called and what they needed is valuable. You can refer them to a colleague, schedule them for next week, or prioritise a genuine emergency over a routine quote. Visibility is the point, not volume."
+  },
+  {
+    question: 'What does it cost?',
+    answer:
+      "£59/month. No contract, cancel anytime. One recovered job covers the cost for three months."
+  },
+  {
+    question: "Who sees my customers' details?",
+    answer:
+      "Only you. Your data stays private and is never shared with anyone. CallGuard exists to serve your business, not mine."
+  },
+  {
+    question: "What if I don't like it?",
+    answer:
+      "Cancel anytime. No contract, no fees, no hassle. You'll know within 30 days whether it's earning its place."
   }
 ];
 
@@ -32,12 +50,12 @@ const CallGuardFAQSection = () => {
 
   return (
     <section id="faq" className="section-padding bg-ink relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(37,99,235,0.38),rgba(16,18,26,0.73)_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_90%_50%,rgba(37,99,235,0.38),rgba(16,18,26,0.73)_40%)]" />
       <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 md:mb-10">
           <h2 className="text-h2 md:text-h2-lg font-bold text-text mb-3">Questions tradespeople ask</h2>
           <p className="text-muted text-sm md:text-base max-w-2xl mx-auto">
-            Straight answers to the common sticking points before you book a quick fit check.
+            Straight answers to the common sticking points.
           </p>
         </div>
 

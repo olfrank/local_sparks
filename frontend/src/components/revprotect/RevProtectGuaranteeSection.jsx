@@ -1,38 +1,31 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { ShieldCheck, PlugZap, Clock3, CheckCircle2 } from 'lucide-react';
-import { motion, useReducedMotion, useInView, AnimatePresence } from 'framer-motion';
+import { motion, useReducedMotion, useInView } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
 const trialIncludes = [
   { icon: PlugZap, label: 'Installed on your existing number', subtext: "Customers never know it's there" },
   { icon: Clock3, label: 'Live in ~10 minutes (we guide it)', subtext: 'No downtime. No tech headache.' },
   { icon: ShieldCheck, label: 'WhatsApp alerts for priority jobs', subtext: 'So you call back the right ones first' },
-  { icon: CheckCircle2, label: 'Decision at day 30', subtext: 'Keep it — or switch it off' }
+  { icon: CheckCircle2, label: 'Decision at day 30', subtext: 'Keep it, or switch it off' }
 ];
 
 const timelineSteps = [
   { icon: PlugZap, label: 'Install (2 min)', subtext: 'We wire it into your number', accent: 'blue' },
   { icon: Clock3, label: 'Observe (30 days)', subtext: 'Missed calls become visible jobs', accent: 'emerald' },
-  { icon: CheckCircle2, label: 'Decide', subtext: 'Keep the revenue — or walk away', accent: 'blue' }
+  { icon: CheckCircle2, label: 'Decide', subtext: 'Keep it or cancel. No lock-in.', accent: 'blue' }
 ];
 
-const liveAuditPhases = ['Install', 'Running', 'Reporting'];
-
-const statHintPhrases = ['Missed call → captured', 'Urgency → tagged', 'Revenue → visible'];
-
 const BORDER_GLOW_INTERVAL_MS = 13500;
-const STAT_HINT_INTERVAL_MS = 3000;
 
 const CallGuardTrialSection = () => {
+  const navigate = useNavigate();
   const prefersReducedMotion = useReducedMotion();
   const containerRef = useRef(null);
   const inView = useInView(containerRef, { once: true, amount: 0.15 });
   const [borderGlowOpacity, setBorderGlowOpacity] = useState(0);
-  const [livePhaseIndex, setLivePhaseIndex] = useState(0);
-  const [statHintIndex, setStatHintIndex] = useState(0);
   const [buttonPulseDone, setButtonPulseDone] = useState(false);
-  const livePhaseIntervalRef = useRef(null);
-  const statHintIntervalRef = useRef(null);
 
   // Border glow: gentle pulse every ~12–15s (opacity + blur, smooth)
   const borderGlowTimeoutRef = useRef(null);
@@ -49,50 +42,12 @@ const CallGuardTrialSection = () => {
     };
   }, [inView, prefersReducedMotion]);
 
-  // Live audit pill: cycle "Install" → "Running" → "Reporting" every ~2.5s while inView
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-    if (!inView) {
-      if (livePhaseIntervalRef.current) clearInterval(livePhaseIntervalRef.current);
-      return;
-    }
-    livePhaseIntervalRef.current = setInterval(() => {
-      setLivePhaseIndex((prev) => (prev + 1) % liveAuditPhases.length);
-    }, 2500);
-    return () => { if (livePhaseIntervalRef.current) clearInterval(livePhaseIntervalRef.current); };
-  }, [inView, prefersReducedMotion]);
-
-  // Stat hint pill: cycle phrases every ~3s while inView
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-    if (!inView) {
-      if (statHintIntervalRef.current) clearInterval(statHintIntervalRef.current);
-      return;
-    }
-    statHintIntervalRef.current = setInterval(() => {
-      setStatHintIndex((prev) => (prev + 1) % statHintPhrases.length);
-    }, STAT_HINT_INTERVAL_MS);
-    return () => { if (statHintIntervalRef.current) clearInterval(statHintIntervalRef.current); };
-  }, [inView, prefersReducedMotion]);
-
   // Single button pulse when CTA enters view
   useEffect(() => {
     if (prefersReducedMotion || !inView) return;
     setButtonPulseDone(true);
   }, [inView, prefersReducedMotion]);
 
-  const scrollToBooking = () => {
-    const el = document.getElementById('contact');
-    el?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const scrollToFaq = () => {
-    const el = document.getElementById('faq');
-    el?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const isReportingPhase = liveAuditPhases[livePhaseIndex] === 'Reporting';
-  const isRevenuePhrase = statHintPhrases[statHintIndex] === 'Revenue → visible';
 
   return (
     <section className="section-padding bg-ink pt-12 md:pt-16 relative overflow-hidden">
@@ -100,10 +55,10 @@ const CallGuardTrialSection = () => {
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Soft depth: two radial glows behind the card */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl" aria-hidden>
+        {/* <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl" aria-hidden>
           <div className="absolute -top-32 right-0 w-[28rem] h-80 bg-primary/15 blur-[80px] rounded-full" />
           <div className="absolute -bottom-32 -left-16 w-80 h-80 bg-emerald-500/12 blur-[80px] rounded-full" />
-        </div>
+        </div> */}
 
         <motion.div
           ref={containerRef}
@@ -146,97 +101,13 @@ const CallGuardTrialSection = () => {
           )}
 
           <div className="relative">
-            {/* Header row: badge + live audit pill + stat hint pill */}
-            <div className="flex flex-wrap items-center gap-3 mb-4">
-              <motion.div
-                initial={prefersReducedMotion ? false : { opacity: 0, y: -6 }}
-                animate={inView && !prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
-                transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
-                className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 overflow-hidden relative"
-              >
-                <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center">
-                  <Clock3 className="w-4 h-4 text-primary" />
-                </div>
-                <span className="cg-label text-xs tracking-[0.16em] uppercase text-primary">
-                  30 DAY REVENUE AUDIT
-                </span>
-                {!prefersReducedMotion && (
-                  <motion.span
-                    aria-hidden="true"
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/12 to-transparent"
-                    initial={{ x: '-100%' }}
-                    animate={inView ? { x: '100%' } : { x: '-100%' }}
-                    transition={{ duration: 1.2, ease: 'easeOut', delay: 0.5 }}
-                  />
-                )}
-              </motion.div>
-              {/* Live audit cycling pill — emerald when "Reporting" */}
-              <motion.div
-                initial={prefersReducedMotion ? false : { opacity: 0 }}
-                animate={inView ? { opacity: 1 } : undefined}
-                transition={{ duration: 0.4, delay: 0.2 }}
-                className={cn(
-                  'inline-flex items-center px-3 py-1.5 rounded-full border text-xs font-medium min-w-[7rem] justify-center',
-                  isReportingPhase
-                    ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400'
-                    : 'bg-surface2/80 border-border/60 text-muted'
-                )}
-              >
-                {prefersReducedMotion ? (
-                  '30 day audit'
-                ) : (
-                  <AnimatePresence mode="wait">
-                    <motion.span
-                      key={liveAuditPhases[livePhaseIndex]}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="inline-block"
-                    >
-                      {liveAuditPhases[livePhaseIndex]}
-                    </motion.span>
-                  </AnimatePresence>
-                )}
-              </motion.div>
-              {/* Stat hint pill: cycles phrases, emerald when "Revenue → visible" */}
-              <motion.div
-                initial={prefersReducedMotion ? false : { opacity: 0 }}
-                animate={inView ? { opacity: 1 } : undefined}
-                transition={{ duration: 0.4, delay: 0.25 }}
-                className={cn(
-                  'inline-flex items-center px-3 py-1.5 rounded-full border text-xs font-medium min-w-[10rem] justify-center',
-                  isRevenuePhrase && !prefersReducedMotion
-                    ? 'bg-emerald-500/10 border-emerald-500/25 text-emerald-400/90'
-                    : 'bg-surface2/60 border-border/50 text-muted'
-                )}
-              >
-                {prefersReducedMotion ? (
-                  statHintPhrases[0]
-                ) : (
-                  <AnimatePresence mode="wait">
-                    <motion.span
-                      key={statHintPhrases[statHintIndex]}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.25 }}
-                      className="inline-block"
-                    >
-                      {statHintPhrases[statHintIndex]}
-                    </motion.span>
-                  </AnimatePresence>
-                )}
-              </motion.div>
-            </div>
-
             <h2 className="cg-h2 text-h2 md:text-h2-lg text-text mb-2">
-              See what your missed calls are really worth (free for 30 days)
+              See what your missed calls are really worth
             </h2>
             <p className="cg-body text-lg md:text-xl text-muted max-w-2xl">
-              You&apos;ll see which missed calls turn into real jobs — and how much revenue they represent — then decide if it earns its place.
+              You&apos;ll see which missed calls turn into real jobs, and how much revenue they represent, then decide if it earns its place.
             </p>
-            <p className="cg-body text-sm text-muted/90 mt-2 mb-5">
+            <p className="cg-label text-base md:text-lg text-text font-semibold mt-6 mb-6">
               No behaviour change. No app. Just visibility.
             </p>
 
@@ -374,16 +245,13 @@ const CallGuardTrialSection = () => {
                 )}
                 <button
                   type="button"
-                  onClick={scrollToBooking}
+                  onClick={() => navigate('/onboard')}
                   className="cg-label w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-full bg-primary text-primary-foreground text-base shadow-lg shadow-primary/25 transition-all duration-200 hover:bg-primary/90 hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
                 >
-                  Start my 30 day audit
+                  Start my 30 day trial
                 </button>
               </motion.div>
             </div>
-            <p className="cg-body text-xs text-muted mt-3 max-w-xl">
-              I&apos;ll personally set this up with you — no tickets, no handoffs.
-            </p>
             <p className="cg-body text-xs text-muted/80 mt-4 max-w-xl">
               No commitment until you&apos;ve seen it working. At day 30 you choose.
             </p>

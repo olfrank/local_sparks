@@ -1,31 +1,19 @@
 import React, { useRef, useCallback, useState, useEffect } from 'react';
-import { Phone, ArrowRight, MessageCircle, Zap, MapPin, CheckCircle2 } from 'lucide-react';
+import { Phone, ArrowRight, MessageCircle, CheckCircle2 } from 'lucide-react';
 import { motion, useInView, useReducedMotion, useMotionValue, useTransform } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
 import { heroImages } from '../data/mock';
-import HeroLeakBadge from './revprotect/HeroLeakBadge';
-
-// Proof chips: inline-flex, rounded-full, glass, icon left
-const PROOF_CHIPS = [
-  { label: 'SMS in ~5 seconds', icon: Zap },
-  { label: 'Captures urgency + postcode', icon: MapPin },
-  { label: 'Delivered to WhatsApp', icon: MessageCircle },
-];
 
 const SystemHeroSection = () => {
   const prefersReducedMotion = useReducedMotion();
   const sectionRef = useRef(null);
+  const navigate = useNavigate();
+
   const handleCTAClick = () => {
     const contactSection = document.getElementById('contact');
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
-  const handleSecondaryClick = () => {
-    const demoSection = document.getElementById('demo');
-    if (demoSection) {
-      demoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
@@ -81,18 +69,18 @@ const SystemHeroSection = () => {
           animation: prefersReducedMotion ? 'none' : 'slowZoom 20s ease-in-out infinite alternate'
         }}
       />
-      {/* Stronger left-side gradient wash: darker left -> lighter right for calmer left column */}
+      {/* Stronger left-side gradient wash */}
       <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/75 to-transparent" />
-      {/* Existing vignette */}
       <div className="absolute inset-0 bg-gradient-to-b from-ink/90 via-ink/85 to-ink/90" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_20%,_rgba(11,18,32,0.7)_100%)]" />
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 md:py-40">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Copy – local blur mask behind left column (feathered, subtle) */}
+
+          {/* Left column */}
           <div className="relative text-left max-w-xl mx-auto lg:mx-0">
-            {/* Local blur mask: dark translucent + backdrop-blur, feathered edges */}
+            {/* Local blur mask */}
             <div
               className="pointer-events-none absolute -inset-8 lg:inset-y-0 lg:-left-12 lg:right-1/2 rounded-2xl bg-ink/40 backdrop-blur-md lg:backdrop-blur-lg"
               style={{
@@ -103,47 +91,35 @@ const SystemHeroSection = () => {
             {/* Spotlight behind heading */}
             <div className="pointer-events-none absolute -inset-x-10 -top-10 h-40 bg-[radial-gradient(circle_at_top,_rgba(37,99,235,0.2),_transparent_60%)] blur-2xl opacity-80" />
 
-            <div className="relative">
-              {/* Hierarchy: headline -> pill -> cause→effect line -> CTA -> chips -> body */}
-              <div className="flex flex-col gap-6 mb-5">
-                <h1 className="cg-h1 text-h1 md:text-h1-lg text-text">
-                  Stop missed calls turning into lost jobs
-                </h1>
-                <HeroLeakBadge />
-                {/* Cause → effect micro-story: system-status style, fade + slide on load */}
-                <motion.div
-                  initial={prefersReducedMotion ? false : { opacity: 0, y: 6 }}
-                  animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.25, ease: 'easeOut' }}
-                  className="relative flex items-center gap-1.5 overflow-hidden text-[11px] md:text-xs font-normal tracking-wide text-muted/70 tabular-nums"
-                >
-                  <span className="relative z-10 flex items-center gap-1.5">
-                    <span>Missed call</span>
-                    <span className="text-muted/50" aria-hidden>→</span>
-                    <span>5-second reply</span>
-                    <span className="text-muted/50" aria-hidden>→</span>
-                    <span>Job held</span>
-                    <span className="text-muted/50" aria-hidden>→</span>
-                    <span>WhatsApp alert</span>
-                  </span>
-                  {/* Optional: very subtle shimmer traveling across every ~11s (low-opacity overlay) */}
-                 
-                </motion.div>
-              </div>
+            <div className="relative flex flex-col gap-6">
+              {/* Headline */}
+              <h1 className="cg-h1 text-h1 md:text-h1-lg text-text">
+                Miss the call.<br />Win the job anyway.
+              </h1>
 
-              {/* CTA first for hierarchy: headline -> pill -> CTA -> chips -> body */}
-              <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
+              {/* Single-line subtext */}
+              <p className="cg-body text-base md:text-lg text-text/70 leading-relaxed">
+                Automatic reply. Job details. Straight to your WhatsApp.
+              </p>
+
+              {/* Cost anchor, muted, small */}
+              <p className="cg-body text-sm text-muted/60">
+                The average emergency call-out is worth £250–£500.
+              </p>
+
+              {/* CTAs */}
+              <div className="flex flex-col items-start gap-3 mt-2">
+                {/* Primary */}
                 <div
                   className="relative overflow-hidden rounded-xl w-full sm:w-auto"
                   onMouseEnter={() => !prefersReducedMotion && setCtaHoverCount((c) => c + 1)}
                 >
                   <Button
-                    onClick={handleCTAClick}
+                    onClick={() => navigate('/demo')}
                     size="lg"
                     className="cg-label relative z-10 w-full sm:w-auto bg-primary hover:bg-primary/90 text-white text-lg px-8 py-6 shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all hover:scale-[1.02] rounded-xl group"
                   >
-                    <span className="relative z-10">Book 5 min fit check</span>
-                    {/* Hover sheen: gradient sweep runs once per hover; disabled when reduced motion */}
+                    <span className="relative z-10">Try it free, 30 seconds</span>
                     {!prefersReducedMotion && (
                       <span
                         key={ctaHoverCount}
@@ -157,55 +133,28 @@ const SystemHeroSection = () => {
                     )}
                   </Button>
                 </div>
+
+                {/* Secondary text link */}
                 <button
                   type="button"
-                  onClick={handleSecondaryClick}
-                  className="cg-label w-full sm:w-auto inline-flex items-center justify-center gap-2 text-sm md:text-base text-muted hover:text-text transition-colors"
+                  onClick={handleCTAClick}
+                  className="cg-label inline-flex items-center gap-1.5 text-sm text-muted hover:text-text transition-colors"
                 >
-                  <span>See the 5-second demo</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <span>Or book a 5 min call</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
-
-
-              {/* Paragraph: calm but clearer – slightly higher contrast than muted, not pure white */}
-              <p className="cg-body text-base md:text-lg text-text/80 mb-6 max-w-[28rem] leading-relaxed">
-                Missed calls leak revenue every month. Miss one and customers call the next electrician. CallGuard replies instantly, holds the job, and sends details to WhatsApp.
-              </p>
-             
-
-              {/* Proof chips – below CTA for hierarchy */}
-              <div className="flex flex-wrap gap-2 mb-6">
-                {PROOF_CHIPS.map(({ label, icon: Icon }) => (
-                  <span
-                    key={label}
-                    className="inline-flex items-center gap-2 rounded-full border border-border/80 bg-white/[0.06] backdrop-blur-sm px-3.5 py-2 text-xs md:text-sm text-muted font-medium"
-                  >
-                    <Icon className="w-3.5 h-3.5 text-primary shrink-0" />
-                    {label}
-                  </span>
-                ))}
-              </div>
-
-
-              
             </div>
           </div>
 
-          {/* Device preview – floating depth, breathing sweep, optional parallax */}
+          {/* Right column — mockup */}
           <div className="relative max-w-lg mx-auto w-full" ref={previewRef}>
             <div className="pointer-events-none absolute -inset-x-10 -top-10 h-48 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.22),_transparent_70%)] blur-3xl opacity-80" />
 
             <motion.div
               style={
                 !prefersReducedMotion && isDesktop
-                  ? {
-                      x,
-                      y,
-                      rotateX,
-                      rotateY,
-                      transformPerspective: 800
-                    }
+                  ? { x, y, rotateX, rotateY, transformPerspective: 800 }
                   : undefined
               }
               initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
@@ -213,7 +162,7 @@ const SystemHeroSection = () => {
               transition={{ duration: 0.5, ease: 'easeOut' }}
               className="font-system relative rounded-[32px] border border-white/15 bg-white/5 backdrop-blur-xl overflow-hidden px-4 pt-6 pb-4 shadow-[0_0_0_1px_rgba(255,255,255,0.08)_inset,0_25px_50px_-12px_rgba(0,0,0,0.4),0_0_40px_-10px_rgba(37,99,235,0.15)]"
             >
-              {/* Breathing highlight sweep – very subtle, 10s loop */}
+              {/* Breathing highlight sweep */}
               <div
                 className="hero-breathing-sweep pointer-events-none absolute inset-0 z-[1] rounded-[32px]"
                 style={{
@@ -222,101 +171,100 @@ const SystemHeroSection = () => {
                   animation: prefersReducedMotion ? 'none' : 'heroBreathingSweep 10s ease-in-out infinite'
                 }}
               />
-              {/* Card content above sweep */}
               <div className="relative z-10">
-              {/* Phone top bar */}
-              <div className="flex justify-center mb-4">
-                <div className="h-1.5 w-16 rounded-full bg-white/20" />
-              </div>
+                {/* Phone top bar */}
+                <div className="flex justify-center mb-4">
+                  <div className="h-1.5 w-16 rounded-full bg-white/20" />
+                </div>
 
-              <div className="space-y-3 text-sm">
-                {/* Missed call */}
-                <motion.div
-                  initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
-                  animate={previewInView && !prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
-                  transition={{ delay: 0.1, duration: 0.4 }}
-                  className="flex items-center gap-2 text-xs text-muted"
-                >
-                  <Phone className="w-4 h-4 text-red-400" />
-                  <span>Missed call from 07901 837 771</span>
-                </motion.div>
+                <div className="space-y-3 text-sm">
+                  {/* Missed call */}
+                  <motion.div
+                    initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
+                    animate={previewInView && !prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
+                    transition={{ delay: 0.1, duration: 0.4 }}
+                    className="flex items-center gap-2 text-xs text-muted"
+                  >
+                    <Phone className="w-4 h-4 text-red-400" />
+                    <span>Missed call from 07901 837 771</span>
+                  </motion.div>
 
-                {/* Auto SMS */}
-                <motion.div
-                  initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
-                  animate={previewInView && !prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
-                  transition={{ delay: 0.3, duration: 0.4 }}
-                  className="flex justify-start"
-                >
-                  <div className="bg-primary/90 text-white rounded-2xl rounded-tl-sm px-4 py-3 max-w-[85%] shadow-lg shadow-primary/30">
-                    <p className="leading-relaxed">
-                      Hi, it's John from Local Electrics 👋
-                      <br /><br />
-                      Sorry I missed you, I&apos;m on a job right now. 
-                      <br /><br />
-                      Text me what you need, postcode, and if it's urgent, today, or a quote.
-                      <br /><br />
-                      For example: "today, consumer unit issue, SW12 1AB"
-                      <br /><br />
-                      I'll get back to you as soon as I'm free! 🔨
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Customer reply */}
-                <motion.div
-                  initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
-                  animate={previewInView && !prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
-                  transition={{ delay: 0.5, duration: 0.4 }}
-                  className="flex justify-end"
-                >
-                  <div className="bg-surface2 text-text rounded-2xl rounded-tr-sm px-4 py-3 max-w-[80%] shadow-sm border border-border">
-                    <p className="leading-relaxed">
-                      Hey John, there's a burning smell from socket in kitchen, i'm a bit worried, you free now? hp249hh
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* WhatsApp alert */}
-                <motion.div
-                  initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
-                  animate={previewInView && !prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
-                  transition={{ delay: 0.7, duration: 0.4 }}
-                  className="mt-4 rounded-2xl border border-emerald-400/40 bg-emerald-400/10 px-4 py-3 flex gap-3 items-start"
-                >
-                  <div className="mt-1">
-                    <MessageCircle className="w-4 h-4 text-emerald-400" />
-                  </div>
-                  <div className="space-y-1 text-xs text-muted">
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-emerald-100 font-medium text-sm">WhatsApp alert</span>
-                      <span className="inline-flex text-center px-2 py-0.5 rounded-full bg-emerald-400/20 text-emerald-200 text-[10px] font-semibold">
-                        <CheckCircle2 className="w-3 h-3 mr-1" />
-                      Job held
-                      </span>
+                  {/* Auto SMS */}
+                  <motion.div
+                    initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
+                    animate={previewInView && !prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
+                    transition={{ delay: 0.3, duration: 0.4 }}
+                    className="flex justify-start"
+                  >
+                    <div className="bg-primary/90 text-white rounded-2xl rounded-tl-sm px-4 py-3 max-w-[85%] shadow-lg shadow-primary/30">
+                      <p className="leading-relaxed">
+                        Hi, it's John from Local Electrics 👋
+                        <br /><br />
+                        Sorry I missed you, I&apos;m on a job right now.
+                        <br /><br />
+                        Text me what you need, postcode, and if it's urgent, today, or a quote.
+                        <br /><br />
+                        For example: "today, consumer unit issue, SW12 1AB"
+                        <br /><br />
+                        I'll get back to you as soon as I'm free! 🔨
+                      </p>
                     </div>
-                    <p className="text-emerald-50 text-sm">
-                      MISSED CALL ENQUIRY - URGENT
-                    </p>
-                    <p className="text-emerald-50 text-sm">
-                      📞+447901234567
-                    </p>
-                    <p className="text-emerald-50 text-sm">
-                      📍HP24 9HH
-                    </p>
-                    <p className="text-emerald-50 text-sm">
-                      💬 Burning smell from kitchen socket. Customer requested a visit immediately
-                    </p>
-                  </div>
-                </motion.div>
-              </div>
+                  </motion.div>
+
+                  {/* Customer reply */}
+                  <motion.div
+                    initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
+                    animate={previewInView && !prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
+                    transition={{ delay: 0.5, duration: 0.4 }}
+                    className="flex justify-end"
+                  >
+                    <div className="bg-surface2 text-text rounded-2xl rounded-tr-sm px-4 py-3 max-w-[80%] shadow-sm border border-border">
+                      <p className="leading-relaxed">
+                        Hey John, there's a burning smell from socket in kitchen, i'm a bit worried, you free now? hp249hh
+                      </p>
+                    </div>
+                  </motion.div>
+
+                  {/* WhatsApp alert — visual climax, subtle glow + scale */}
+                  <motion.div
+                    initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
+                    animate={previewInView && !prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
+                    transition={{ delay: 0.7, duration: 0.4 }}
+                    className="mt-4 rounded-2xl border border-emerald-400/60 bg-[#46f5754d] px-4 py-3 flex gap-3 items-start scale-[1.02] shadow-[0_0_28px_-4px_rgba(52,211,153,0.30)]"
+                  >
+                    <div className="mt-1">
+                      <MessageCircle className="w-4 h-4 text-emerald-400" />
+                    </div>
+                    <div className="space-y-1 text-xs text-muted">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-emerald-100 font-medium text-sm">WhatsApp alert</span>
+                        <span className="inline-flex text-center px-2 py-0.5 rounded-full bg-emerald-400/20 text-emerald-200 text-[10px] font-semibold">
+                          <CheckCircle2 className="w-3 h-3 mr-1" />
+                          Job held
+                        </span>
+                      </div>
+                      <p className="text-emerald-50 text-sm">
+                        MISSED CALL ENQUIRY - URGENT
+                      </p>
+                      <p className="text-emerald-50 text-sm">
+                        📞+447901234567
+                      </p>
+                      <p className="text-emerald-50 text-sm">
+                        📍HP24 9HH
+                      </p>
+                      <p className="text-emerald-50 text-sm">
+                        💬 Burning smell from kitchen socket. Customer requested a visit immediately
+                      </p>
+                    </div>
+                  </motion.div>
+                </div>
               </div>
             </motion.div>
           </div>
         </div>
       </div>
 
-      {/* Scroll Indicator – no bounce when reduced motion */}
+      {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
         <div className="w-6 h-10 border-2 border-text/30 rounded-full flex justify-center pt-2 animate-bounce motion-reduce:animate-none">
           <div className="w-1.5 h-3 bg-text/50 rounded-full animate-pulse motion-reduce:animate-none" />

@@ -3,11 +3,10 @@ import SystemHeroSection from '../components/SystemHeroSection';
 import BusyMomentSection from '../components/BusyMomentSection';
 import RevenueLeakCalculator from '../components/RevenueLeakCalculator';
 import SystemFlowSection from '../components/SystemFlowSection';
-import ChatDemo from '../components/ChatDemo';
 import FinalCTASection from '../components/FinalCTASection';
 import CallGuardTrialSection from '../components/revprotect/RevProtectGuaranteeSection';
-import CallGuardROISection from '../components/revprotect/RevProtectROISection';
 import CallGuardFAQSection from '../components/revprotect/RevProtectFAQSection';
+import ClosingCTASection from '../components/ClosingCTASection';
 
 const SystemPage = () => {
   return (
@@ -20,17 +19,13 @@ const SystemPage = () => {
         <RevenueLeakCalculator />
         {/* 3. How it works */}
         <SystemFlowSection />
-        {/* 4. Demo (60-second visual) */}
-        <section className="bg-ink">
-          <ChatDemo />
-        </section>
-        {/* 5. 30 day trial / revenue audit */}
+        {/* 5. 30 day trial */}
         <CallGuardTrialSection />
-        {/* 6. ROI */}
-        <CallGuardROISection />
         {/* 7. FAQ */}
         <CallGuardFAQSection />
-        {/* 8. Final CTA */}
+        {/* 8. Closing CTA */}
+        <ClosingCTASection />
+        {/* 9. Contact form */}
         <FinalCTASection />
       </main>
     </>

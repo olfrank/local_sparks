@@ -20,7 +20,7 @@ const WeeklySummaryCard = () => {
         {/* Section Header */}
         <div className="text-center mb-12">
           <h2 className="text-h2 md:text-h2-lg font-bold text-text mb-4">
-            A simple weekly summary — so you can see what was caught
+            A simple weekly summary so you can see what was caught
           </h2>
           <p className="text-lg md:text-xl text-muted max-w-2xl mx-auto">
             No dashboards. No logins. Just a clear recap.
