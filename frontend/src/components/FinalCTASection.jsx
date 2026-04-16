@@ -28,7 +28,7 @@ const FinalCTASection = () => {
       });
       setSubmitted(true);
     } catch {
-      setError('Something went wrong — message me on WhatsApp instead.');
+      setError('Something went wrong, message me on WhatsApp instead.');
     } finally {
       setLoading(false);
     }
@@ -110,7 +110,7 @@ const FinalCTASection = () => {
 
             {submitted ? (
               <p className="cg-body text-sm text-text/80 leading-relaxed mt-auto py-1">
-                Got it — I&apos;ll give you a call soon. 👍
+                Got it,  I&apos;ll give you a call soon. 👍
               </p>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-3 mt-auto">

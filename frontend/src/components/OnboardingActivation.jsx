@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import confetti from 'canvas-confetti';
 import { Check, Copy, Phone, PhoneOff, MessageCircle, RotateCcw, Users, X, Plus, ArrowRight } from 'lucide-react';
 import { Button } from './ui/button';
 
@@ -112,7 +113,7 @@ function VerifyModal({ isOpen, verifying, onConfirm, onCancel }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
       <div
-        className="absolute inset-0 bg-black/60"
+        className="absolute inset-0 bg-black/80"
         onClick={!verifying ? onCancel : undefined}
       />
       <div className="animate-fade-in relative z-10 w-full max-w-sm glass-card rounded-2xl border border-border p-6 flex flex-col gap-5">
@@ -122,24 +123,21 @@ function VerifyModal({ isOpen, verifying, onConfirm, onCancel }) {
               <div className="w-14 h-14 rounded-full bg-amber-500/15 flex items-center justify-center">
                 <PhoneOff className="w-6 h-6 text-amber-400" />
               </div>
-              <h3 className="cg-h2 text-text text-lg leading-snug">
-                We're about to call you — don't answer it
+              <h3 className="cg-h2 text-text text-xl leading-snug">
+                We're about to call you
               </h3>
-              <p className="cg-body text-muted text-sm leading-relaxed">
-                We'll call your phone right now to check that missed call forwarding is working.
+              <p className="text-lg font-semibold text-amber-400 leading-relaxed">
+                Don't answer it. Let it ring out.
               </p>
-              <p className="text-sm font-semibold text-text/90 leading-relaxed">
-                Let it ring. Don't answer it, don't decline it. Just let it ring out.
-              </p>
-              <p className="cg-body text-muted text-sm leading-relaxed">
-                When the call goes unanswered, it will forward to CallGuard — and you'll receive your first test alert on WhatsApp.
+              <p className="cg-body text-muted text-md leading-relaxed">
+                The missed call will forward to CallGuard and you'll get your first test alert on WhatsApp.
               </p>
             </div>
             <Button
               onClick={onConfirm}
               className="cg-label w-full bg-primary hover:bg-primary/90 text-white py-5 text-base rounded-xl shadow-lg shadow-primary/25 transition-all hover:scale-[1.02]"
             >
-              Call me now — I won't answer
+              Call me now, I won't answer
             </Button>
             <button
               type="button"
@@ -159,7 +157,7 @@ function VerifyModal({ isOpen, verifying, onConfirm, onCancel }) {
             </div>
             <h3 className="cg-h2 text-text text-lg">Calling you now…</h3>
             <p className="cg-body text-muted text-sm leading-relaxed">
-              Let it ring — don't pick up. This takes about 15–20 seconds.
+              Let it ring, don't pick up. This takes about 15–20 seconds.
             </p>
             <div className="flex gap-1.5">
               {[0, 1, 2].map((i) => (
@@ -183,12 +181,6 @@ function ActivationPhase({ forwardingCode, onVerifyStart, verifying }) {
   const [dialled, setDialled] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
-
-  const trustPoints = [
-    'Works with your existing number',
-    'No app needed',
-    'Turn off anytime in 10 seconds',
-  ];
 
   return (
     <div className="animate-fade-in flex flex-col gap-5">
@@ -217,20 +209,8 @@ function ActivationPhase({ forwardingCode, onVerifyStart, verifying }) {
 
       {/* What this does */}
       <p className="cg-body text-muted text-md leading-relaxed">
-        This forwards missed calls to CallGuard so we can text the customer and send the job details to your WhatsApp.
+        This just forwards missed calls to CallGuard so we can text the customer and send the job details to your WhatsApp.
       </p>
-
-      {/* Trust checklist */}
-      <div className="flex flex-col gap-2">
-        {trustPoints.map((item) => (
-          <div key={item} className="flex items-center gap-2.5">
-            <div className="flex-shrink-0 w-5 h-5 rounded-full bg-emerald-500/15 flex items-center justify-center">
-              <Check className="w-3 h-3 text-emerald-400" />
-            </div>
-            <span className="text-md text-text/80">{item}</span>
-          </div>
-        ))}
-      </div>
 
       {/* CTA */}
       <Button
@@ -401,10 +381,23 @@ function VipNumbersPhase({ customerId, onComplete, onSkip }) {
 // ─── Success phase ─────────────────────────────────────────────────────────────
 
 function SuccessPhase({ businessName }) {
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const timer = setTimeout(() => {
+      confetti({ particleCount: 80, spread: 70, origin: { x: 0.1, y: 0.6 }, angle: 60, colors: ['#2563EB', '#3B82F6', '#60A5FA', '#93C5FD', '#FFFFFF'] });
+      confetti({ particleCount: 80, spread: 70, origin: { x: 0.9, y: 0.6 }, angle: 120, colors: ['#2563EB', '#3B82F6', '#60A5FA', '#93C5FD', '#FFFFFF'] });
+      setTimeout(() => {
+        confetti({ particleCount: 40, spread: 50, origin: { x: 0.15, y: 0.65 }, angle: 55, colors: ['#2563EB', '#3B82F6', '#60A5FA', '#FFFFFF'] });
+        confetti({ particleCount: 40, spread: 50, origin: { x: 0.85, y: 0.65 }, angle: 125, colors: ['#2563EB', '#3B82F6', '#60A5FA', '#FFFFFF'] });
+      }, 300);
+    }, 400);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="animate-fade-in flex flex-col items-center gap-6 text-center py-8">
-      <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center">
-        <Check className="w-10 h-10 text-primary" />
+      <div className="w-20 h-20 rounded-full bg-[#00a8843d] flex items-center justify-center">
+        <Check className="w-10 h-10 text-[#00a884]" />
       </div>
       <div>
         <h2 className="cg-h2 text-text text-2xl mb-3">You're live.</h2>
@@ -416,8 +409,8 @@ function SuccessPhase({ businessName }) {
       <div className="glass-card rounded-2xl p-5 w-full border border-primary/20 text-left space-y-3">
         {['Missed call SMS triage — active', 'WhatsApp job alerts — active', 'Weekly missed-call report — active'].map((item) => (
           <div key={item} className="flex items-center gap-3">
-            <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
-              <Check className="w-3 h-3 text-white" />
+            <div className="w-5 h-5 rounded-full bg-[#00a884] flex items-center justify-center flex-shrink-0">
+              <Check className="w-3 h-3 text-black" />
             </div>
             <p className="text-sm text-text">{item}</p>
           </div>
