@@ -77,14 +77,16 @@ function CodeRow({ label, code, dialled, onDial }) {
         <p className="text-sm font-mono text-text tracking-wide">{code}</p>
       </div>
       <div className="flex gap-2">
-        <button
-          type="button"
-          onClick={handleCopy}
-          className="p-2 rounded-lg bg-surface border border-border text-muted hover:text-text hover:border-primary/30 transition-colors"
-          title="Copy code"
-        >
-          {copied ? <Check className="w-4 h-4 text-primary" /> : <Copy className="w-4 h-4" />}
-        </button>
+        {!isMobile && (
+          <button
+            type="button"
+            onClick={handleCopy}
+            className="p-2 rounded-lg bg-surface border border-border text-muted hover:text-text hover:border-primary/30 transition-colors"
+            title="Copy code"
+          >
+            {copied ? <Check className="w-4 h-4 text-primary" /> : <Copy className="w-4 h-4" />}
+          </button>
+        )}
         {isMobile && (
           <a
             href={buildTelLink(code)}
@@ -104,55 +106,87 @@ function CodeRow({ label, code, dialled, onDial }) {
 
 // ─── Activation phase ─────────────────────────────────────────────────────────
 
-function ActivationPhase({ forwardingNumber, forwardingCode, onVerifyStart }) {
+function ActivationPhase({ forwardingCode, onVerifyStart, verifying }) {
   const [dialled, setDialled] = useState(false);
   const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
 
+  const trustPoints = [
+    'Works with your existing number',
+    'No app needed',
+    'Turn off anytime in 10 seconds',
+  ];
+
   return (
-    <div className="animate-fade-in flex flex-col gap-6">
+    <div className="animate-fade-in flex flex-col gap-5">
+      {/* Header */}
       <div className="text-center">
         <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
           <Phone className="w-6 h-6 text-primary" />
         </div>
-        <h2 className="cg-h2 text-text text-xl mb-2">Activate call forwarding</h2>
-        <p className="cg-body text-muted text-sm leading-relaxed">
-          {isMobile
-            ? 'Tap the button to dial the code from your mobile — takes 10 seconds.'
-            : 'Dial the code below from your mobile phone to switch on call forwarding.'}
+        <h2 className="cg-h2 text-text text-2xl mb-2">Activate missed call forwarding</h2>
+       
+        <p className="cg-body text-muted text-md leading-relaxed">
+          This is standard missed call forwarding, same as voicemail. 
         </p>
       </div>
-      <div className="rounded-xl bg-surface2 border border-border p-4 text-center">
-        <p className="text-xs text-muted mb-1">Your CallGuard forwarding number</p>
-        <p className="text-base font-semibold text-text tracking-wide">{forwardingNumber}</p>
-      </div>
-      <div className="flex flex-col gap-3">
+
+      {/* Code section */}
+      <div className="flex flex-col gap-2">
+        <p className="text-sm text-muted">Dial the code below from your phone:</p>
         <CodeRow
-          label="Forward all missed calls to CallGuard"
+          label=""
           code={forwardingCode}
           dialled={dialled}
           onDial={() => setDialled(true)}
         />
       </div>
+
+      {/* What this does */}
+      <p className="cg-body text-muted text-md leading-relaxed">
+        This forwards missed calls to CallGuard so we can text the customer and send the job details to your WhatsApp.
+      </p>
+
+      {/* Trust checklist */}
+      <div className="flex flex-col gap-2">
+        {trustPoints.map((item) => (
+          <div key={item} className="flex items-center gap-2.5">
+            <div className="flex-shrink-0 w-5 h-5 rounded-full bg-emerald-500/15 flex items-center justify-center">
+              <Check className="w-3 h-3 text-emerald-400" />
+            </div>
+            <span className="text-md text-text/80">{item}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* CTA */}
       <Button
         onClick={onVerifyStart}
         className={`cg-label w-full py-6 text-base rounded-xl shadow-lg transition-all hover:scale-[1.02] ${
-          dialled || !isMobile
-            ? 'bg-primary hover:bg-primary/90 text-white shadow-primary/25'
-            : 'bg-surface2 text-muted border border-border cursor-not-allowed hover:scale-100'
+          verifying
+            ? 'bg-primary/70 text-white cursor-not-allowed hover:scale-100'
+            : dialled || !isMobile
+              ? 'bg-primary hover:bg-primary/90 text-white shadow-primary/25'
+              : 'bg-surface2 text-muted border border-border cursor-not-allowed hover:scale-100'
         }`}
-        disabled={isMobile && !dialled}
+        disabled={(isMobile && !dialled) || verifying}
       >
-        {dialled || !isMobile ? "I've dialled it — verify me" : 'Dial the code to continue'}
+        {verifying ? (
+          <span className="inline-flex items-center gap-2">
+            <span className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+            Verifying…
+          </span>
+        ) : "I've dialled it, verify me"}
       </Button>
-      {!isMobile && (
-        <p className="text-xs text-muted text-center leading-relaxed">
-          Need to do this on your phone?{' '}
-          <a href={OLLIE_WA} target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2">
-            Message Ollie on WhatsApp
-          </a>{' '}
-          and he'll walk you through it.
-        </p>
-      )}
+
+      {/* Fallback */}
+      <p className="text-sm text-muted text-center leading-relaxed">
+        Not sure?{' '}
+        <a href={OLLIE_WA} target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2">
+          Message Ollie directly on WhatsApp
+        </a>{' '}
+        and he'll walk you through it
+      </p>
+      
     </div>
   );
 }
@@ -473,7 +507,7 @@ export default function OnboardingActivation({
         const res = await fetch(`${API_BASE}/api/onboarding/status/${provisionData?.customerId}`);
         if (!res.ok) return;
         const data = await res.json();
-        if (data.status === 'active') {
+        if (data.status === 'verified') {
           clearInterval(pollRef.current);
           saveSession('vip', provisionData);
           setPhase('vip');
