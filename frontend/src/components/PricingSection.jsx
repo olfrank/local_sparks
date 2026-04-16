@@ -23,7 +23,7 @@ const PricingSection = () => {
 
       <div className="relative z-10 max-w-lg mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 md:mb-10">
-          <h2 className="text-h2 md:text-h2-lg font-bold text-text">
+          <h2 className="text-h2 md:text-h1-lg font-bold text-text">
             One plan. One price. No surprises.
           </h2>
         </div>
@@ -72,7 +72,7 @@ const PricingSection = () => {
                 onClick={() => navigate('/onboard')}
                 className="cg-label w-full bg-primary hover:bg-primary/90 text-white py-6 text-base rounded-xl shadow-lg shadow-primary/25 transition-all hover:scale-[1.02]"
               >
-                Start my 30 day audit
+                Start my 30 free day trial
               </Button>
               <p className="text-center">
                 <button

@@ -865,7 +865,7 @@ function WeeklyReportCard({ businessName, postcode, summary, customerReply }) {
     { text: '• Customers who replied: 3 (50%)' },
     { text: '' },
     { text: '💰 Value protected', bold: true },
-    { text: '• Jobs recovered: 2' },
+    { text: '• Opportunities recovered: 2' },
     { text: '• Estimated recovered value: £300–£600' },
     { text: '' },
     { text: '⚡ Response speed', bold: true },
@@ -877,13 +877,6 @@ function WeeklyReportCard({ businessName, postcode, summary, customerReply }) {
     { text: '' },
     { text: '📍 Busiest missed window', bold: true },
     { text: 'Thu 20:00–22:00' },
-    ...(hasReply ? [
-      { text: '' },
-      { text: '🔔 Recent enquiry', bold: true },
-      ...(summary ? [{ text: `💬 ${summary}` }] : []),
-      ...(postcode ? [{ text: `📍 ${postcode}` }] : []),
-      ...(!summary && !postcode && customerReply ? [{ text: `💬 ${customerReply}` }] : []),
-    ] : []),
     { text: '' },
     { text: 'CallGuard has protected 16 enquiries since you started.' },
   ];

@@ -33,21 +33,23 @@ const ClosingCTASection = () => {
             size="lg"
             className="cg-label bg-primary hover:bg-primary/90 text-white text-base px-8 py-6 rounded-xl shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all hover:scale-[1.02]"
           >
-            Start my 30 day trial
+            Start my 30 free day trial
           </Button>
 
           <p className="cg-body text-sm text-muted mt-4">
-            Takes 2 minutes to set up. Cancel anytime.
+            Takes 2 minutes to set up. No cards or payment details. 
+            <br />
+            Cancel anytime.
           </p>
 
-          <button
+          {/* <button
             type="button"
             onClick={handleSecondary}
             className="cg-label inline-flex items-center gap-1.5 text-sm text-muted hover:text-text transition-colors mt-3"
           >
             <span>Or book a 5 min call</span>
             <ArrowRight className="w-3.5 h-3.5" />
-          </button>
+          </button> */}
         </motion.div>
       </div>
     </section>

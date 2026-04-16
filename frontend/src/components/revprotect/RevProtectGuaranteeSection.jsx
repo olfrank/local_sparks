@@ -248,7 +248,7 @@ const CallGuardTrialSection = () => {
                   onClick={() => navigate('/onboard')}
                   className="cg-label w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-full bg-primary text-primary-foreground text-base shadow-lg shadow-primary/25 transition-all duration-200 hover:bg-primary/90 hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
                 >
-                  Start my 30 day trial
+                  Start my 30 free day trial
                 </button>
               </motion.div>
             </div>

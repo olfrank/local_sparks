@@ -119,7 +119,7 @@ const SystemHeroSection = () => {
                     size="lg"
                     className="cg-label relative z-10 w-full sm:w-auto bg-primary hover:bg-primary/90 text-white text-lg px-8 py-6 shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all hover:scale-[1.02] rounded-xl group"
                   >
-                    <span className="relative z-10">Try it free, 30 seconds</span>
+                    <span className="relative z-10">Try 30 second demo</span>
                     {!prefersReducedMotion && (
                       <span
                         key={ctaHoverCount}
@@ -135,14 +135,12 @@ const SystemHeroSection = () => {
                 </div>
 
                 {/* Secondary text link */}
-                <button
-                  type="button"
-                  onClick={handleCTAClick}
+                {/* <span
                   className="cg-label inline-flex items-center gap-1.5 text-sm text-muted hover:text-text transition-colors"
                 >
-                  <span>Or book a 5 min call</span>
+                  <span>Enter your number, reply to SMS, see your alert</span>
                   <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                </span> */}
               </div>
             </div>
           </div>
@@ -178,18 +176,27 @@ const SystemHeroSection = () => {
                 </div>
 
                 <div className="space-y-3 text-sm">
-                  {/* Missed call */}
-                  <motion.div
-                    initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
-                    animate={previewInView && !prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
-                    transition={{ delay: 0.1, duration: 0.4 }}
-                    className="flex items-center gap-2 text-xs text-muted"
-                  >
-                    <Phone className="w-4 h-4 text-red-400" />
-                    <span>Missed call from 07901 837 771</span>
-                  </motion.div>
+                  <div className='w-full flex justify-start'>
+                    <motion.div
+                      initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
+                      animate={previewInView && !prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
+                      transition={{ delay: 0.1, duration: 0.4 }}
+                      className="flex items-center gap-2 text-xs text-muted w-fit bg-transparent rounded-xl px-2 py-1"
+                    >
+                      <span
+                        style={{
+                          display: 'inline-flex',
+                          gap: '0.5rem',
+                          animation: prefersReducedMotion ? 'none' : 'phoneRing 4s ease-in-out 0.8s infinite',
+                        }}
+                      >
+                        <Phone className="w-4 h-4 text-red-400" />
+                        <span className="text-red-400">Missed call from 07901 837 771</span>
+                      </span>
+                      
+                    </motion.div>
+                  </div>
 
-                  {/* Auto SMS */}
                   <motion.div
                     initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
                     animate={previewInView && !prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
@@ -239,7 +246,7 @@ const SystemHeroSection = () => {
                       <div className="flex items-center justify-between gap-2">
                         <span className="text-emerald-100 font-medium text-sm">WhatsApp alert</span>
                         <span className="inline-flex text-center px-2 py-0.5 rounded-full bg-emerald-400/20 text-emerald-200 text-[10px] font-semibold">
-                          <CheckCircle2 className="w-3 h-3 mr-1" />
+                          <CheckCircle2 className="w-3 h-3 mr-1 mt-0.5" />
                           Job held
                         </span>
                       </div>

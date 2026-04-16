@@ -1,7 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { MessageSquare, MessageCircle, Reply, CheckCircle2, ArrowRight, Zap } from 'lucide-react';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
-
+import { Button } from './ui/button';
 // ─── Mini mockups ─────────────────────────────────────────────────────────────
 
 function SmsMockup() {
@@ -124,6 +124,7 @@ const ChatDemo = () => {
   const prefersReducedMotion = useReducedMotion();
   const sectionRef = useRef(null);
   const inView = useInView(sectionRef, { once: true, margin: '-80px' });
+  const [ctaHoverCount, setCtaHoverCount] = useState(0);
 
   return (
     <section id="demo" className="section-padding bg-ink relative overflow-hidden">
@@ -213,6 +214,34 @@ const ChatDemo = () => {
         >
           No apps. No dashboards. Everything lands where you already work.
         </motion.p>
+
+        <div className='w-full flex mt-4'>
+
+        
+        <div
+          className="relative w-full mx-auto overflow-hidden rounded-xl w-full sm:w-auto"
+          onMouseEnter={() => !prefersReducedMotion && setCtaHoverCount((c) => c + 1)}
+        >
+          <Button
+            onClick={() => navigate('/demo')}
+            size="lg"
+            className="cg-label relative z-10 w-full sm:w-auto bg-primary hover:bg-primary/90 text-white text-lg px-8 py-6 shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all hover:scale-[1.02] rounded-xl group"
+          >
+            <span className="relative z-10">Try 30 second demo</span>
+            {!prefersReducedMotion && (
+              <span
+                key={ctaHoverCount}
+                className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+                style={{
+                  background: 'linear-gradient(105deg, transparent 0%, rgba(255,255,255,0.12) 45%, rgba(255,255,255,0.18) 50%, rgba(255,255,255,0.12) 55%, transparent 100%)',
+                  backgroundSize: '200% 100%',
+                  animation: 'buttonHoverSheen 0.6s ease-out forwards'
+                }}
+              />
+            )}
+          </Button>
+        </div>
+        </div>
 
       </div>
     </section>
