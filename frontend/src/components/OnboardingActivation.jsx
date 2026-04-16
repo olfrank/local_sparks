@@ -104,16 +104,9 @@ function CodeRow({ label, code, dialled, onDial }) {
 
 // ─── Activation phase ─────────────────────────────────────────────────────────
 
-function ActivationPhase({ forwardingNumber, forwardingCodes, onVerifyStart }) {
-  const [dialled, setDialled] = useState({ noAnswer: false, unreachable: false, busy: false });
+function ActivationPhase({ forwardingNumber, forwardingCode, onVerifyStart }) {
+  const [dialled, setDialled] = useState(false);
   const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
-  const allDialled = dialled.noAnswer && dialled.unreachable && dialled.busy;
-
-  const codes = [
-    { key: 'noAnswer', label: "When you don't answer", code: forwardingCodes.noAnswer },
-    { key: 'unreachable', label: 'When your phone is off / no signal', code: forwardingCodes.unreachable },
-    { key: 'busy', label: "When you're on another call", code: forwardingCodes.busy },
-  ];
 
   return (
     <div className="animate-fade-in flex flex-col gap-6">
@@ -124,8 +117,8 @@ function ActivationPhase({ forwardingNumber, forwardingCodes, onVerifyStart }) {
         <h2 className="cg-h2 text-text text-xl mb-2">Activate call forwarding</h2>
         <p className="cg-body text-muted text-sm leading-relaxed">
           {isMobile
-            ? 'Tap each button to dial the codes from your mobile — takes under 60 seconds.'
-            : 'Dial each code below from your mobile phone to switch on call forwarding.'}
+            ? 'Tap the button to dial the code from your mobile — takes 10 seconds.'
+            : 'Dial the code below from your mobile phone to switch on call forwarding.'}
         </p>
       </div>
       <div className="rounded-xl bg-surface2 border border-border p-4 text-center">
@@ -133,26 +126,23 @@ function ActivationPhase({ forwardingNumber, forwardingCodes, onVerifyStart }) {
         <p className="text-base font-semibold text-text tracking-wide">{forwardingNumber}</p>
       </div>
       <div className="flex flex-col gap-3">
-        {codes.map(({ key, label, code }) => (
-          <CodeRow
-            key={key}
-            label={label}
-            code={code}
-            dialled={dialled[key]}
-            onDial={() => setDialled((prev) => ({ ...prev, [key]: true }))}
-          />
-        ))}
+        <CodeRow
+          label="Forward all missed calls to CallGuard"
+          code={forwardingCode}
+          dialled={dialled}
+          onDial={() => setDialled(true)}
+        />
       </div>
       <Button
         onClick={onVerifyStart}
         className={`cg-label w-full py-6 text-base rounded-xl shadow-lg transition-all hover:scale-[1.02] ${
-          allDialled
+          dialled
             ? 'bg-primary hover:bg-primary/90 text-white shadow-primary/25'
             : 'bg-surface2 text-muted border border-border cursor-not-allowed hover:scale-100'
         }`}
-        disabled={!allDialled}
+        disabled={!dialled}
       >
-        {allDialled ? "I've dialled all three — verify me" : 'Dial all 3 codes to continue'}
+        {dialled ? "I've dialled it — verify me" : 'Dial the code to continue'}
       </Button>
       {!isMobile && (
         <p className="text-xs text-muted text-center leading-relaxed">
@@ -392,6 +382,12 @@ export default function OnboardingActivation({
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed.phase && parsed.provisionData) {
+          // Old session format used forwardingCodes (object) — clear and re-provision
+          if (!parsed.provisionData.forwardingCode && parsed.provisionData.forwardingCodes) {
+            sessionStorage.removeItem(SESSION_KEY);
+            provision();
+            return;
+          }
           setProvisionData(parsed.provisionData);
           setPhase(parsed.phase);
           return;
@@ -510,7 +506,8 @@ export default function OnboardingActivation({
       {phase === 'activation' && provisionData && (
         <ActivationPhase
           forwardingNumber={provisionData.forwardingNumber}
-          forwardingCodes={provisionData.forwardingCodes}
+          forwardingCode={provisionData.forwardingCode}
+          deactivationCode={provisionData.deactivationCode}
           onVerifyStart={handleVerifyStart}
           verifying={verifying}
         />

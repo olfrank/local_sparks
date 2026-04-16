@@ -293,7 +293,7 @@ export default function OnboardPage() {
       <div
         className="pointer-events-none absolute inset-0"
         style={{
-          background: 'radial-gradient(ellipse 80% 40% at 50% 0%, rgba(37,99,235,0.05), transparent 65%)',
+          background: 'radial-gradient(ellipse 80% 40% at 50% 0%, rgba(37, 100, 235, 0.08), transparent 65%)',
         }}
       />
       <div className="relative z-10 max-w-md mx-auto px-4 pt-28 pb-24">
