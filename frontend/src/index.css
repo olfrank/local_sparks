@@ -121,11 +121,30 @@ code {
         @apply border-border;
     }
     body {
-        @apply font-sans bg-[#0B1220] text-[#E5E7EB];
-        background-color: hsl(var(--bg));
+        @apply font-sans text-[#E5E7EB];
+        background-color: #080c14;
         color: hsl(var(--text));
         line-height: 1.55;
     }
+}
+
+/* Layer 4: Noise texture — physical material quality over the full page */
+main::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.1;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+  mix-blend-mode: overlay;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main::after {
+    display: none;
+  }
 }
 
 /* Utility Classes for Hybrid Dark Theme */

@@ -1,265 +1,278 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { ShieldCheck, PlugZap, Clock3, CheckCircle2 } from 'lucide-react';
+import { PlugZap, Clock3, CheckCircle2, ArrowRight } from 'lucide-react';
 import { motion, useReducedMotion, useInView } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { cn } from '@/lib/utils';
 
-const trialIncludes = [
-  { icon: PlugZap, label: 'Installed on your existing number', subtext: "Customers never know it's there" },
-  { icon: Clock3, label: 'Live in ~10 minutes (we guide it)', subtext: 'No downtime. No tech headache.' },
-  { icon: ShieldCheck, label: 'WhatsApp alerts for priority jobs', subtext: 'So you call back the right ones first' },
-  { icon: CheckCircle2, label: 'Decision at day 30', subtext: 'Keep it, or switch it off' }
+// ─── Data ─────────────────────────────────────────────────────────────────────
+
+const KILLER_PHRASES = ['No behaviour change', 'No app', 'Just visibility'];
+
+const TIMELINE = [
+  { icon: PlugZap,       label: 'Install (2 min)',    sub: 'We wire it into your number' },
+  { icon: Clock3,        label: 'Observe (30 days)',  sub: 'Missed calls become visible jobs' },
+  { icon: CheckCircle2,  label: 'Decide',             sub: 'Keep it or cancel. No lock-in.' },
 ];
 
-const timelineSteps = [
-  { icon: PlugZap, label: 'Install (2 min)', subtext: 'We wire it into your number', accent: 'blue' },
-  { icon: Clock3, label: 'Observe (30 days)', subtext: 'Missed calls become visible jobs', accent: 'emerald' },
-  { icon: CheckCircle2, label: 'Decide', subtext: 'Keep it or cancel. No lock-in.', accent: 'blue' }
-];
+// ─── Count-up hook ────────────────────────────────────────────────────────────
 
-const BORDER_GLOW_INTERVAL_MS = 13500;
+function useCountUp(target, duration, started, reduceMotion) {
+  const [val, setVal] = useState(reduceMotion ? target : 0);
+  const rafRef = useRef(null);
+  useEffect(() => {
+    if (!started) return;
+    if (reduceMotion) { setVal(target); return; }
+    setVal(0);
+    const t0 = performance.now();
+    const tick = (now) => {
+      const p = Math.min((now - t0) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 2);
+      setVal(Math.round(target * eased));
+      if (p < 1) rafRef.current = requestAnimationFrame(tick);
+    };
+    rafRef.current = requestAnimationFrame(tick);
+    return () => rafRef.current && cancelAnimationFrame(rafRef.current);
+  }, [started, target, duration, reduceMotion]); // eslint-disable-line react-hooks/exhaustive-deps
+  return val;
+}
+
+// ─── Weekly report phone mockup ───────────────────────────────────────────────
+
+function WeeklyReportPhone({ inView, reduceMotion }) {
+  const enquiries = useCountUp(6,   1000, inView, reduceMotion);
+  const valueLow  = useCountUp(300, 1300, inView, reduceMotion);
+  const valueHigh = useCountUp(600, 1300, inView, reduceMotion);
+
+  const timeStr = '08:07';
+
+  return (
+    <div
+      className="relative mx-auto select-none"
+      style={{
+        width: 'min(260px, 78vw)',
+        animation: reduceMotion ? 'none' : 'phoneFloat 3s ease-in-out infinite',
+      }}
+    >
+      {/* Side buttons */}
+      {[90, 128, 184].map((top) => (
+        <div key={top} className="absolute" style={{ left: '-3px', top, width: 3, height: top === 184 ? 44 : top === 128 ? 44 : 26, background: 'rgba(255,255,255,0.10)', borderRadius: '2px 0 0 2px' }} />
+      ))}
+      <div className="absolute" style={{ right: '-3px', top: 128, width: 3, height: 60, background: 'rgba(255,255,255,0.10)', borderRadius: '0 2px 2px 0' }} />
+
+      {/* Frame */}
+      <div
+        className="relative overflow-hidden"
+        style={{
+          borderRadius: 44,
+          background: 'linear-gradient(160deg, #1c2233 0%, #0d1117 50%, #080c14 100%)',
+          border: '2px solid rgba(255,255,255,0.09)',
+          boxShadow: '0 40px 60px -20px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.03) inset, 0 0 50px -10px rgba(16,185,129,0.18)',
+        }}
+      >
+        {/* Dynamic island */}
+        <div className="flex justify-center pt-3.5 pb-1">
+          <div style={{ width: 88, height: 26, borderRadius: 20, background: '#000', border: '1px solid rgba(255,255,255,0.05)' }} />
+        </div>
+        {/* Status bar */}
+        <div className="flex justify-between items-center text-[10px] font-medium px-5 pb-2" style={{ color: 'rgba(255,255,255,0.4)' }}>
+          <span>9:41</span>
+          <div className="flex items-center gap-1">
+            <span style={{ letterSpacing: '0.05em' }}>●●●</span>
+            <span className="ml-1">5G</span>
+          </div>
+        </div>
+
+        {/* Screen */}
+        <div className="px-3 pb-0" style={{ minHeight: 390 }}>
+          {/* WA header */}
+          <div className="flex items-center gap-2.5 px-2 py-2.5 -mx-3 -mt-1" style={{ background: '#1f2c34' }}>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="#aebac1">
+              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+            </svg>
+            <img src="/CallGuard_logo_mark.png" alt="" className="w-7 h-7 rounded-full flex-shrink-0" />
+            <div className="flex-1 min-w-0">
+              <p className="text-[11px] font-semibold leading-tight" style={{ color: '#e9edef' }}>CallGuard 360</p>
+              <p className="text-[9px] leading-tight" style={{ color: '#8696a0' }}>online</p>
+            </div>
+          </div>
+
+          {/* Chat area */}
+          <div className="-mx-3 px-2 pt-3 pb-2" style={{ background: '#0b141a', minHeight: 320 }}>
+            {/* Report bubble */}
+            <div
+              className="rounded-lg rounded-tl-none px-3 pt-2.5 pb-1.5 relative"
+              style={{ background: '#202c33', maxWidth: '96%', color: '#e9edef', fontSize: 10, lineHeight: 1.5 }}
+            >
+              {/* Tail */}
+              <div className="absolute" style={{ top: 0, left: -7, width: 0, height: 0, borderTop: '8px solid #202c33', borderLeft: '8px solid transparent' }} />
+
+              <p className="font-bold mb-1.5" style={{ color: '#00a884', fontSize: 10 }}>
+                📊 WEEKLY REPORT — W/E 12 JAN
+              </p>
+
+              <div style={{ borderTop: '1px solid rgba(255,255,255,0.07)', paddingTop: 6, marginBottom: 6 }}>
+                <div className="flex justify-between mb-0.5">
+                  <span style={{ color: '#8696a0' }}>Enquiries recovered</span>
+                  <span className="font-bold tabular-nums" style={{ color: '#e9edef' }}>{enquiries}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span style={{ color: '#8696a0' }}>Estimated value</span>
+                  <span className="font-bold tabular-nums" style={{ color: '#00a884' }}>
+                    £{valueLow}–£{valueHigh}
+                  </span>
+                </div>
+              </div>
+
+              <div style={{ borderTop: '1px solid rgba(255,255,255,0.07)', paddingTop: 6, marginBottom: 6 }}>
+                <div className="flex justify-between mb-0.5">
+                  <span>🔴 Urgent</span><span className="tabular-nums">2</span>
+                </div>
+                <div className="flex justify-between mb-0.5">
+                  <span>🟡 Same-day</span><span className="tabular-nums">3</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>🟢 Quote</span><span className="tabular-nums">1</span>
+                </div>
+              </div>
+
+              <p style={{ color: '#8696a0', fontSize: 9, borderTop: '1px solid rgba(255,255,255,0.07)', paddingTop: 5 }}>
+                Busiest window: Tue 11am–2pm
+              </p>
+
+              <div className="flex justify-end mt-1">
+                <span style={{ color: '#8696a0', fontSize: 9 }}>{timeStr}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Home indicator */}
+        <div className="flex justify-center py-3" style={{ background: '#0b141a' }}>
+          <div style={{ width: 96, height: 4, borderRadius: 99, background: 'rgba(255,255,255,0.18)' }} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Main section ─────────────────────────────────────────────────────────────
 
 const CallGuardTrialSection = () => {
   const navigate = useNavigate();
   const prefersReducedMotion = useReducedMotion();
-  const containerRef = useRef(null);
-  const inView = useInView(containerRef, { once: true, amount: 0.15 });
-  const [borderGlowOpacity, setBorderGlowOpacity] = useState(0);
+  const sectionRef = useRef(null);
+  const inView = useInView(sectionRef, { once: true, amount: 0.15 });
   const [buttonPulseDone, setButtonPulseDone] = useState(false);
 
-  // Border glow: gentle pulse every ~12–15s (opacity + blur, smooth)
-  const borderGlowTimeoutRef = useRef(null);
-  useEffect(() => {
-    if (prefersReducedMotion || !inView) return;
-    const pulse = () => {
-      setBorderGlowOpacity(0.25);
-      borderGlowTimeoutRef.current = setTimeout(() => setBorderGlowOpacity(0), 2200);
-    };
-    const id = setInterval(pulse, BORDER_GLOW_INTERVAL_MS);
-    return () => {
-      clearInterval(id);
-      if (borderGlowTimeoutRef.current) clearTimeout(borderGlowTimeoutRef.current);
-    };
-  }, [inView, prefersReducedMotion]);
-
-  // Single button pulse when CTA enters view
   useEffect(() => {
     if (prefersReducedMotion || !inView) return;
     setButtonPulseDone(true);
   }, [inView, prefersReducedMotion]);
 
-
   return (
-    <section className="section-padding bg-ink pt-12 md:pt-16 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(37,99,235,0.38),rgba(16,18,26,0.73)_50%)]" />
+    <section className="section-padding pt-12 md:pt-16 relative overflow-hidden" ref={sectionRef}>
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Soft depth: two radial glows behind the card */}
-        {/* <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl" aria-hidden>
-          <div className="absolute -top-32 right-0 w-[28rem] h-80 bg-primary/15 blur-[80px] rounded-full" />
-          <div className="absolute -bottom-32 -left-16 w-80 h-80 bg-emerald-500/12 blur-[80px] rounded-full" />
-        </div> */}
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <motion.div
-          ref={containerRef}
-          initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
-          animate={inView && !prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
-          transition={{ duration: 0.55, ease: 'easeOut' }}
-          className="relative glass-card rounded-2xl p-5 md:p-6 lg:p-8 border border-border/60 bg-surface/60 backdrop-blur-xl overflow-hidden"
-        >
-          {/* Gentle border glow pulse (opacity-based, every ~12–15s) */}
-          {!prefersReducedMotion && (
-            <motion.div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 rounded-2xl"
-              style={{
-                boxShadow: '0 0 32px 2px rgba(59,130,246,0.35)',
-                filter: 'blur(1px)'
-              }}
-              animate={{ opacity: borderGlowOpacity }}
-              transition={{ duration: 1.2, ease: 'easeInOut' }}
-            />
-          )}
+        {/* ── Two-column grid ─────────────────────────────────────────────── */}
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
 
-          {/* Accent glow blob (top-right) */}
-          <div className="pointer-events-none absolute -top-24 right-0 w-72 h-72 bg-primary/20 blur-3xl opacity-70" />
-
-          {/* Gradient sweep — once when in view, very subtle */}
-          {!prefersReducedMotion && inView && (
-            <motion.div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 opacity-[0.12]"
-              initial={{ backgroundPosition: '0% 50%' }}
-              animate={{ backgroundPosition: '100% 50%' }}
-              transition={{ duration: 1.4, ease: 'easeOut' }}
-              style={{
-                backgroundImage:
-                  'linear-gradient(120deg, transparent, rgba(59,130,246,0.25), transparent)',
-                backgroundSize: '200% 200%'
-              }}
-            />
-          )}
-
-          <div className="relative">
-            <h2 className="cg-h2 text-h2 md:text-h2-lg text-text mb-2">
-              See what your missed calls are really worth
+          {/* Left column — text + CTA */}
+          <motion.div
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
+            animate={inView && !prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
+            transition={{ duration: 0.55, ease: 'easeOut' }}
+          >
+            <h2 className="cg-h2 text-h1 md:text-h1-lg text-text mb-3 leading-tight">
+              Find out what you&apos;ve been missing
             </h2>
-            <p className="cg-body text-lg md:text-xl text-muted max-w-2xl">
-              You&apos;ll see which missed calls turn into real jobs, and how much revenue they represent, then decide if it earns its place.
-            </p>
-            <p className="cg-label text-base md:text-lg text-text font-semibold mt-6 mb-6">
-              No behaviour change. No app. Just visibility.
+
+            <p className="cg-body text-base md:text-lg text-muted leading-relaxed mb-6">
+              Run CallGuard on your number for 30 days. See which missed calls were real jobs, how much they were worth, and decide if it earns its place.
             </p>
 
-            {/* Trial includes — 4 pills with subtext */}
-            {/* <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-              {trialIncludes.map(({ icon: Icon, label, subtext }, index) => (
-                <motion.div
-                  key={label}
-                  initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
-                  animate={inView && !prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
-                  transition={{
-                    duration: 0.4,
-                    ease: 'easeOut',
-                    delay: prefersReducedMotion ? 0 : 0.08 * index
-                  }}
-                  whileHover={
-                    prefersReducedMotion
-                      ? undefined
-                      : {
-                          y: -3,
-                          boxShadow: '0 12px 28px rgba(59,130,246,0.12)',
-                          borderColor: 'rgba(59,130,246,0.35)',
-                          transition: { duration: 0.25, ease: 'easeOut' }
-                        }
-                  }
-                  style={{ borderColor: 'hsl(215 20% 65% / 0.6)' }}
-                  className="flex flex-col items-start sm:items-center gap-1.5 rounded-xl border bg-surface2/60 px-3 py-3 transition-all duration-200 cursor-default"
+            {/* Killer line — 3 pills */}
+            <div className="flex flex-wrap gap-2 mb-7">
+              {KILLER_PHRASES.map((phrase) => (
+                <span
+                  key={phrase}
+                  className="inline-flex items-center px-3.5 py-1.5 rounded-full border border-border/70 bg-surface2/50 text-sm font-semibold text-text/90 tracking-wide"
                 >
-                  <motion.div
-                    initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.8 }}
-                    animate={inView && !prefersReducedMotion ? { opacity: 1, scale: 1 } : undefined}
-                    transition={{
-                      duration: 0.35,
-                      ease: 'easeOut',
-                      delay: prefersReducedMotion ? 0 : 0.08 * index + 0.05
-                    }}
-                    whileHover={prefersReducedMotion ? undefined : { rotate: 2, scale: 1.05 }}
-                    className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center"
-                  >
-                    <Icon className="w-4 h-4 text-primary" />
-                  </motion.div>
-                  <p className="text-xs sm:text-[13px] font-medium text-text leading-snug text-center sm:text-left">
-                    {label}
-                  </p>
-                  {subtext && (
-                    <p className="text-[11px] sm:text-xs text-muted/90 leading-snug text-center sm:text-left">
-                      {subtext}
-                    </p>
-                  )}
-                </motion.div>
+                  {phrase}
+                </span>
               ))}
-            </div> */}
-
-            {/* 3-step trial timeline with micro-outcomes */}
-            <div className="mb-6">
-              <p className="cg-label text-xs uppercase tracking-wider text-muted mb-3">
-                Trial timeline
-              </p>
-              <div className="relative">
-                {/* Progress track + animated fill (desktop) */}
-                <div className="hidden md:block relative h-0.5 w-full rounded-full bg-primary/15 mb-5 overflow-hidden">
-                  {!prefersReducedMotion && (
-                    <motion.div
-                      className="absolute inset-y-0 left-0 rounded-full bg-primary/40"
-                      initial={{ width: '0%' }}
-                      animate={inView ? { width: '100%' } : { width: '0%' }}
-                      transition={{ duration: 1, ease: 'easeOut', delay: 0.3 }}
-                      style={{ originX: 0 }}
-                      aria-hidden
-                    />
-                  )}
-                </div>
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-5 md:gap-4">
-                  {timelineSteps.map(({ icon: Icon, label, subtext, accent }, index) => (
-                    <motion.div
-                      key={label}
-                      initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
-                      animate={inView && !prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
-                      transition={{
-                        duration: 0.4,
-                        ease: 'easeOut',
-                        delay: prefersReducedMotion ? 0 : 0.2 + index * 0.15
-                      }}
-                      style={accent !== 'emerald' ? { borderColor: 'hsl(215 20% 65% / 0.6)' } : undefined}
-                      className={cn(
-                        'flex items-center gap-3 md:flex-col md:items-center md:gap-1.5 flex-1 md:max-w-[33%] rounded-xl border px-4 py-3 md:py-4',
-                        accent === 'emerald'
-                          ? 'border-emerald-500/25 bg-emerald-500/10'
-                          : 'bg-surface2/40'
-                      )}
-                    >
-                      <div
-                        className={cn(
-                          'w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 border',
-                          accent === 'emerald'
-                            ? 'bg-emerald-500/15 border-emerald-500/30'
-                            : 'bg-primary/15 border-primary/30'
-                        )}
-                      >
-                        <Icon
-                          className={cn(
-                            'w-5 h-5',
-                            accent === 'emerald' ? 'text-emerald-400' : 'text-primary'
-                          )}
-                        />
-                      </div>
-                      <div className="md:text-center">
-                        <span className="cg-label text-sm text-text block">{label}</span>
-                        {subtext && (
-                          <span className="cg-body text-xs text-muted/90 mt-0.5 block">{subtext}</span>
-                        )}
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
             </div>
 
-            {/* CTA row */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-1">
-              <motion.div
-                initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
-                animate={inView && !prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
-                transition={{ duration: 0.4, delay: 0.5 }}
-                className="relative"
+            {/* Personal touch */}
+            <p className="text-sm text-muted/65 italic mb-5">
+              I&apos;ll personally set this up with you — no tickets, no handoffs.
+            </p>
+
+            {/* CTA */}
+            <div className="relative inline-block w-full sm:w-auto">
+              {!prefersReducedMotion && buttonPulseDone && (
+                <motion.span
+                  className="pointer-events-none absolute inset-0 rounded-xl bg-primary/30 blur-lg -z-10"
+                  initial={{ opacity: 0.8, scale: 0.95 }}
+                  animate={{ opacity: 0, scale: 1.15 }}
+                  transition={{ duration: 1.2, ease: 'easeOut' }}
+                  aria-hidden
+                />
+              )}
+              <button
+                type="button"
+                onClick={() => navigate('/onboard')}
+                className="cg-label w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-xl bg-primary text-primary-foreground text-base transition-all duration-200 hover:bg-primary/90 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+                style={{ boxShadow: '0 0 32px -4px rgba(37,99,235,0.55), 0 8px 24px -8px rgba(37,99,235,0.4)' }}
               >
-                {!prefersReducedMotion && buttonPulseDone && (
-                  <motion.span
-                    className="absolute inset-0 rounded-full bg-primary/30 blur-md -z-10"
-                    initial={{ opacity: 0.8, scale: 0.95 }}
-                    animate={{ opacity: 0, scale: 1.2 }}
-                    transition={{ duration: 1, ease: 'easeOut' }}
-                    aria-hidden
-                  />
-                )}
-                <button
-                  type="button"
-                  onClick={() => navigate('/onboard')}
-                  className="cg-label w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-full bg-primary text-primary-foreground text-base shadow-lg shadow-primary/25 transition-all duration-200 hover:bg-primary/90 hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
-                >
-                  Start my 30 free day trial
-                </button>
-              </motion.div>
+                Start my 30 free day trial
+              </button>
             </div>
-            <p className="cg-body text-xs text-muted/80 mt-4 max-w-xl">
+
+            <p className="cg-body text-xs text-muted/70 mt-4">
               No commitment until you&apos;ve seen it working. At day 30 you choose.
             </p>
-            <p className="cg-body text-[11px] text-muted/70 mt-3">
+            <p className="cg-body text-[11px] text-muted/55 mt-2">
               Currently running with independent UK electricians.
             </p>
+          </motion.div>
+
+          {/* Right column — animated weekly report phone */}
+          <motion.div
+            className="flex flex-col items-center gap-3"
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+            animate={inView && !prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
+            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
+          >
+            <WeeklyReportPhone inView={inView} reduceMotion={!!prefersReducedMotion} />
+            <p className="text-xs text-muted/50 text-center mt-1">
+              Delivered to your WhatsApp every Monday morning.
+            </p>
+          </motion.div>
+        </div>
+
+        {/* ── Timeline strip ──────────────────────────────────────────────── */}
+        <motion.div
+          className="mt-10 pt-8 border-t border-border/30"
+          initial={prefersReducedMotion ? false : { opacity: 0 }}
+          animate={inView && !prefersReducedMotion ? { opacity: 1 } : undefined}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-0">
+            {TIMELINE.map(({ icon: Icon, label, sub }, i) => (
+              <React.Fragment key={label}>
+                <div className="flex flex-col items-center text-center px-5 py-2">
+                  <Icon className="w-6 h-6 text-primary mb-1.5 flex-shrink-0" />
+                  <span className="text-md font-semibold text-text/80">{label}</span>
+                  <span className="text-[14px] text-muted/55 mt-0.5 leading-snug max-w-[120px]">{sub}</span>
+                </div>
+                {i < TIMELINE.length - 1 && (
+                  <ArrowRight className="w-3.5 h-3.5 text-muted/25 hidden sm:block flex-shrink-0 mx-1" />
+                )}
+              </React.Fragment>
+            ))}
           </div>
         </motion.div>
+
       </div>
     </section>
   );

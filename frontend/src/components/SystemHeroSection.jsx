@@ -59,7 +59,7 @@ const SystemHeroSection = () => {
       ref={sectionRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-[#0B1220] to-[#0F172A]"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
       {/* Background Image with Parallax Effect */}
       <div

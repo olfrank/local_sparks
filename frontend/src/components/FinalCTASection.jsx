@@ -75,9 +75,7 @@ const FinalCTASection = () => {
   };
 
   return (
-    <section id="contact" className="section-padding bg-gradient-to-br from-ink to-[#0F172A] relative overflow-hidden">
-      {/* <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(37,99,235,0.1),transparent_50%)]" /> */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_50%,rgba(37,99,235,0.38),rgba(16,18,26,0.73)_40%)]" />
+    <section id="contact" className="section-padding relative overflow-hidden">
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="cg-h2 text-h1 md:text-h1-lg text-text mb-6">

@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { MessageSquare, MessageCircle, Reply, CheckCircle2, ArrowRight, Zap } from 'lucide-react';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { Button } from './ui/button';
+import { useNavigate } from 'react-router-dom';
 // ─── Mini mockups ─────────────────────────────────────────────────────────────
 
 function SmsMockup() {
@@ -125,10 +126,10 @@ const ChatDemo = () => {
   const sectionRef = useRef(null);
   const inView = useInView(sectionRef, { once: true, margin: '-80px' });
   const [ctaHoverCount, setCtaHoverCount] = useState(0);
+  const navigate = useNavigate();
 
   return (
-    <section id="demo" className="section-padding bg-ink relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(37,99,235,0.38),rgba(16,18,26,0.73)_50%)]"/>
+    <section id="demo" className="section-padding relative overflow-hidden">
 
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
