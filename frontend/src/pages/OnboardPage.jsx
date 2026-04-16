@@ -313,7 +313,7 @@ export default function OnboardPage() {
           <>
             <div className="mb-8 text-center">
               <h1 className="cg-h1 text-h1 md:text-h1-lg text-text mb-3 max-w-sm mx-auto leading-tight">
-                You&apos;re 2 minutes from never losing a job again
+                You&apos;re 2 minutes away from catching every missed call
               </h1>
               <p className="cg-body text-sm md:text-base text-muted max-w-xs mx-auto leading-relaxed">
                 We&apos;ll wire CallGuard into your existing number. No app, no new number, no hassle.

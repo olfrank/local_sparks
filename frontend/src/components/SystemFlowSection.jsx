@@ -143,12 +143,6 @@ const ChatDemo = () => {
           </p>
         </div>
 
-        {/* Context line */}
-        <p className="text-center text-sm text-muted/55 italic mb-10">
-          A customer calls while you&apos;re on a job. You can&apos;t answer.
-        </p>
-
-        {/* 3-step grid */}
         <div
           ref={sectionRef}
           className="grid grid-cols-1 gap-5 md:grid-cols-[1fr_44px_1fr_44px_1fr] md:gap-0 md:items-center"

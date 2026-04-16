@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Check, Copy, Phone, MessageCircle, RotateCcw, Users, X, Plus, ArrowRight } from 'lucide-react';
+import { Check, Copy, Phone, PhoneOff, MessageCircle, RotateCcw, Users, X, Plus, ArrowRight } from 'lucide-react';
 import { Button } from './ui/button';
 
 const API_BASE = process.env.REACT_APP_DEMO_API_URL || 'http://localhost:8000';
@@ -104,10 +104,84 @@ function CodeRow({ label, code, dialled, onDial }) {
   );
 }
 
+// ─── Verify modal ─────────────────────────────────────────────────────────────
+
+function VerifyModal({ isOpen, verifying, onConfirm, onCancel }) {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+      <div
+        className="absolute inset-0 bg-black/60"
+        onClick={!verifying ? onCancel : undefined}
+      />
+      <div className="animate-fade-in relative z-10 w-full max-w-sm glass-card rounded-2xl border border-border p-6 flex flex-col gap-5">
+        {!verifying ? (
+          <>
+            <div className="flex flex-col items-center text-center gap-3">
+              <div className="w-14 h-14 rounded-full bg-amber-500/15 flex items-center justify-center">
+                <PhoneOff className="w-6 h-6 text-amber-400" />
+              </div>
+              <h3 className="cg-h2 text-text text-lg leading-snug">
+                We're about to call you — don't answer it
+              </h3>
+              <p className="cg-body text-muted text-sm leading-relaxed">
+                We'll call your phone right now to check that missed call forwarding is working.
+              </p>
+              <p className="text-sm font-semibold text-text/90 leading-relaxed">
+                Let it ring. Don't answer it, don't decline it. Just let it ring out.
+              </p>
+              <p className="cg-body text-muted text-sm leading-relaxed">
+                When the call goes unanswered, it will forward to CallGuard — and you'll receive your first test alert on WhatsApp.
+              </p>
+            </div>
+            <Button
+              onClick={onConfirm}
+              className="cg-label w-full bg-primary hover:bg-primary/90 text-white py-5 text-base rounded-xl shadow-lg shadow-primary/25 transition-all hover:scale-[1.02]"
+            >
+              Call me now — I won't answer
+            </Button>
+            <button
+              type="button"
+              onClick={onCancel}
+              className="cg-label text-sm text-muted hover:text-text transition-colors text-center"
+            >
+              Go back
+            </button>
+          </>
+        ) : (
+          <div className="flex flex-col items-center text-center gap-4 py-2">
+            <div className="relative w-14 h-14">
+              <div className="absolute inset-0 rounded-full bg-primary/20 animate-ping" />
+              <div className="relative w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
+                <Phone className="w-6 h-6 text-primary" />
+              </div>
+            </div>
+            <h3 className="cg-h2 text-text text-lg">Calling you now…</h3>
+            <p className="cg-body text-muted text-sm leading-relaxed">
+              Let it ring — don't pick up. This takes about 15–20 seconds.
+            </p>
+            <div className="flex gap-1.5">
+              {[0, 1, 2].map((i) => (
+                <span
+                  key={i}
+                  className="w-2 h-2 rounded-full bg-primary"
+                  style={{ animation: `pulseDot 1.2s ease-in-out ${i * 0.2}s infinite` }}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ─── Activation phase ─────────────────────────────────────────────────────────
 
 function ActivationPhase({ forwardingCode, onVerifyStart, verifying }) {
   const [dialled, setDialled] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
 
   const trustPoints = [
@@ -160,22 +234,15 @@ function ActivationPhase({ forwardingCode, onVerifyStart, verifying }) {
 
       {/* CTA */}
       <Button
-        onClick={onVerifyStart}
+        onClick={() => setShowModal(true)}
         className={`cg-label w-full py-6 text-base rounded-xl shadow-lg transition-all hover:scale-[1.02] ${
-          verifying
-            ? 'bg-primary/70 text-white cursor-not-allowed hover:scale-100'
-            : dialled || !isMobile
-              ? 'bg-primary hover:bg-primary/90 text-white shadow-primary/25'
-              : 'bg-surface2 text-muted border border-border cursor-not-allowed hover:scale-100'
+          dialled || !isMobile
+            ? 'bg-primary hover:bg-primary/90 text-white shadow-primary/25'
+            : 'bg-surface2 text-muted border border-border cursor-not-allowed hover:scale-100'
         }`}
-        disabled={(isMobile && !dialled) || verifying}
+        disabled={isMobile && !dialled}
       >
-        {verifying ? (
-          <span className="inline-flex items-center gap-2">
-            <span className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
-            Verifying…
-          </span>
-        ) : "I've dialled it, verify me"}
+        I've dialled it, verify me
       </Button>
 
       {/* Fallback */}
@@ -186,6 +253,13 @@ function ActivationPhase({ forwardingCode, onVerifyStart, verifying }) {
         </a>{' '}
         and he'll walk you through it
       </p>
+
+      <VerifyModal
+        isOpen={showModal}
+        verifying={verifying}
+        onConfirm={onVerifyStart}
+        onCancel={() => setShowModal(false)}
+      />
       
     </div>
   );
@@ -311,7 +385,7 @@ function VipNumbersPhase({ customerId, onComplete, onSkip }) {
       <button
         type="button"
         onClick={onSkip}
-        className="cg-label inline-flex items-center gap-1 text-sm text-muted hover:text-text transition-colors mx-auto"
+        className="cg-label inline-flex items-center gap-1 text-md text-muted hover:text-text transition-colors mx-auto"
       >
         Skip for now
         <ArrowRight className="w-3.5 h-3.5" />

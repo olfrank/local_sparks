@@ -63,7 +63,7 @@ const CallGuardFAQSection = () => {
           whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.45, ease: 'easeOut' }}
-          className="glass-card rounded-2xl p-4 md:p-6 border border-border/70 bg-surface/60 backdrop-blur-xl"
+          className="glass-card rounded-2xl p-4 md:p-6 border border-border bg-surface/60 backdrop-blur-xl"
         >
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((item, index) => (

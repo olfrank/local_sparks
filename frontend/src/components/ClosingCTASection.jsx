@@ -35,7 +35,7 @@ const ClosingCTASection = () => {
             Start my 30 free day trial
           </Button>
 
-          <p className="cg-body text-sm text-muted mt-4">
+          <p className="cg-body text-md text-muted mt-4">
             Takes 2 minutes to set up. No cards or payment details. 
             <br />
             Cancel anytime.

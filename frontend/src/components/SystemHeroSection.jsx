@@ -103,7 +103,7 @@ const SystemHeroSection = () => {
               </p>
 
               {/* Cost anchor, muted, small */}
-              <p className="cg-body text-sm text-muted/60">
+              <p className="cg-body text-md text-muted/70">
                 The average emergency call-out is worth £250–£500.
               </p>
 

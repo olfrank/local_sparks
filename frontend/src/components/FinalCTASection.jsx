@@ -1,74 +1,34 @@
 import React, { useState } from 'react';
-import { format } from 'date-fns';
-import { Calendar as CalendarIcon } from 'lucide-react';
-import axios from 'axios';
+import { Phone } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
-import { Calendar } from './ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from './ui/select';
-import { cn } from '@/lib/utils';
-
-const TIME_BANDS = [
-  { value: 'morning', label: 'Morning (9am–12pm)' },
-  { value: 'afternoon', label: 'Afternoon (12pm–5pm)' },
-  { value: 'evening', label: 'Evening (5pm–8pm)' },
-];
 
 const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+const WA_LINK = 'https://wa.me/447901837771';
+
+// WhatsApp logo path (reused in two places)
+const WA_PATH = 'M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z';
 
 const FinalCTASection = () => {
-  const [callbackForm, setCallbackForm] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    town: '',
-    bestTime: '',
-  });
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [timeBand, setTimeBand] = useState('');
+  const [phone, setPhone] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const bestTimeDisplay =
-    selectedDate && timeBand
-      ? `${format(selectedDate, 'EEE d MMM')}, ${TIME_BANDS.find((t) => t.value === timeBand)?.label?.split(' ')[0] || timeBand}`
-      : 'Pick date & time';
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
-    const bestTimeStr =
-      selectedDate && timeBand
-        ? `${format(selectedDate, 'EEE d MMM yyyy')}, ${TIME_BANDS.find((t) => t.value === timeBand)?.label || timeBand}`
-        : callbackForm.bestTime;
-    if (!callbackForm.name || !callbackForm.email || !callbackForm.phone || !callbackForm.town || (!bestTimeStr && !callbackForm.bestTime)) {
-      setError('Please fill in all fields including email and date & time.');
-      return;
-    }
+    if (!phone.trim()) return;
     setLoading(true);
+    setError('');
     try {
-      await axios.post(`${API_BASE}/api/contact`, {
-        name: callbackForm.name,
-        email: callbackForm.email,
-        phone: callbackForm.phone,
-        town: callbackForm.town,
-        bestTime: bestTimeStr || callbackForm.bestTime,
+      await fetch(`${API_BASE}/api/callback-request`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: phone.trim() }),
       });
       setSubmitted(true);
-      setCallbackForm({ name: '', email: '', phone: '', town: '', bestTime: '' });
-      setSelectedDate(null);
-      setTimeBand('');
-      setTimeout(() => setSubmitted(false), 5000);
-    } catch (err) {
-      setError(err.response?.data?.error || 'Something went wrong. Please try again or call directly.');
+    } catch {
+      setError('Something went wrong — message me on WhatsApp instead.');
     } finally {
       setLoading(false);
     }
@@ -76,138 +36,117 @@ const FinalCTASection = () => {
 
   return (
     <section id="contact" className="section-padding relative overflow-hidden">
+      <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="cg-h2 text-h1 md:text-h1-lg text-text mb-6">
-          Want to see which jobs you're probably losing today?
-        </h2>
-        <p className="cg-body text-xl md:text-2xl text-muted mb-12 max-w-3xl mx-auto">
-          This is a quick sanity check, no selling, no setup. I'll show you exactly what happens after a missed call and whether this would even help you.
-        </p>
-
-        <div className="glass-card rounded-2xl p-8 max-w-2xl mx-auto border-2 border-primary/20 shadow-2xl">
-          <h3 className="cg-h2 text-2xl text-text mb-2">Book a 5 min fit check</h3>
-          <p className="cg-body text-muted mb-2 text-sm md:text-base">
-            This takes 30 seconds. No obligation.
+        {/* Header */}
+        <div className="text-center mb-10">
+          <h2 className="cg-h2 text-h1 md:text-h1-lg text-text mb-3 leading-tight">
+            Not sure if it&apos;s right for you?
+          </h2>
+          <p className="cg-body text-base md:text-lg text-muted">
+            No pitch, no pressure. Just a quick chat to see if CallGuard fits how you work.
           </p>
+        </div>
 
-          {submitted ? (
-            <div className="py-8 text-center">
-              <div className="w-16 h-16 bg-success/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+        {/* Two cards */}
+        <div className="grid sm:grid-cols-2 gap-5 items-stretch">
+
+          {/* WhatsApp card */}
+          <div
+            className="glass-card rounded-2xl p-6 flex flex-col gap-5"
+            style={{ border: '1px solid rgba(37,211,102,0.30)', background: 'rgba(37,211,102,0.04)' }}
+          >
+            <div className="flex items-center gap-3">
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                style={{ background: 'rgba(37,211,102,0.15)' }}
+              >
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="#25D366">
+                  <path d={WA_PATH} />
                 </svg>
               </div>
-              <h4 className="cg-label text-lg text-text mb-2">Thank You!</h4>
-              <p className="cg-body text-muted">We'll call you back within 24 hours.</p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid md:grid-cols-2 gap-4">
-                <Input
-                  placeholder="Name"
-                  value={callbackForm.name}
-                  onChange={(e) => setCallbackForm({ ...callbackForm, name: e.target.value })}
-                  required
-                  className="bg-surface2 border-border text-text placeholder:text-muted"
-                />
-                <Input
-                  type="email"
-                  placeholder="Email"
-                  value={callbackForm.email}
-                  onChange={(e) => setCallbackForm({ ...callbackForm, email: e.target.value })}
-                  required
-                  className="bg-surface2 border-border text-text placeholder:text-muted"
-                />
+              <div>
+                <p className="cg-label text-text font-semibold text-base leading-tight">
+                  Message me on WhatsApp
+                </p>
+                <p className="text-sm mt-0.5" style={{ color: 'rgba(148,163,184,0.65)' }}>
+                  Usually reply within a few minutes.
+                </p>
               </div>
-              <div className="grid md:grid-cols-2 gap-4">
+            </div>
+
+            <a
+              href={WA_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cg-label mt-auto inline-flex items-center justify-center gap-2 w-full rounded-xl px-6 py-3.5 text-sm font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366]"
+              style={{
+                background: '#25d36694',
+                boxShadow: '0 4px 20px -4px rgba(37,211,102,0.45)',
+              }}
+            >
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="white" className="shrink-0">
+                <path d={WA_PATH} />
+              </svg>
+              Open WhatsApp
+            </a>
+          </div>
+
+          {/* Callback card */}
+          <div className="glass-card rounded-2xl p-6 flex flex-col gap-5">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-primary/15">
+                <Phone className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <p className="cg-label text-text font-semibold text-base leading-tight">
+                  Leave your number
+                </p>
+                <p className="text-sm mt-0.5" style={{ color: 'rgba(148,163,184,0.65)' }}>
+                  I&apos;ll call you back within a few hours.
+                </p>
+              </div>
+            </div>
+
+            {submitted ? (
+              <p className="cg-body text-sm text-text/80 leading-relaxed mt-auto py-1">
+                Got it — I&apos;ll give you a call soon. 👍
+              </p>
+            ) : (
+              <form onSubmit={handleSubmit} className="flex flex-col gap-3 mt-auto">
                 <Input
                   type="tel"
-                  placeholder="Phone number"
-                  value={callbackForm.phone}
-                  onChange={(e) => setCallbackForm({ ...callbackForm, phone: e.target.value })}
+                  placeholder="07xxx xxx xxx"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  inputMode="tel"
+                  autoComplete="tel"
+                  className="bg-surface2 border-border text-text placeholder:text-muted h-11 rounded-xl"
                   required
-                  className="bg-surface2 border-border text-text placeholder:text-muted"
                 />
-                <Input
-                  placeholder="Town/City"
-                  value={callbackForm.town}
-                  onChange={(e) => setCallbackForm({ ...callbackForm, town: e.target.value })}
-                  required
-                  className="bg-surface2 border-border text-text placeholder:text-muted"
-                />
-              </div>
-              <div className="grid md:grid-cols-2 gap-4">
-                {/* Apple-style date + time picker */}
-                <div className="flex flex-col gap-1">
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <button
-                        type="button"
-                        className={cn(
-                          'flex h-12 w-full items-center justify-between gap-2 rounded-xl border border-border bg-surface2 px-4 py-2 text-sm text-left text-text',
-                          'focus:outline-none focus:ring-1 focus:ring-ring transition-colors hover:border-primary/30'
-                        )}
-                      >
-                        <span className={!selectedDate && !timeBand ? 'text-muted' : ''}>
-                          {bestTimeDisplay}
-                        </span>
-                        <CalendarIcon className="h-4 w-4 opacity-50 shrink-0" />
-                      </button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 border-border bg-surface rounded-xl shadow-xl" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={selectedDate}
-                        onSelect={setSelectedDate}
-                        disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
-                        className="rounded-xl border-0 bg-surface text-text"
-                        classNames={{
-                          day: 'h-9 w-9 rounded-lg text-sm hover:bg-primary/20 hover:text-primary',
-                          day_selected: 'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground',
-                          day_today: 'bg-surface2 font-medium',
-                          head_cell: 'text-muted text-xs font-medium',
-                          nav_button: 'text-muted hover:text-text hover:bg-surface2 rounded-md',
-                          caption_label: 'text-text font-medium',
-                        }}
-                      />
-                      <div className="p-3 border-t border-border">
-                        <p className="text-xs text-muted mb-2">Preferred time</p>
-                        <Select value={timeBand} onValueChange={setTimeBand}>
-                          <SelectTrigger className="h-9 bg-surface2 border-border text-text">
-                            <SelectValue placeholder="Select time" />
-                          </SelectTrigger>
-                          <SelectContent className="bg-surface border-border">
-                            {TIME_BANDS.map((t) => (
-                              <SelectItem key={t.value} value={t.value} className="text-text focus:bg-primary/20 focus:text-text">
-                                {t.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </PopoverContent>
-                  </Popover>
-                </div>
-              </div>
-              {error && (
-                <p className="text-sm text-red-400" role="alert">
-                  {error}
+                {error && (
+                  <p className="text-xs text-red-400 leading-snug">{error}</p>
+                )}
+                <Button
+                  type="submit"
+                  disabled={loading || !phone.trim()}
+                  className="cg-label w-full bg-primary hover:bg-primary/90 text-white py-5 rounded-xl shadow-lg shadow-primary/25 transition-all hover:scale-[1.02] disabled:opacity-60 disabled:hover:scale-100"
+                >
+                  {loading ? 'Sending…' : 'Call me back'}
+                </Button>
+                <p className="text-[13px] text-center leading-snug" style={{ color: 'rgba(148, 163, 184, 0.68)' }}>
+                  No voicemail, no email chain. Just a quick call.
                 </p>
-              )}
-              <Button
-                type="submit"
-                disabled={loading}
-                className="cg-label w-full bg-primary hover:bg-primary/90 text-white py-6 text-lg rounded-xl shadow-lg shadow-primary/25 transition-all hover:scale-[1.02] disabled:opacity-70"
-              >
-                {loading ? 'Sending…' : 'Check if this would save me jobs'}
-              </Button>
-              <p className="cg-body text-center text-muted text-sm mt-4">
-                I'll personally review this and get back to you.
-              </p>
-            </form>
-          )}
+              </form>
+            )}
+          </div>
         </div>
+
+        {/* Personal sign-off */}
+        <p className="text-center textmd italic mt-8" style={{ color: 'rgba(148, 163, 184, 0.77)' }}>
+          — Ollie, founder of CallGuard
+        </p>
+
       </div>
     </section>
   );
