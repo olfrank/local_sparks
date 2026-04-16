@@ -136,13 +136,13 @@ function ActivationPhase({ forwardingNumber, forwardingCode, onVerifyStart }) {
       <Button
         onClick={onVerifyStart}
         className={`cg-label w-full py-6 text-base rounded-xl shadow-lg transition-all hover:scale-[1.02] ${
-          dialled
+          dialled || !isMobile
             ? 'bg-primary hover:bg-primary/90 text-white shadow-primary/25'
             : 'bg-surface2 text-muted border border-border cursor-not-allowed hover:scale-100'
         }`}
-        disabled={!dialled}
+        disabled={isMobile && !dialled}
       >
-        {dialled ? "I've dialled it — verify me" : 'Dial the code to continue'}
+        {dialled || !isMobile ? "I've dialled it — verify me" : 'Dial the code to continue'}
       </Button>
       {!isMobile && (
         <p className="text-xs text-muted text-center leading-relaxed">
