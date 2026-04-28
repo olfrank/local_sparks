@@ -20,15 +20,21 @@ const PricingSection = () => {
     <section id="pricing" className="section-padding relative overflow-hidden">
 
       <div className="relative z-10 max-w-lg mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8 md:mb-10">
+        <motion.div
+          className="text-center mb-8 md:mb-10"
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
+          whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+        >
           <h2 className="text-h2 md:text-h1-lg font-bold text-text">
-            One plan. 
+            One plan.
             <br />
-            One price. 
+            One price.
             <br />
             No surprises.
           </h2>
-        </div>
+        </motion.div>
 
         <motion.div
           initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
@@ -59,7 +65,7 @@ const PricingSection = () => {
               ))}
             </ul>
 
-            <p className="mt-6 text-sm text-muted text-center">
+            <p className="mt-6 text-base text-muted text-center">
               No contract. No setup fee. Cancel anytime.
             </p>
 

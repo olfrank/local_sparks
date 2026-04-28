@@ -94,7 +94,7 @@ const HeroLeakBadge = () => {
       >
         {/* Subtle inner glow */}
         <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(56,189,248,0.15),transparent_60%)] pointer-events-none" />
-        <div className="relative flex items-center gap-3.5 text-sm">
+        <div className="relative flex items-center gap-3.5 text-base">
           {/* Icon – slightly larger for focal */}
           <div className="flex items-center justify-center w-7 h-7 rounded-full bg-emerald-400/15 text-emerald-400 ring-1 ring-emerald-400/20">
             <activeState.Icon className="w-4 h-4" />

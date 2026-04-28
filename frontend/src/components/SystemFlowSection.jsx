@@ -9,12 +9,12 @@ function SmsMockup() {
   return (
     <div className="rounded-xl bg-ink/60 border border-border p-3 mt-3">
       <div className="max-w-[90%] bg-primary/90 text-white rounded-2xl rounded-tl-sm px-3 py-2">
-        <p className="text-[11px] leading-relaxed">
+        <p className="text-[14px] leading-relaxed">
           Hi, it&apos;s John from Local Electrics 👋 
           <br />
           Sorry I missed you, I&apos;m on a job. 
           <br />
-          Text me what you need, your postcode, and if it&apos;s urgent, today, or a quote.
+          Text me what you need and your postcode.
           <br />
           I'll get back to you as soon as I'm free! 🔨
         </p>
@@ -28,7 +28,7 @@ function ReplyMockup() {
     <div className="rounded-xl bg-ink/60 border border-border p-3 mt-3">
       <div className="flex justify-end">
         <div className="max-w-[90%] bg-surface2 text-text rounded-2xl rounded-tr-sm px-3 py-2 border border-border">
-          <p className="text-[11px] leading-relaxed">
+          <p className="text-[14px] leading-relaxed">
             Burning smell from socket in kitchen, HP24 9HH, urgent
           </p>
         </div>
@@ -41,17 +41,17 @@ function WhatsAppMockup() {
   return (
     <div className="rounded-xl border border-emerald-400/40 bg-[#46f5754d] p-3 mt-3">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-emerald-100 text-[11px] font-medium">WhatsApp alert</span>
+        <span className="text-emerald-100 text-[14px] font-medium">WhatsApp alert</span>
         <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-emerald-400/20 text-emerald-200 text-[10px] font-medium">
           <CheckCircle2 className="w-3 h-3" />
           Job held
         </span>
       </div>
-      <div className="space-y-0.5 text-[11px] text-emerald-50 leading-relaxed">
+      <div className="space-y-0.5 text-[14px] text-emerald-50 leading-relaxed">
         <p className="font-medium">MISSED CALL ENQUIRY — URGENT</p>
         <p>📞 +44 7901 234 567</p>
         <p>📍 HP24 9HH</p>
-        <p>💬 Burning smell from socket in kitchen. Customer is requesting a visit now.</p>
+        <p>💬 Burning smell from socket in kitchen. Customer is requesting a visit immediately.</p>
       </div>
     </div>
   );
@@ -83,7 +83,7 @@ function StepCard({ stepNum, icon: Icon, iconColor, headline, subtext, badge, mo
         }`}>
           <Icon className={`w-4 h-4 ${iconColor}`} />
         </div>
-        <span className={`cg-label text-xs font-semibold tracking-wider uppercase ${
+        <span className={`cg-label text-base font-semibold tracking-wider uppercase ${
           emphasis ? 'text-emerald-400/80' : 'text-primary/70'
         }`}>
           Step {stepNum}
@@ -91,10 +91,10 @@ function StepCard({ stepNum, icon: Icon, iconColor, headline, subtext, badge, mo
       </div>
 
       {/* Text */}
-      <h3 className="cg-label text-text font-semibold text-sm md:text-base leading-snug mb-1">
+      <h3 className="cg-label text-text font-semibold text-lg leading-snug mb-1">
         {headline}
       </h3>
-      <p className="cg-body text-muted text-xs md:text-sm leading-relaxed">
+      <p className="cg-body text-muted text-base leading-relaxed">
         {subtext}
       </p>
 
@@ -134,14 +134,20 @@ const ChatDemo = () => {
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
-        <div className="text-center mb-6">
+        <motion.div
+          className="text-center mb-6"
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
+          whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+        >
           <h2 className="cg-h2 text-h1 md:text-h1-lg text-text mb-4">
             What happens when you miss a call?
           </h2>
           <p className="cg-body text-lg text-muted max-w-2xl mx-auto">
             In under 5 seconds, the customer is acknowledged and you get the full picture in WhatsApp.
           </p>
-        </div>
+        </motion.div>
 
         <div
           ref={sectionRef}
@@ -195,7 +201,7 @@ const ChatDemo = () => {
           initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
           animate={inView && !prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
           transition={{ duration: 0.4, delay: 0.7, ease: 'easeOut' }}
-          className="cg-body text-center text-muted text-sm md:text-base mt-10 max-w-2xl mx-auto leading-relaxed"
+          className="cg-body text-center text-muted text-base md:text-lg mt-10 max-w-2xl mx-auto leading-relaxed"
         >
           Call them back when you&apos;re free. You already know the issue, the location, and how urgent it is. Job saved.
         </motion.p>

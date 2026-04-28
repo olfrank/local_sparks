@@ -39,7 +39,7 @@ function ProvisioningPhase() {
       </div>
       <div>
         <h2 className="cg-h2 text-text text-xl mb-2">Setting up your account…</h2>
-        <p className="cg-body text-muted text-sm">This takes just a few seconds</p>
+        <p className="cg-body text-muted text-base">This takes just a few seconds</p>
       </div>
       <div className="flex gap-1.5 mt-2">
         {[0, 1, 2].map((i) => (
@@ -71,11 +71,11 @@ function CodeRow({ label, code, dialled, onDial }) {
   return (
     <div className="flex items-center gap-3 rounded-xl bg-surface2 border border-border p-4">
       <div className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-colors ${dialled ? 'bg-primary' : 'bg-surface border border-border'}`}>
-        {dialled ? <Check className="w-4 h-4 text-white" /> : <span className="text-xs text-muted font-semibold">•</span>}
+        {dialled ? <Check className="w-4 h-4 text-white" /> : <span className="text-base text-muted font-semibold">•</span>}
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-xs text-muted mb-0.5">{label}</p>
-        <p className="text-sm font-mono text-text tracking-wide">{code}</p>
+        <p className="text-base text-muted mb-0.5">{label}</p>
+        <p className="text-base font-mono text-text tracking-wide">{code}</p>
       </div>
       <div className="flex gap-2">
         {!isMobile && (
@@ -92,7 +92,7 @@ function CodeRow({ label, code, dialled, onDial }) {
           <a
             href={buildTelLink(code)}
             onClick={onDial}
-            className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-base font-medium transition-colors ${
               dialled ? 'bg-primary/10 text-primary border border-primary/20' : 'bg-primary text-white hover:bg-primary/90'
             }`}
           >
@@ -142,7 +142,7 @@ function VerifyModal({ isOpen, verifying, onConfirm, onCancel }) {
             <button
               type="button"
               onClick={onCancel}
-              className="cg-label text-sm text-muted hover:text-text transition-colors text-center"
+              className="cg-label text-base text-muted hover:text-text transition-colors text-center"
             >
               Go back
             </button>
@@ -156,7 +156,7 @@ function VerifyModal({ isOpen, verifying, onConfirm, onCancel }) {
               </div>
             </div>
             <h3 className="cg-h2 text-text text-lg">Calling you now…</h3>
-            <p className="cg-body text-muted text-sm leading-relaxed">
+            <p className="cg-body text-muted text-base leading-relaxed">
               Let it ring, don't pick up. This takes about 15–20 seconds.
             </p>
             <div className="flex gap-1.5">
@@ -198,7 +198,7 @@ function ActivationPhase({ forwardingCode, onVerifyStart, verifying }) {
 
       {/* Code section */}
       <div className="flex flex-col gap-2">
-        <p className="text-sm text-muted">Dial the code below from your phone:</p>
+        <p className="text-base text-muted">Dial the code below from your phone:</p>
         <CodeRow
           label=""
           code={forwardingCode}
@@ -226,7 +226,7 @@ function ActivationPhase({ forwardingCode, onVerifyStart, verifying }) {
       </Button>
 
       {/* Fallback */}
-      <p className="text-sm text-muted text-center leading-relaxed">
+      <p className="text-base text-muted text-center leading-relaxed">
         Not sure?{' '}
         <a href={OLLIE_WA} target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2">
           Message Ollie directly on WhatsApp
@@ -306,7 +306,7 @@ function VipNumbersPhase({ customerId, onComplete, onSkip }) {
           <Users className="w-6 h-6 text-primary" />
         </div>
         <h2 className="cg-h2 text-text text-xl mb-2">Who should skip the auto-reply?</h2>
-        <p className="cg-body text-muted text-sm leading-relaxed">
+        <p className="cg-body text-muted text-base leading-relaxed">
           Add numbers for your partner, colleagues, or anyone who shouldn't get the triage text when they call you.
         </p>
       </div>
@@ -321,14 +321,14 @@ function VipNumbersPhase({ customerId, onComplete, onSkip }) {
                 value={entry.number}
                 onChange={(e) => updateEntry(i, 'number', e.target.value)}
                 inputMode="tel"
-                className="flex-1 h-10 rounded-lg bg-surface2 border border-border text-text placeholder:text-muted px-3 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
+                className="flex-1 h-10 rounded-lg bg-surface2 border border-border text-text placeholder:text-muted px-3 text-base focus:outline-none focus:ring-1 focus:ring-primary"
               />
               <input
                 type="text"
                 placeholder="e.g. Wife, Dave"
                 value={entry.label}
                 onChange={(e) => updateEntry(i, 'label', e.target.value)}
-                className="w-28 h-10 rounded-lg bg-surface2 border border-border text-text placeholder:text-muted px-3 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
+                className="w-28 h-10 rounded-lg bg-surface2 border border-border text-text placeholder:text-muted px-3 text-base focus:outline-none focus:ring-1 focus:ring-primary"
               />
               {entries.length > 1 && (
                 <button
@@ -340,7 +340,7 @@ function VipNumbersPhase({ customerId, onComplete, onSkip }) {
                 </button>
               )}
             </div>
-            {errors[i] && <p className="text-xs text-red-400">{errors[i]}</p>}
+            {errors[i] && <p className="text-base text-red-400">{errors[i]}</p>}
           </div>
         ))}
       </div>
@@ -348,7 +348,7 @@ function VipNumbersPhase({ customerId, onComplete, onSkip }) {
       <button
         type="button"
         onClick={addEntry}
-        className="cg-label text-sm text-primary hover:text-primary/80 transition-colors flex items-center gap-1.5 w-fit"
+        className="cg-label text-base text-primary hover:text-primary/80 transition-colors flex items-center gap-1.5 w-fit"
       >
         <Plus className="w-3.5 h-3.5" />
         Add another
@@ -371,7 +371,7 @@ function VipNumbersPhase({ customerId, onComplete, onSkip }) {
         <ArrowRight className="w-3.5 h-3.5" />
       </button>
 
-      <p className="text-xs text-muted/60 text-center">
+      <p className="text-base text-muted/60 text-center">
         You can always add or change these later.
       </p>
     </div>
@@ -401,7 +401,7 @@ function SuccessPhase({ businessName }) {
       </div>
       <div>
         <h2 className="cg-h2 text-text text-2xl mb-3">You're live.</h2>
-        <p className="cg-body text-muted text-sm leading-relaxed max-w-xs mx-auto">
+        <p className="cg-body text-muted text-base leading-relaxed max-w-xs mx-auto">
           CallGuard is now watching every call for{' '}
           <span className="text-text font-medium">{businessName}</span>. Miss a call — we've got it.
         </p>
@@ -412,7 +412,7 @@ function SuccessPhase({ businessName }) {
             <div className="w-5 h-5 rounded-full bg-[#00a884] flex items-center justify-center flex-shrink-0">
               <Check className="w-3 h-3 text-black" />
             </div>
-            <p className="text-sm text-text">{item}</p>
+            <p className="text-base text-text">{item}</p>
           </div>
         ))}
       </div>
@@ -420,7 +420,7 @@ function SuccessPhase({ businessName }) {
         href={OLLIE_WA}
         target="_blank"
         rel="noopener noreferrer"
-        className="cg-label inline-flex items-center gap-2 text-sm text-primary underline underline-offset-4 hover:text-primary/80 transition-colors"
+        className="cg-label inline-flex items-center gap-2 text-base text-primary underline underline-offset-4 hover:text-primary/80 transition-colors"
       >
         <MessageCircle className="w-4 h-4" />
         Message Ollie on WhatsApp
@@ -436,13 +436,13 @@ function ErrorState({ message, onRetry }) {
     <div className="animate-fade-in text-center">
       <div className="glass-card rounded-2xl p-8">
         <p className="cg-label text-text text-base mb-2">Something went wrong</p>
-        <p className="cg-body text-muted text-sm mb-6 leading-relaxed">{message}</p>
+        <p className="cg-body text-muted text-base mb-6 leading-relaxed">{message}</p>
         <div className="flex flex-col gap-3">
           <Button onClick={onRetry} className="cg-label w-full bg-primary hover:bg-primary/90 text-white rounded-xl py-5">
             <RotateCcw className="w-4 h-4 mr-2" />
             Try again
           </Button>
-          <a href={OLLIE_WA} target="_blank" rel="noopener noreferrer" className="cg-label text-sm text-primary underline underline-offset-4 hover:text-primary/80 transition-colors">
+          <a href={OLLIE_WA} target="_blank" rel="noopener noreferrer" className="cg-label text-base text-primary underline underline-offset-4 hover:text-primary/80 transition-colors">
             Or message Ollie on WhatsApp
           </a>
         </div>

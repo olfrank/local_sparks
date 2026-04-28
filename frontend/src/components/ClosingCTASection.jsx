@@ -44,7 +44,7 @@ const ClosingCTASection = () => {
           {/* <button
             type="button"
             onClick={handleSecondary}
-            className="cg-label inline-flex items-center gap-1.5 text-sm text-muted hover:text-text transition-colors mt-3"
+            className="cg-label inline-flex items-center gap-1.5 text-base text-muted hover:text-text transition-colors mt-3"
           >
             <span>Or book a 5 min call</span>
             <ArrowRight className="w-3.5 h-3.5" />

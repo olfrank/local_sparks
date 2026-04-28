@@ -1,37 +1,52 @@
 import React from 'react';
 import { Phone, CheckCircle2, Calendar, PhoneOff, X, Clock } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
 
 const BusyMomentSection = () => {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <section className="section-padding relative overflow-hidden">
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Section Header */}
-        <div className="text-center mb-12 md:mb-16">
+        <motion.div
+          className="text-center mb-12 md:mb-16"
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
+          whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+        >
           <h2 className="text-h1 font-bold text-text mb-6 leading-tight">
             The silent leak in every trade business
           </h2>
           <p className="text-xl md:text-2xl text-muted max-w-3xl mx-auto leading-relaxed">
-            Most customers won&apos;t leave a voicemail. They&apos;ll call the next electrician instead... and you&apos;ll never know.
+            Most customers won&apos;t leave a voicemail. <br />They&apos;ll call the next electrician instead.
           </p>
-        </div>
+        </motion.div>
 
         {/* Split Graphic Card */}
-        <div className="glass-card rounded-2xl p-6 md:p-8 mb-6 card-hover relative overflow-hidden">
+        <motion.div
+          className="glass-card rounded-2xl p-6 md:p-8 mb-6 card-hover relative overflow-hidden"
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
+          whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.55, delay: 0.1, ease: 'easeOut' }}
+        >
           {/* Decorative accent */}
           <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-          
+
           <div className="relative">
             <div className="grid md:grid-cols-2 gap-8 md:gap-12 relative">
               {/* Quiet Period Column */}
               <div className="group space-y-6">
                 <div className="flex items-center gap-3">
                   <div className="px-3 py-1 bg-primary/20 rounded-full">
-                    <span className="text-primary text-xs font-semibold uppercase tracking-wide">Quiet Period</span>
+                    <span className="text-primary text-base font-semibold uppercase tracking-wide">Quiet Period</span>
                   </div>
                 </div>
                 <h3 className="text-xl md:text-2xl font-bold text-text">
-                  When you&apos;re free, any site works
+                  When you&apos;re free, any business works
                 </h3>
                 <div className="space-y-4">
                   {/* Row 1 */}
@@ -83,7 +98,7 @@ const BusyMomentSection = () => {
               <div className="group space-y-6 md:pl-8 border-t border-border pt-8 md:pt-0 md:border-t-0">
                 <div className="flex items-center gap-3">
                   <div className="px-3 py-1 bg-red-500/20 rounded-full">
-                    <span className="text-red-400 text-xs font-semibold uppercase tracking-wide">Busy Period</span>
+                    <span className="text-red-400 text-base font-semibold uppercase tracking-wide">Busy Period</span>
                   </div>
                 </div>
                 <h3 className="text-xl md:text-2xl font-bold text-text">
@@ -110,9 +125,9 @@ const BusyMomentSection = () => {
                     </div>
                     <div className="flex-1 pt-2">
                       <span className="text-text font-medium leading-relaxed">
-                        <span className="text-muted mr-2">Customer keeps calling</span>
+                        <span className="text-muted mr-2">Customer keeps calling around</span>
                         <span className="text-red-400">—</span>
-                        <span className="ml-2">Next electrician in 30 seconds</span>
+                        <span className="ml-2">Next electrician booked in 2 minutes</span>
                       </span>
                     </div>
                   </div>
@@ -133,12 +148,18 @@ const BusyMomentSection = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Caption */}
-        <p className="text-center text-muted text-base md:text-lg font-medium">
+        <motion.p
+          className="text-center text-muted text-base md:text-lg font-medium"
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
+          whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.45, delay: 0.2, ease: 'easeOut' }}
+        >
           This is the moment CallGuard exists for.
-        </p>
+        </motion.p>
       </div>
     </section>
   );

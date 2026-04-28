@@ -38,7 +38,7 @@ function ProgressIndicator({ step }) {
           <React.Fragment key={s.n}>
             <div className="flex flex-col items-center gap-1.5">
               <div
-                className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold transition-colors ${
+                className={`w-7 h-7 rounded-full flex items-center justify-center text-base font-semibold transition-colors ${
                   done || active
                     ? 'bg-primary text-white'
                     : 'bg-surface2 border border-border text-muted'
@@ -47,7 +47,7 @@ function ProgressIndicator({ step }) {
                 {done ? <Check className="w-3.5 h-3.5" /> : s.n}
               </div>
               <span
-                className={`text-xs transition-colors ${
+                className={`text-base transition-colors ${
                   active ? 'text-primary font-semibold' : done ? 'text-primary/60' : 'text-muted'
                 }`}
               >
@@ -78,9 +78,9 @@ function TrustStrip() {
     <div className="flex flex-wrap justify-center items-center gap-x-3 gap-y-1 mt-5">
       {TRUST_ITEMS.map((item, i) => (
         <React.Fragment key={item}>
-          <span className="text-xs text-muted/55">{item}</span>
+          <span className="text-base text-muted/55">{item}</span>
           {i < TRUST_ITEMS.length - 1 && (
-            <span className="text-border/60 text-xs select-none">·</span>
+            <span className="text-border/60 text-base select-none">·</span>
           )}
         </React.Fragment>
       ))}
@@ -153,7 +153,7 @@ function IntakeForm({ onSubmit }) {
               onChange={update('contactName')}
               className={`bg-surface2 border-border text-text placeholder:text-muted h-12 rounded-xl text-base ${errors.contactName ? 'border-red-500/60' : ''}`}
             />
-            {errors.contactName && <p className="mt-1.5 text-sm text-red-400 leading-snug">{errors.contactName}</p>}
+            {errors.contactName && <p className="mt-1.5 text-base text-red-400 leading-snug">{errors.contactName}</p>}
           </div>
 
           {/* Business name */}
@@ -165,7 +165,7 @@ function IntakeForm({ onSubmit }) {
               onChange={update('businessName')}
               className={`bg-surface2 border-border text-text placeholder:text-muted h-12 rounded-xl text-base ${errors.businessName ? 'border-red-500/60' : ''}`}
             />
-            {errors.businessName && <p className="mt-1.5 text-sm text-red-400 leading-snug">{errors.businessName}</p>}
+            {errors.businessName && <p className="mt-1.5 text-base text-red-400 leading-snug">{errors.businessName}</p>}
           </div>
 
           {/* Mobile number */}
@@ -180,7 +180,7 @@ function IntakeForm({ onSubmit }) {
               autoComplete="tel"
               className={`bg-surface2 border-border text-text placeholder:text-muted h-12 rounded-xl text-base ${errors.mobileNumber ? 'border-red-500/60' : ''}`}
             />
-            {errors.mobileNumber && <p className="mt-1.5 text-sm text-red-400 leading-snug">{errors.mobileNumber}</p>}
+            {errors.mobileNumber && <p className="mt-1.5 text-base text-red-400 leading-snug">{errors.mobileNumber}</p>}
           </div>
 
           {/* WhatsApp on a different number? */}
@@ -188,7 +188,7 @@ function IntakeForm({ onSubmit }) {
             <button
               type="button"
               onClick={() => setWhatsappDifferent((p) => !p)}
-              className="inline-flex items-center gap-1.5 text-xs text-muted hover:text-text transition-colors"
+              className="inline-flex items-center gap-1.5 text-base text-muted hover:text-text transition-colors"
             >
               <ChevronDown className={`w-3.5 h-3.5 transition-transform ${whatsappDifferent ? 'rotate-180' : ''}`} />
               WhatsApp on a different number?
@@ -203,14 +203,14 @@ function IntakeForm({ onSubmit }) {
                   inputMode="tel"
                   className={`bg-surface2 border-border text-text placeholder:text-muted h-12 rounded-xl text-base ${errors.whatsappNumber ? 'border-red-500/60' : ''}`}
                 />
-                {errors.whatsappNumber && <p className="mt-1.5 text-sm text-red-400 leading-snug">{errors.whatsappNumber}</p>}
+                {errors.whatsappNumber && <p className="mt-1.5 text-base text-red-400 leading-snug">{errors.whatsappNumber}</p>}
               </div>
             )}
           </div>
 
           {/* Job value */}
           <div>
-            <p className="text-xs text-muted mb-2">
+            <p className="text-base text-muted mb-2">
               What&apos;s a typical job worth?{' '}
               <span className="text-muted/60">Used for your weekly revenue report.</span>
             </p>
@@ -220,7 +220,7 @@ function IntakeForm({ onSubmit }) {
                   key={opt.label}
                   type="button"
                   onClick={() => setJobValue(opt)}
-                  className={`cg-label px-3 py-1.5 rounded-full text-xs transition-all border ${
+                  className={`cg-label px-3 py-1.5 rounded-full text-base transition-all border ${
                     jobValue.label === opt.label
                       ? 'bg-primary/20 border-primary/40 text-primary'
                       : 'bg-surface2/60 border-border text-muted hover:text-text hover:border-primary/30'
@@ -240,11 +240,11 @@ function IntakeForm({ onSubmit }) {
             Set up my account
           </Button>
 
-          <p className="text-center text-muted text-xs pt-1">
+          <p className="text-center text-muted text-base pt-1">
             Takes about 2 minutes. Cancel anytime.
           </p>
 
-          <p className="text-center text-xs text-muted/60 pt-0">
+          <p className="text-center text-base text-muted/60 pt-0">
             Want to see how it works first?{' '}
             <button
               type="button"
@@ -315,7 +315,7 @@ export default function OnboardPage() {
               <h1 className="cg-h1 text-h1 md:text-h1-lg text-text mb-3 max-w-sm mx-auto leading-tight">
                 You&apos;re 2 minutes away from catching every missed call
               </h1>
-              <p className="cg-body text-sm md:text-base text-muted max-w-xs mx-auto leading-relaxed">
+              <p className="cg-body text-base text-muted max-w-xs mx-auto leading-relaxed">
                 We&apos;ll wire CallGuard into your existing number. No app, no new number, no hassle.
               </p>
             </div>

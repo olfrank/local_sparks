@@ -154,7 +154,7 @@ function WeeklyReportPhone({ reduceMotion }) {
                   <span className="text-[9px]" style={{ color: '#8696a0' }}>08:07</span>
                   <svg viewBox="0 0 18 11" width="14" height="9" fill="none">
                     <path d="M1 5.5L5.5 10L17 1" stroke="#53bdeb" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M6 5.5L10.5 10L17 1" stroke="#53bdeb" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M6 5.5L10.5 10L23 1" stroke="#53bdeb" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
               </div>
@@ -224,7 +224,7 @@ const CallGuardTrialSection = () => {
               {KILLER_PHRASES.map((phrase) => (
                 <span
                   key={phrase}
-                  className="inline-flex items-center px-3.5 py-1.5 rounded-full border border-border bg-surface2/50 text-sm font-semibold text-text/90 tracking-wide"
+                  className="inline-flex items-center px-3.5 py-1.5 rounded-full border border-border bg-surface2/50 text-base font-semibold text-text/90 tracking-wide"
                 >
                   {phrase}
                 </span>
@@ -252,7 +252,7 @@ const CallGuardTrialSection = () => {
               </button>
             </div>
 
-            <p className="cg-body text-sm text-muted text-center mt-4">
+            <p className="cg-body text-base text-muted text-center mt-4">
               No commitment until you&apos;ve seen it working. At day 30 you choose.
             </p>
             

@@ -54,6 +54,9 @@ const SystemHeroSection = () => {
     mouseY.set(0);
   }, [mouseX, mouseY]);
 
+  // Shared ease for left-column entrance
+  const heroEase = [0.22, 1, 0.36, 1];
+
   return (
     <section
       ref={sectionRef}
@@ -61,7 +64,6 @@ const SystemHeroSection = () => {
       onMouseLeave={handleMouseLeave}
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background Image with Parallax Effect */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat transform scale-105"
         style={{
@@ -69,10 +71,32 @@ const SystemHeroSection = () => {
           animation: prefersReducedMotion ? 'none' : 'slowZoom 20s ease-in-out infinite alternate'
         }}
       />
-      {/* Stronger left-side gradient wash */}
-      <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/75 to-transparent" />
+
+          <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/75 to-transparent" />
       <div className="absolute inset-0 bg-gradient-to-b from-ink/90 via-ink/85 to-ink/90" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_20%,_rgba(11,18,32,0.7)_100%)]" />
+
+      {/* Aurora sweep — soft blue/violet colour band across the top third */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0"
+        style={{
+          height: '65%',
+          background: 'radial-gradient(ellipse 110% 70% at 50% -10%, rgba(37,99,235,0.13) 0%, rgba(80,40,220,0.05) 55%, transparent 75%)',
+        }}
+      />
+
+      {/* Right-side ambient bloom — large soft glow behind the phone mockup */}
+      <div
+        className="pointer-events-none absolute"
+        style={{
+          right: '-5%',
+          top: '5%',
+          width: '60%',
+          height: '90%',
+          background: 'radial-gradient(ellipse 75% 60% at 65% 45%, rgba(37,99,235,0.12) 0%, rgba(37,99,235,0.05) 55%, transparent 80%)',
+          filter: 'blur(60px)',
+        }}
+      />
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 md:py-40">
@@ -93,22 +117,42 @@ const SystemHeroSection = () => {
 
             <div className="relative flex flex-col gap-6">
               {/* Headline */}
-              <h1 className="cg-h1 text-h1 md:text-h1-lg text-text">
+              <motion.h1
+                className="cg-h1 text-h1 md:text-h1-lg text-text"
+                initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.15, ease: heroEase }}
+              >
                 Miss the call.<br />Win the job anyway.
-              </h1>
+              </motion.h1>
 
               {/* Single-line subtext */}
-              <p className="cg-body text-base md:text-lg text-text/70 leading-relaxed">
+              <motion.p
+                className="cg-body text-base md:text-lg text-text/70 leading-relaxed"
+                initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.65, delay: 0.3, ease: heroEase }}
+              >
                 Automatic reply. Job details. Straight to your WhatsApp.
-              </p>
+              </motion.p>
 
               {/* Cost anchor, muted, small */}
-              <p className="cg-body text-md text-muted/70">
+              <motion.p
+                className="cg-body text-md text-muted/70"
+                initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.42, ease: heroEase }}
+              >
                 The average emergency call-out is worth £250–£500.
-              </p>
+              </motion.p>
 
               {/* CTAs */}
-              <div className="flex flex-col items-start gap-3 mt-2">
+              <motion.div
+                className="flex flex-col items-start gap-3 mt-2"
+                initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.54, ease: heroEase }}
+              >
                 {/* Primary */}
                 <div
                   className="relative overflow-hidden rounded-xl w-full sm:w-auto"
@@ -136,18 +180,19 @@ const SystemHeroSection = () => {
 
                 {/* Secondary text link */}
                 {/* <span
-                  className="cg-label inline-flex items-center gap-1.5 text-sm text-muted hover:text-text transition-colors"
+                  className="cg-label inline-flex items-center gap-1.5 text-base text-muted hover:text-text transition-colors"
                 >
                   <span>Enter your number, reply to SMS, see your alert</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </span> */}
-              </div>
+              </motion.div>
             </div>
           </div>
 
           {/* Right column — mockup */}
           <div className="relative max-w-lg mx-auto w-full" ref={previewRef}>
             <div className="pointer-events-none absolute -inset-x-10 -top-10 h-48 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.22),_transparent_70%)] blur-3xl opacity-80" />
+            <div className="pointer-events-none absolute -inset-x-10 -bottom-6 h-40 bg-[radial-gradient(circle_at_bottom,_rgba(37,99,235,0.20),_transparent_70%)] blur-3xl opacity-60" />
 
             <motion.div
               style={
@@ -157,8 +202,8 @@ const SystemHeroSection = () => {
               }
               initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
               animate={previewInView && !prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
-              transition={{ duration: 0.5, ease: 'easeOut' }}
-              className="font-system relative rounded-[32px] border border-white/15 bg-white/5 backdrop-blur-xl overflow-hidden px-4 pt-6 pb-4 shadow-[0_0_0_1px_rgba(255,255,255,0.08)_inset,0_25px_50px_-12px_rgba(0,0,0,0.4),0_0_40px_-10px_rgba(37,99,235,0.15)]"
+              transition={{ duration: 0.6, delay: 0.35, ease: 'easeOut' }}
+              className="font-system relative rounded-[32px] border border-white/15 bg-white/5 backdrop-blur-xl overflow-hidden px-4 pt-6 pb-4 shadow-[0_0_0_1px_rgba(255,255,255,0.08)_inset,0_25px_50px_-12px_rgba(0,0,0,0.4),0_0_80px_-10px_rgba(37,99,235,0.28)]"
             >
               {/* Breathing highlight sweep */}
               <div
@@ -175,13 +220,13 @@ const SystemHeroSection = () => {
                   <div className="h-1.5 w-16 rounded-full bg-white/20" />
                 </div>
 
-                <div className="space-y-3 text-sm">
+                <div className="space-y-3 text-base">
                   <div className='w-full flex justify-start'>
                     <motion.div
                       initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
                       animate={previewInView && !prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
                       transition={{ delay: 0.1, duration: 0.4 }}
-                      className="flex items-center gap-2 text-xs text-muted w-fit bg-transparent rounded-xl px-2 py-1"
+                      className="flex items-center gap-2 text-base text-muted w-fit bg-transparent rounded-xl px-2 py-1"
                     >
                       <span
                         style={{
@@ -193,7 +238,7 @@ const SystemHeroSection = () => {
                         <Phone className="w-4 h-4 text-red-400" />
                         <span className="text-red-400">Missed call from 07901 837 771</span>
                       </span>
-                      
+
                     </motion.div>
                   </div>
 
@@ -242,24 +287,24 @@ const SystemHeroSection = () => {
                     <div className="mt-1">
                       <MessageCircle className="w-4 h-4 text-emerald-400" />
                     </div>
-                    <div className="space-y-1 text-xs text-muted">
+                    <div className="space-y-1 text-base text-muted">
                       <div className="flex items-center justify-between gap-2">
-                        <span className="text-emerald-100 font-medium text-sm">WhatsApp alert</span>
+                        <span className="text-emerald-100 font-medium text-base">WhatsApp alert</span>
                         <span className="inline-flex text-center px-2 py-0.5 rounded-full bg-emerald-400/20 text-emerald-200 text-[10px] font-semibold">
                           <CheckCircle2 className="w-3 h-3 mr-1 mt-0.5" />
                           Job held
                         </span>
                       </div>
-                      <p className="text-emerald-50 text-sm">
+                      <p className="text-emerald-50 text-base">
                         MISSED CALL ENQUIRY - URGENT
                       </p>
-                      <p className="text-emerald-50 text-sm">
+                      <p className="text-emerald-50 text-base">
                         📞+447901234567
                       </p>
-                      <p className="text-emerald-50 text-sm">
+                      <p className="text-emerald-50 text-base">
                         📍HP24 9HH
                       </p>
-                      <p className="text-emerald-50 text-sm">
+                      <p className="text-emerald-50 text-base">
                         💬 Burning smell from kitchen socket. Customer requested a visit immediately
                       </p>
                     </div>
@@ -272,11 +317,16 @@ const SystemHeroSection = () => {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+      <motion.div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        initial={prefersReducedMotion ? false : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.9, ease: 'easeOut' }}
+      >
         <div className="w-6 h-10 border-2 border-text/30 rounded-full flex justify-center pt-2 animate-bounce motion-reduce:animate-none">
           <div className="w-1.5 h-3 bg-text/50 rounded-full animate-pulse motion-reduce:animate-none" />
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

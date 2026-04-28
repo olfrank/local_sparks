@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Button } from './ui/button';
 import Logo from './Logo';
 
 const SiteNav = () => {
   const navigate = useNavigate();
+  const prefersReducedMotion = useReducedMotion();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -30,12 +32,15 @@ const SiteNav = () => {
   };
 
   return (
-    <header
+    <motion.header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
           ? 'bg-ink/20 backdrop-blur-md border-b border-border'
           : 'bg-ink/10 backdrop-blur-md border-b border-transparent'
       }`}
+      initial={prefersReducedMotion ? false : { opacity: 0, y: -16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
@@ -50,7 +55,7 @@ const SiteNav = () => {
               {!isOnboardPage && (
                 <Link
                   to="/onboard"
-                  className={`cg-label text-sm font-medium transition-colors ${
+                  className={`cg-label text-base font-medium transition-colors ${
                     isScrolled ? 'text-primary hover:text-primary/80' : 'text-white/90 hover:text-white'
                   }`}
                 >
@@ -64,7 +69,7 @@ const SiteNav = () => {
                   onClick={() => navigate('/demo')}
                   variant="outline"
                   size="sm"
-                  className={`text-sm transition-all rounded-xl ${
+                  className={`text-base transition-all rounded-xl ${
                     isScrolled
                       ? 'border-border text-white hover:bg-surface2 bg-primary'
                       : 'border-white/40 text-black hover:bg-white/10 bg-white'
@@ -111,7 +116,7 @@ const SiteNav = () => {
           </nav>
         </div>
       )}
-    </header>
+    </motion.header>
   );
 };
 

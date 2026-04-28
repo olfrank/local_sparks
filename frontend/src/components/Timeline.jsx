@@ -1,7 +1,10 @@
 import React from 'react';
 import { Phone, X, CheckCircle2, ArrowRight, MessageSquare, Clock } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
 
 const Timeline = ({ variant = 'without', steps }) => {
+  const prefersReducedMotion = useReducedMotion();
+
   const iconMap = {
     phone: Phone,
     x: X,
@@ -17,16 +20,23 @@ const Timeline = ({ variant = 'without', steps }) => {
         {steps.map((step, index) => {
           const Icon = iconMap[step.icon] || ArrowRight;
           const isLast = index === steps.length - 1;
-          
+
           return (
-            <div key={index} className="relative flex gap-4">
+            <motion.div
+              key={index}
+              className="relative flex gap-4"
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
+              whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.4, delay: index * 0.07, ease: 'easeOut' }}
+            >
               {/* Timeline line */}
               {!isLast && (
                 <div className={`absolute left-5 top-10 w-0.5 h-[70%] ${
                   variant === 'without' ? 'bg-red-500/30' : 'bg-success/30'
                 }`} />
               )}
-              
+
               {/* Icon */}
               <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${
                 variant === 'without'
@@ -35,7 +45,7 @@ const Timeline = ({ variant = 'without', steps }) => {
               }`}>
                 <Icon className="w-5 h-5" />
               </div>
-              
+
               {/* Content */}
               <div className="flex-1 pt-1">
                 <p className={`font-medium ${
@@ -44,10 +54,10 @@ const Timeline = ({ variant = 'without', steps }) => {
                   {step.text}
                 </p>
                 {step.detail && (
-                  <p className="text-sm text-muted mt-1">{step.detail}</p>
+                  <p className="text-base text-muted mt-1">{step.detail}</p>
                 )}
               </div>
-            </div>
+            </motion.div>
           );
         })}
       </div>

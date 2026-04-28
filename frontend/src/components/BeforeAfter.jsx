@@ -1,7 +1,10 @@
 import React from 'react';
 import { X, Check, PhoneOff, Eye, Clock, Filter } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
 
 const BeforeAfter = () => {
+  const prefersReducedMotion = useReducedMotion();
+
   const comparisonRows = [
     {
       feature: 'Missed calls',
@@ -33,8 +36,14 @@ const BeforeAfter = () => {
     <section className="section-padding bg-ink">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <span className="inline-block text-primary font-semibold text-sm uppercase tracking-wider mb-3">
+        <motion.div
+          className="text-center mb-12 md:mb-16"
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
+          whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+        >
+          <span className="inline-block text-primary font-semibold text-base uppercase tracking-wider mb-3">
             The Difference
           </span>
           <h2 className="text-h2 md:text-h2-lg font-bold text-text mb-4">
@@ -43,27 +52,38 @@ const BeforeAfter = () => {
           <p className="text-muted max-w-2xl mx-auto">
             See how a system designed for busy periods prevents lost opportunities.
           </p>
-        </div>
+        </motion.div>
 
         {/* Comparison Table */}
         <div className="max-w-5xl mx-auto relative">
           {/* Header Row */}
           <div className="absolute top-24 md:-top-3 right-2 z-[50]">
-                <span className="bg-amber-400 text-amber-900 text-xs font-bold px-2 py-1 rounded-full">
-                  RECOMMENDED
-                </span>
-              </div>
+            <span className="bg-amber-400 text-amber-900 text-base font-bold px-2 py-1 rounded-full">
+              RECOMMENDED
+            </span>
+          </div>
           <div className="grid md:grid-cols-3 gap-4 mb-4">
             <div className="hidden md:block"></div>
-            <div className="glass-card rounded-xl p-4 border-2 border-border text-center">
+            <motion.div
+              className="glass-card rounded-xl p-4 border-2 border-border text-center"
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
+              whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
+            >
               <h3 className="font-bold text-text">Brochure site</h3>
-              <p className="text-sm text-muted">Standard approach</p>
-            </div>
-            <div className="bg-gradient-to-br from-primary to-primary/80 rounded-xl p-4 border-2 border-primary text-center relative overflow-hidden">
-              
+              <p className="text-base text-muted">Standard approach</p>
+            </motion.div>
+            <motion.div
+              className="bg-gradient-to-br from-primary to-primary/80 rounded-xl p-4 border-2 border-primary text-center relative overflow-hidden"
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
+              whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.2, ease: 'easeOut' }}
+            >
               <h3 className="font-bold text-white">Revenue-capture system</h3>
-              <p className="text-sm text-white/80">This system</p>
-            </div>
+              <p className="text-base text-white/80">This system</p>
+            </motion.div>
           </div>
 
           {/* Comparison Rows */}
@@ -71,9 +91,13 @@ const BeforeAfter = () => {
             {comparisonRows.map((row, index) => {
               const Icon = row.icon;
               return (
-                <div
+                <motion.div
                   key={index}
                   className="grid md:grid-cols-3 gap-4 glass-card rounded-xl p-5 card-hover"
+                  initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
+                  whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.45, delay: index * 0.08, ease: 'easeOut' }}
                 >
                   {/* Feature */}
                   <div className="flex items-center gap-3">
@@ -102,7 +126,7 @@ const BeforeAfter = () => {
                       <span className="text-text font-medium">{row.system}</span>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
           </div>

@@ -193,16 +193,28 @@ export function RevenueLeakCalculator() {
         <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-teal-500/6 blur-3xl rounded-full" />
       </div>
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8 md:mb-10">
+        <motion.div
+          className="text-center mb-8 md:mb-10"
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
+          whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+        >
           <h2 id="revenue-calculator-heading" className="cg-h2 text-h1 text-text mb-3">
             How much money are missed calls costing you?
           </h2>
           <p className="cg-body text-lg text-muted max-w-2xl mx-auto">
             Adjust the numbers to see what could be quietly slipping away each month.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="glass-card rounded-2xl p-5 md:p-6 lg:p-8 card-hover relative overflow-hidden">
+        <motion.div
+          className="glass-card rounded-2xl p-5 md:p-6 lg:p-8 card-hover relative overflow-hidden"
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
+          whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.55, delay: 0.1, ease: 'easeOut' }}
+        >
           <div className="absolute top-0 right-0 w-48 h-48 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
           <div className="relative grid lg:grid-cols-2 gap-6 lg:gap-10">
             {/* Left: presets + inputs */}
@@ -215,7 +227,7 @@ export function RevenueLeakCalculator() {
                     type="button"
                     onClick={() => applyPreset(preset)}
                     className={cn(
-                      'cg-label px-3 py-1.5 rounded-full text-xs transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-ink',
+                      'cg-label px-3 py-1.5 rounded-full text-base transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-ink',
                       activePreset === preset.id
                         ? 'bg-primary/20 border border-primary/40 text-primary'
                         : 'bg-surface2/60 border border-transparent text-muted hover:text-text hover:bg-surface2/80'
@@ -230,7 +242,7 @@ export function RevenueLeakCalculator() {
                 <Label htmlFor="missed-calls" className="cg-label text-text">
                   Missed calls per week
                 </Label>
-                <p className="cg-body text-xs text-muted/90 mb-1">
+                <p className="cg-body text-base text-muted/90 mb-1">
                   Most electricians miss 3–8 calls a week, start here.
                 </p>
                 <div className="flex gap-3 items-center">
@@ -254,7 +266,7 @@ export function RevenueLeakCalculator() {
                     aria-label="Missed calls per week"
                   />
                 </div>
-                <p id="missed-calls-desc" className="text-xs text-muted sr-only">
+                <p id="missed-calls-desc" className="text-base text-muted sr-only">
                   Between {MISSED_CALLS_MIN} and {MISSED_CALLS_MAX} calls per week
                 </p>
               </div>
@@ -284,7 +296,7 @@ export function RevenueLeakCalculator() {
                     aria-label="Average job value in pounds"
                   />
                 </div>
-                <p id="avg-job-desc" className="text-xs text-muted sr-only">
+                <p id="avg-job-desc" className="text-base text-muted sr-only">
                   Between £{AVG_JOB_MIN} and £{AVG_JOB_MAX}
                 </p>
               </div>
@@ -309,17 +321,17 @@ export function RevenueLeakCalculator() {
                     aria-valuetext={`${conversionRate} percent`}
                   />
                 </div>
-                <p className="cg-body text-xs text-muted">10–50%. Industry estimates often sit around 20–40%.</p>
+                <p className="cg-body text-base text-muted">10–50%. Industry estimates often sit around 20–40%.</p>
               </div>
 
               <Collapsible className="pt-2" open={estimateOpen} onOpenChange={setEstimateOpen}>
-                <CollapsibleTrigger className="cg-label inline-flex items-center gap-1.5 text-sm text-muted hover:text-text transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded">
+                <CollapsibleTrigger className="cg-label inline-flex items-center gap-1.5 text-base text-muted hover:text-text transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded">
                   <Calculator className="w-4 h-4" aria-hidden />
                   How we estimate
                   <ChevronDown className={cn('w-4 h-4 transition-transform duration-200', estimateOpen && 'rotate-180')} aria-hidden />
                 </CollapsibleTrigger>
                 <CollapsibleContent>
-                  <p className="cg-body mt-2 text-sm text-muted">
+                  <p className="cg-body mt-2 text-base text-muted">
                     Assumes {debouncedMissed} missed calls per week, of which {debouncedConv}% could become real jobs, with an average job value of {GBP.format(debouncedAvg)}. We show a range using ±10% conversion to reflect uncertainty.
                   </p>
                 </CollapsibleContent>
@@ -384,7 +396,7 @@ export function RevenueLeakCalculator() {
                       aria-hidden
                     />
                   )}
-                  <p className="cg-label text-xs text-muted uppercase tracking-wide mb-1">
+                  <p className="cg-label text-base text-muted uppercase tracking-wide mb-1">
                     Potential missed revenue per month
                   </p>
                   <p className="cg-label text-4xl md:text-5xl lg:text-6xl tabular-nums leading-tight">
@@ -395,7 +407,7 @@ export function RevenueLeakCalculator() {
                       className="text-red-500/80"
                     />
                   </p>
-                  <p className="cg-body text-xs text-muted/70 mt-1 tabular-nums">
+                  <p className="cg-body text-base text-muted/70 mt-1 tabular-nums">
                     Range:{' '}
                     <AnimatedNumber
                       value={revenueLow}
@@ -413,7 +425,7 @@ export function RevenueLeakCalculator() {
                   <p className="cg-body mt-3 text-base text-muted">
                     {humanTranslation}
                   </p>
-                  <p className="cg-body mt-2 text-xs text-muted/70">
+                  <p className="cg-body mt-2 text-base text-muted/70">
                     Based on industry averages for sole traders.
                   </p>
                 </motion.div>
@@ -435,21 +447,21 @@ export function RevenueLeakCalculator() {
                   Run my 30 day trial (free)
                 </Button>
               </motion.div>
-              <p className="cg-body text-center text-sm text-muted mt-2">
+              <p className="cg-body text-center text-base text-muted mt-2">
                 We&apos;ll show you exactly which missed calls turn into real jobs.
               </p>
               <p className="text-center mt-3">
                 <button
                   type="button"
                   onClick={scrollToBooking}
-                  className="cg-label text-xs text-muted/80 hover:text-muted transition-colors underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-ink rounded"
+                  className="cg-label text-base text-muted/80 hover:text-muted transition-colors underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-ink rounded"
                 >
                   Or book a 5 min fit check
                 </button>
               </p>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

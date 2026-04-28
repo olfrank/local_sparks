@@ -51,12 +51,18 @@ const CallGuardFAQSection = () => {
   return (
     <section id="faq" className="section-padding relative overflow-hidden">
       <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8 md:mb-10">
+        <motion.div
+          className="text-center mb-8 md:mb-10"
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
+          whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+        >
           <h2 className="text-h2 md:text-h2-lg font-bold text-text mb-3">Questions tradespeople ask</h2>
-          <p className="text-muted text-sm md:text-base max-w-2xl mx-auto">
+          <p className="text-muted text-base max-w-2xl mx-auto">
             Straight answers to the common sticking points.
           </p>
-        </div>
+        </motion.div>
 
         <motion.div
           initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
@@ -68,10 +74,10 @@ const CallGuardFAQSection = () => {
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((item, index) => (
               <AccordionItem key={item.question} value={`item-${index + 1}`}>
-                <AccordionTrigger className="text-left text-sm md:text-base">
+                <AccordionTrigger className="text-left text-base">
                   {item.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-sm md:text-[15px] text-muted leading-relaxed">
+                <AccordionContent className="text-base md:text-[15px] text-muted leading-relaxed">
                   {item.answer}
                 </AccordionContent>
               </AccordionItem>

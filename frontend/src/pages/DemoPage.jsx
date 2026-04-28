@@ -262,7 +262,7 @@ function DemoStepStrip() {
               <p className="hidden sm:block text-[10px] text-muted/55 text-center leading-tight">{sub}</p>
             </div>
             {i < DEMO_STEPS.length - 1 && (
-              <span className="flex-shrink-0 text-muted/35 text-sm mt-2.5">→</span>
+              <span className="flex-shrink-0 text-muted/35 text-base mt-2.5">→</span>
             )}
           </React.Fragment>
         ))}
@@ -566,7 +566,7 @@ function Stage1Form({ onSubmit, loading, apiError, initialValues }) {
         <h1 className="cg-h1 text-h1 md:text-h1-lg text-text text-center mb-3 leading-tight">
           Try it with your real number
         </h1>
-        <p className="cg-body text-sm md:text-base text-muted text-center leading-relaxed">
+        <p className="cg-body text-base text-muted text-center leading-relaxed">
           Enter your details and we'll show you exactly what your customers experience when they can't reach you.
         </p>
       </div>
@@ -589,7 +589,7 @@ function Stage1Form({ onSubmit, loading, apiError, initialValues }) {
               }`}
             />
             {errors.contactName && (
-              <p className="mt-1.5 text-sm text-red-400 leading-snug">{errors.contactName}</p>
+              <p className="mt-1.5 text-base text-red-400 leading-snug">{errors.contactName}</p>
             )}
           </div>
 
@@ -604,7 +604,7 @@ function Stage1Form({ onSubmit, loading, apiError, initialValues }) {
               }`}
             />
             {errors.businessName && (
-              <p className="mt-1.5 text-sm text-red-400 leading-snug">{errors.businessName}</p>
+              <p className="mt-1.5 text-base text-red-400 leading-snug">{errors.businessName}</p>
             )}
           </div>
 
@@ -622,12 +622,12 @@ function Stage1Form({ onSubmit, loading, apiError, initialValues }) {
               }`}
             />
             {errors.mobileNumber && (
-              <p className="mt-1.5 text-sm text-red-400 leading-snug">{errors.mobileNumber}</p>
+              <p className="mt-1.5 text-base text-red-400 leading-snug">{errors.mobileNumber}</p>
             )}
           </div>
 
           {apiError && (
-            <p className="text-sm text-red-400 text-center leading-snug">{apiError}</p>
+            <p className="text-base text-red-400 text-center leading-snug">{apiError}</p>
           )}
 
           <Button
@@ -645,7 +645,7 @@ function Stage1Form({ onSubmit, loading, apiError, initialValues }) {
             )}
           </Button>
 
-          <p className="text-center text-muted text-xs pt-1">
+          <p className="text-center text-muted text-base pt-1">
             One SMS. No signup. Takes 20 seconds.
           </p>
 
@@ -653,7 +653,7 @@ function Stage1Form({ onSubmit, loading, apiError, initialValues }) {
           </div>
 
           {/* Mobile flow line — only shown below form on small screens */}
-          <p className="lg:hidden mt-5 text-center text-xs text-muted/50 leading-relaxed">
+          <p className="lg:hidden mt-5 text-center text-base text-muted/50 leading-relaxed">
             Missed call → SMS sent → WhatsApp alert. See it happen live.
           </p>
         </div>
@@ -759,7 +759,7 @@ function Stage2Waiting({ demoId, contactName, businessName, formData, onComplete
       </PhoneFrame>
 
       <p
-        className="cg-body text-center text-muted text-sm leading-relaxed"
+        className="cg-body text-center text-muted text-base leading-relaxed"
         style={{ maxWidth: '280px' }}
       >
         Check your phone, you've just received an SMS. Reply to it with a job description and
@@ -791,14 +791,14 @@ function Stage2Waiting({ demoId, contactName, businessName, formData, onComplete
             {/* Option 1: Resend */}
             {resendCount < MAX_RESENDS && (
               <div className="flex items-center justify-between gap-3">
-                <span className="text-xs text-muted leading-snug">Send it again</span>
+                <span className="text-base text-muted leading-snug">Send it again</span>
                 {resendConfirmed ? (
-                  <span className="text-xs text-green-400 font-medium">Sent ✓</span>
+                  <span className="text-base text-green-400 font-medium">Sent ✓</span>
                 ) : (
                   <button
                     onClick={handleResend}
                     disabled={resendLoading || resendCooldown}
-                    className="text-xs border border-border rounded-lg px-3 py-1.5 text-text hover:border-primary/50 hover:text-primary transition-colors disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
+                    className="text-base border border-border rounded-lg px-3 py-1.5 text-text hover:border-primary/50 hover:text-primary transition-colors disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
                   >
                     {resendLoading ? 'Sending…' : 'Send it again'}
                   </button>
@@ -808,10 +808,10 @@ function Stage2Waiting({ demoId, contactName, businessName, formData, onComplete
 
             {/* Option 2: Different number */}
             <div className="flex items-center justify-between gap-3">
-              <span className="text-xs text-muted leading-snug">Wrong number?</span>
+              <span className="text-base text-muted leading-snug">Wrong number?</span>
               <button
                 onClick={onRetryNumber}
-                className="text-xs border border-border rounded-lg px-3 py-1.5 text-text hover:border-primary/50 hover:text-primary transition-colors shrink-0"
+                className="text-base border border-border rounded-lg px-3 py-1.5 text-text hover:border-primary/50 hover:text-primary transition-colors shrink-0"
               >
                 Try a different number
               </button>
@@ -977,13 +977,13 @@ function WeeklyReportCard({ businessName, postcode, summary, customerReply }) {
       </PhoneFrame>
 
       {/* Footer */}
-      <p className="cg-body text-center text-xs leading-relaxed mt-6" style={{ color: '#8696a0' }}>
+      <p className="cg-body text-center text-base leading-relaxed mt-6" style={{ color: '#8696a0' }}>
         Delivered to your WhatsApp every Monday morning. Automatically.
       </p>
       <div className="text-center mt-3 mb-2">
         <a
           href="#demo-cta"
-          className="text-xs transition-colors"
+          className="text-base transition-colors"
           style={{ color: 'hsl(var(--primary))', textDecoration: 'underline', textUnderlineOffset: '3px' }}
           onClick={(e) => {
             e.preventDefault();
@@ -1053,7 +1053,7 @@ function Stage3Complete({ demoId, initialData, businessName, customerReply, onAc
             <h2 className="cg-h2 text-h1 text-text mb-3 leading-tight">
               That just happened in under 30 seconds.
             </h2>
-            <p className="cg-body text-muted text-sm md:text-base mb-8 leading-relaxed">
+            <p className="cg-body text-muted text-base mb-8 leading-relaxed">
               Every missed call. Handled automatically. No app needed.
             </p>
 
@@ -1066,7 +1066,7 @@ function Stage3Complete({ demoId, initialData, businessName, customerReply, onAc
               </Button>
               <a
                 href="/#contact"
-                className="cg-label text-sm text-muted hover:text-text transition-colors underline underline-offset-4 block text-center"
+                className="cg-label text-base text-muted hover:text-text transition-colors underline underline-offset-4 block text-center"
               >
                 Or book a 5 min fit check
               </a>
@@ -1093,7 +1093,7 @@ function TimeoutState({ onRestart }) {
       <div className="glass-card rounded-2xl p-8">
         <MessageCircle className="w-10 h-10 text-muted mx-auto mb-4" />
         <p className="cg-label text-text text-base mb-2">No reply received yet.</p>
-        <p className="cg-body text-muted text-sm mb-6 leading-relaxed">
+        <p className="cg-body text-muted text-base mb-6 leading-relaxed">
           Check your phone for the SMS and reply to continue, or try again.
         </p>
         <Button
