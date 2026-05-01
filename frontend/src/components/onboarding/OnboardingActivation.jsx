@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import confetti from 'canvas-confetti';
 import { Check, Copy, Phone, PhoneOff, MessageCircle, RotateCcw, Users, X, Plus, ArrowRight } from 'lucide-react';
 import { Button } from '../ui/button';
+import { signupOnboarding, verifyOnboarding, getOnboardingStatus, saveVipNumbers } from '../../api/onboarding.api';
 
-const API_BASE = process.env.REACT_APP_DEMO_API_URL || 'http://localhost:8000';
 const OLLIE_WA = process.env.REACT_APP_OLLIE_WHATSAPP || 'https://wa.me/447901837771';
 const SESSION_KEY = 'callguard_onboarding';
 
@@ -286,11 +286,7 @@ function VipNumbersPhase({ customerId, onComplete, onSkip }) {
       label: e.label.trim(),
     }));
     try {
-      await fetch(`${API_BASE}/api/onboarding/vip`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ customerId, vipNumbers }),
-      });
+      await saveVipNumbers({ customerId, vipNumbers });
     } catch (_) {
       // Best-effort
     } finally {
@@ -509,25 +505,15 @@ export default function OnboardingActivation({
     setPhase('provisioning');
     setErrorMsg('');
     try {
-      const res = await fetch(`${API_BASE}/api/onboarding/signup`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contactName,
-          businessName,
-          whatsappNumber: whatsappNumber || mobileNumber,
-          alertChannel: 'whatsapp',
-          jobValueLow,
-          jobValueHigh,
-        }),
+      const data = await signupOnboarding({
+        contactName,
+        businessName,
+        whatsappNumber: whatsappNumber || mobileNumber,
+        alertChannel: 'whatsapp',
+        jobValueLow,
+        jobValueHigh,
       });
       if (!mountedRef.current) return;
-      const text = await res.text();
-      let data;
-      try { data = JSON.parse(text); } catch (_) { throw new Error('Invalid response from server'); }
-      if (!res.ok || !data.success) {
-        throw new Error(data?.error || `Server error (${res.status})`);
-      }
       setProvisionData(data);
       saveSession('activation', data);
       setPhase('activation');
@@ -549,11 +535,7 @@ export default function OnboardingActivation({
     pollCountRef.current = 0;
 
     try {
-      await fetch(`${API_BASE}/api/onboarding/verify`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ customerId: provisionData?.customerId }),
-      });
+      await verifyOnboarding({ customerId: provisionData?.customerId });
     } catch (_) {
       // Non-fatal — continue polling
     }
@@ -571,9 +553,7 @@ export default function OnboardingActivation({
       }
 
       try {
-        const res = await fetch(`${API_BASE}/api/onboarding/status/${provisionData?.customerId}`);
-        if (!res.ok) return;
-        const data = await res.json();
+        const data = await getOnboardingStatus(provisionData?.customerId);
         if (data.status === 'verified') {
           clearInterval(pollRef.current);
           saveSession('vip', provisionData);

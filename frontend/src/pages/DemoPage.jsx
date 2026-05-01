@@ -3,8 +3,8 @@ import { MessageCircle, RotateCcw, PhoneIncoming, CornerDownLeft } from 'lucide-
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
+import { startDemo, getDemoStatus } from '../api/demo.api';
 
-const API_BASE = process.env.REACT_APP_DEMO_API_URL || 'http://localhost:8000';
 const SUPPORT_WA = process.env.REACT_APP_SUPPORT_WHATSAPP || 'https://wa.me/447901837771';
 const POLL_INTERVAL = 3000;
 const POLL_TIMEOUT_MS = 6 * 60 * 1000;
@@ -694,9 +694,7 @@ function Stage2Waiting({ demoId, contactName, businessName, formData, onComplete
       return;
     }
     try {
-      const res = await fetch(`${API_BASE}/api/demo/status/${demoId}`);
-      if (!res.ok) return;
-      const data = await res.json();
+      const data = await getDemoStatus(demoId);
       console.log('[Demo] stage2 poll:', JSON.stringify(data));
       if (data.status === 'replied' || data.status === 'complete') {
         doneRef.current = true;
@@ -728,11 +726,7 @@ function Stage2Waiting({ demoId, contactName, businessName, formData, onComplete
     setResendLoading(true);
     setResendConfirmed(false);
     try {
-      await fetch(`${API_BASE}/api/demo/start`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
+      await startDemo(formData);
     } catch (_) {
       // Best-effort — show confirmed regardless
     } finally {
@@ -1015,9 +1009,7 @@ function Stage3Complete({ demoId, initialData, businessName, customerReply, onAc
     const poll = async () => {
       if (doneRef.current) return;
       try {
-        const res = await fetch(`${API_BASE}/api/demo/status/${demoId}`);
-        if (!res.ok) return;
-        const data = await res.json();
+        const data = await getDemoStatus(demoId);
         console.log('[Demo] stage3 poll:', JSON.stringify(data));
         if (data.status === 'complete') {
           doneRef.current = true;
@@ -1124,29 +1116,18 @@ export default function DemoPage() {
     setLoading(true);
     setApiError('');
     try {
-      const res = await fetch(`${API_BASE}/api/demo/start`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
-      if (res.status === 409) {
-        setApiError(
-          "Looks like you've already got a demo running, check your phone for the SMS"
-        );
-        return;
-      }
-      if (!res.ok) throw new Error('start failed');
-      const text = await res.text();
-      console.log('[Demo] start status:', res.status, 'body:', text);
-      if (!text) throw new Error('empty response body');
-      const data = JSON.parse(text);
+      const data = await startDemo(form);
       console.log('[Demo] start parsed:', data);
-      if (!data.success || !data.demoId) throw new Error(`unexpected response shape: ${JSON.stringify(data)}`);
+      if (!data.success || !data.demoId) throw new Error('Unexpected response shape');
       setFormData(form);
       setDemoId(data.demoId);
       setStage(2);
     } catch (err) {
       console.error('[Demo] submit error:', err);
+      if (err.status === 409) {
+        setApiError("Looks like you've already got a demo running, check your phone for the SMS");
+        return;
+      }
       setApiError('Something went wrong — try again in a moment');
     } finally {
       setLoading(false);

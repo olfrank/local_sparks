@@ -3,8 +3,8 @@ import { Phone } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { motion, useReducedMotion } from 'framer-motion';
+import { requestCallback } from '../../api/contact.api';
 
-const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:8000';
 const WA_LINK = 'https://wa.me/447901837771';
 
 // WhatsApp logo path (reused in two places)
@@ -23,11 +23,7 @@ const FinalCTASection = () => {
     setLoading(true);
     setError('');
     try {
-      await fetch(`${API_BASE}/api/callback-request`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone: phone.trim() }),
-      });
+      await requestCallback({ phone: phone.trim() });
       setSubmitted(true);
     } catch {
       setError('Something went wrong, message me on WhatsApp instead.');
