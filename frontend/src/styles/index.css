@@ -1,21 +1,21 @@
 /* Host Grotesk – primary sans-serif (400, 500, 600 only) */
 @font-face {
   font-family: 'Host Grotesk';
-  src: url('../public/fonts/Host_Grotesk/HostGrotesk-Regular.ttf') format('truetype');
+  src: url('../../public/fonts/Host_Grotesk/HostGrotesk-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Host Grotesk';
-  src: url('../public/fonts/Host_Grotesk/HostGrotesk-Medium.ttf') format('truetype');
+  src: url('../../public/fonts/Host_Grotesk/HostGrotesk-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Host Grotesk';
-  src: url('../public/fonts/Host_Grotesk/HostGrotesk-SemiBold.ttf') format('truetype');
+  src: url('../../public/fonts/Host_Grotesk/HostGrotesk-SemiBold.ttf') format('truetype');
   font-weight: 600;
   font-style: normal;
   font-display: swap;

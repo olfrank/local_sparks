@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Phone, Menu, X } from 'lucide-react';
-import { Button } from './ui/button';
-import { businessInfo } from '../data/mock';
+import { Button } from '../ui/button';
+import { businessInfo } from '../../data/mock';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);

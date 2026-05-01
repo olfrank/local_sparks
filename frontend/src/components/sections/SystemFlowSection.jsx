@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { MessageSquare, MessageCircle, Reply, CheckCircle2, ArrowRight, Zap } from 'lucide-react';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import { useNavigate } from 'react-router-dom';
 // ─── Mini mockups ─────────────────────────────────────────────────────────────
 

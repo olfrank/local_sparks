@@ -1,13 +1,13 @@
 import React from 'react';
-import SystemHeroSection from '../components/SystemHeroSection';
-import BusyMomentSection from '../components/BusyMomentSection';
-import RevenueLeakCalculator from '../components/RevenueLeakCalculator';
-import SystemFlowSection from '../components/SystemFlowSection';
-import FinalCTASection from '../components/FinalCTASection';
-import CallGuardTrialSection from '../components/revprotect/RevProtectGuaranteeSection';
-import PricingSection from '../components/PricingSection';
-import CallGuardFAQSection from '../components/revprotect/RevProtectFAQSection';
-import ClosingCTASection from '../components/ClosingCTASection';
+import SystemHeroSection from '../components/sections/SystemHeroSection';
+import BusyMomentSection from '../components/sections/BusyMomentSection';
+import RevenueLeakCalculator from '../components/sections/RevenueLeakCalculator';
+import SystemFlowSection from '../components/sections/SystemFlowSection';
+import FinalCTASection from '../components/sections/FinalCTASection';
+import CallGuardTrialSection from '../components/sections/revprotect/RevProtectGuaranteeSection';
+import PricingSection from '../components/sections/PricingSection';
+import CallGuardFAQSection from '../components/sections/revprotect/RevProtectFAQSection';
+import ClosingCTASection from '../components/sections/ClosingCTASection';
 
 const BG_GRADIENT = [
   'linear-gradient(to bottom, transparent 0%, transparent 60%, rgba(0, 47, 255, 0.02) 100%)',

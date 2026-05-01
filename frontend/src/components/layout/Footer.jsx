@@ -1,6 +1,6 @@
 import React from 'react';
 import { Phone, Mail } from 'lucide-react';
-import { businessInfo } from '../data/mock';
+import { businessInfo } from '../../data/mock';
 import Logo from './Logo';
 import { motion, useReducedMotion } from 'framer-motion';
 

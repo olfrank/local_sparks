@@ -1,5 +1,5 @@
 import React from 'react';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../ui/accordion';
 import { motion, useReducedMotion } from 'framer-motion';
 
 const faqs = [

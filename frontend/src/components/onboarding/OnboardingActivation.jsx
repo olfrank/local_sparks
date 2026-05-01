@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import confetti from 'canvas-confetti';
 import { Check, Copy, Phone, PhoneOff, MessageCircle, RotateCcw, Users, X, Plus, ArrowRight } from 'lucide-react';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 
 const API_BASE = process.env.REACT_APP_DEMO_API_URL || 'http://localhost:8000';
 const OLLIE_WA = process.env.REACT_APP_OLLIE_WHATSAPP || 'https://wa.me/447901837771';

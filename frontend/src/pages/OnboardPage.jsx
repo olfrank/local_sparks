@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { ArrowRight, Check, ChevronDown } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
-import OnboardingActivation from '../components/OnboardingActivation';
+import OnboardingActivation from '../components/onboarding/OnboardingActivation';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 

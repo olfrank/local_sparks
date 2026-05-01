@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import Logo from './Logo';
 
 const SiteNav = () => {

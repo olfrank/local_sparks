@@ -1,9 +1,9 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import "./App.css";
-import SiteNav from "./components/SiteNav";
-import Footer from "./components/Footer";
-import PageTitle from "./components/PageTitle";
+import "./styles/App.css";
+import SiteNav from "./components/layout/SiteNav";
+import Footer from "./components/layout/Footer";
+import PageTitle from "./components/layout/PageTitle";
 import SystemPage from "./pages/SystemPage";
 import DemoPage from "./pages/DemoPage";
 import OnboardPage from "./pages/OnboardPage";

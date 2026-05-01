@@ -2,7 +2,7 @@ import React from 'react';
 import { Check, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 
 const included = [
   'Missed call SMS triage — automatic, every call',

@@ -2,8 +2,8 @@ import React, { useRef, useCallback, useState, useEffect } from 'react';
 import { Phone, ArrowRight, MessageCircle, CheckCircle2 } from 'lucide-react';
 import { motion, useInView, useReducedMotion, useMotionValue, useTransform } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Button } from './ui/button';
-import { heroImages } from '../data/mock';
+import { Button } from '../ui/button';
+import { heroImages } from '../../data/mock';
 
 const SystemHeroSection = () => {
   const prefersReducedMotion = useReducedMotion();

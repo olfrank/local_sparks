@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Phone } from 'lucide-react';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
 import { motion, useReducedMotion } from 'framer-motion';
 
 const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:8000';
