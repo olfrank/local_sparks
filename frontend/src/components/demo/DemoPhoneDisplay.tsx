@@ -1,7 +1,20 @@
 import React from 'react';
-import { MessageCircle, PhoneIncoming, CornerDownLeft } from 'lucide-react';
+import { MessageCircle, PhoneIncoming, CornerDownLeft, type LucideIcon } from 'lucide-react';
 
-export function PhoneFrame({ children, floating = false }) {
+interface PhoneFrameProps {
+  children: React.ReactNode;
+  floating?: boolean;
+}
+
+interface DemoStep {
+  Icon: LucideIcon;
+  color: string;
+  bg: string;
+  label: string;
+  sub: string;
+}
+
+export function PhoneFrame({ children, floating = false }: PhoneFrameProps): React.ReactElement {
   return (
     <div
       className="relative mx-auto select-none"
@@ -108,7 +121,7 @@ export function PhoneFrame({ children, floating = false }) {
   );
 }
 
-export function DemoPhoneMockupPreview() {
+export function DemoPhoneMockupPreview(): React.ReactElement {
   return (
     <div className="relative opacity-80">
       <PhoneFrame floating>
@@ -185,7 +198,7 @@ export function DemoPhoneMockupPreview() {
   );
 }
 
-const DEMO_STEPS = [
+const DEMO_STEPS: DemoStep[] = [
   {
     Icon: PhoneIncoming,
     color: '#2563eb',
@@ -209,7 +222,7 @@ const DEMO_STEPS = [
   },
 ];
 
-export function DemoStepStrip() {
+export function DemoStepStrip(): React.ReactElement {
   return (
     <div className="mb-2">
       <div className="flex items-start justify-center gap-1.5 sm:gap-2">

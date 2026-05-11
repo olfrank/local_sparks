@@ -1,7 +1,22 @@
 import React from 'react';
 import { MessageCircle } from 'lucide-react';
 
-export function SMSConversation({ contactName, businessName, customerReply, showReply }) {
+interface SMSConversationProps {
+  contactName: string;
+  businessName: string;
+  customerReply?: string;
+  showReply: boolean;
+}
+
+interface WhatsAppConversationProps {
+  urgency?: string;
+  phoneNumber?: string;
+  postcode?: string;
+  summary?: string;
+  loading: boolean;
+}
+
+export function SMSConversation({ contactName, businessName, customerReply, showReply }: SMSConversationProps): React.ReactElement {
   const triageText = `Hi, it's ${contactName} from ${businessName}. 👋 \n\n Sorry I missed you, I'm on a job right now. \n\n Text me what you need, postcode, and if it's urgent, today, or a quote. \n\n For example: 'urgent, plug socket sparking, SW11 1AB'. \n\n I'll get back to you as soon as I'm free! 🔨`;
 
   return (
@@ -90,7 +105,7 @@ export function SMSConversation({ contactName, businessName, customerReply, show
   );
 }
 
-export function WhatsAppConversation({ urgency, phoneNumber, postcode, summary, loading }) {
+export function WhatsAppConversation({ urgency, phoneNumber, postcode, summary, loading }: WhatsAppConversationProps): React.ReactElement {
   // Current time for the message timestamp
   const now = new Date();
   const timeStr = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });

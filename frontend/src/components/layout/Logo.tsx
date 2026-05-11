@@ -1,11 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+type LogoSize = 'sm' | 'md';
+
+interface LogoMarkProps {
+  size?: LogoSize;
+}
+
+interface LogoProps {
+  size?: LogoSize;
+  asLink?: boolean;
+}
+
 /**
  * CallGuard logo mark – simple "C" (call) with a dot (one call, guarded).
  * Geometric, thick stroke, single colour. Works at small sizes.
  */
-const LogoMark = ({ size }) => {
+const LogoMark = ({ size }: LogoMarkProps): React.ReactElement => {
   const isSm = size === 'sm';
   const w = isSm ? 28 : 40;
   const h = isSm ? 28 : 40;
@@ -39,7 +50,7 @@ const LogoMark = ({ size }) => {
  * Premium logo lockup: mark + CallGuard wordmark.
  * No button styling by default; subtle hover polish.
  */
-const Logo = ({ size = 'md', asLink = true }) => {
+const Logo = ({ size = 'md', asLink = true }: LogoProps): React.ReactElement => {
   const isSm = size === 'sm';
   const gapClass = isSm ? 'gap-2' : 'gap-2.5 md:gap-3';
   const wordmarkClass = isSm

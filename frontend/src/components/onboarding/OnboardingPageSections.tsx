@@ -1,13 +1,21 @@
 import React from 'react';
 import { Check } from 'lucide-react';
 
+interface OnboardingPageShellProps {
+  children: React.ReactNode;
+}
+
+interface ProgressIndicatorProps {
+  step: 1 | 2 | 3;
+}
+
 const STEPS = [
   { n: 1, label: 'Your details', short: 'Details' },
   { n: 2, label: 'Activate',     short: 'Activate' },
   { n: 3, label: "You're live",  short: 'Live' },
-];
+] as const;
 
-export function OnboardingPageShell({ children }) {
+export function OnboardingPageShell({ children }: OnboardingPageShellProps): React.ReactElement {
   return (
     <main className="min-h-screen bg-ink relative overflow-x-hidden">
       <div
@@ -23,7 +31,7 @@ export function OnboardingPageShell({ children }) {
   );
 }
 
-export function ProgressIndicator({ step }) {
+export function ProgressIndicator({ step }: ProgressIndicatorProps): React.ReactElement {
   return (
     <div className="flex items-center justify-center mb-10">
       {STEPS.map((s, i) => {
@@ -64,7 +72,7 @@ export function ProgressIndicator({ step }) {
   );
 }
 
-export function OnboardingIntro() {
+export function OnboardingIntro(): React.ReactElement {
   return (
     <div className="mb-8 text-center">
       <h1 className="cg-h1 text-h1 md:text-h1-lg text-text mb-3 max-w-sm mx-auto leading-tight">
@@ -79,7 +87,7 @@ export function OnboardingIntro() {
 
 const TRUST_ITEMS = ['No contract', 'Cancel anytime', 'Live in 2 minutes', 'UK-based support'];
 
-export function TrustStrip() {
+export function TrustStrip(): React.ReactElement {
   return (
     <div className="flex flex-wrap justify-center items-center gap-x-3 gap-y-1 mt-5">
       {TRUST_ITEMS.map((item, i) => (

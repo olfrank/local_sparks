@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-const PageTitle = () => {
+const PageTitle = (): null => {
   const location = useLocation();
 
   useEffect(() => {
