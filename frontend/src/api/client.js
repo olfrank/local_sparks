@@ -1,9 +1,5 @@
 // Central API base URLs — each maps to a separate backend
-export const DEMO_API_BASE =
-  process.env.REACT_APP_DEMO_API_URL || 'https://callguard-server.onrender.com';
-
-export const API_BASE =
-  process.env.REACT_APP_API_URL || 'https://api.callguard360.com';
+export { DEMO_API_BASE, API_BASE } from '../config';
 
 const DEFAULT_TIMEOUT_MS = 15000;
 

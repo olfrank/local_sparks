@@ -3,8 +3,10 @@ import confetti from 'canvas-confetti';
 import { Check, Copy, Phone, PhoneOff, MessageCircle, RotateCcw, Users, X, Plus, ArrowRight } from 'lucide-react';
 import { Button } from '../ui/button';
 import { signupOnboarding, verifyOnboarding, getOnboardingStatus, saveVipNumbers } from '../../api/onboarding.api';
+import { OLLIE_WHATSAPP_URL } from '../../config';
+import { isValidUKMobile, normaliseToE164 } from '../../lib/utils';
 
-const OLLIE_WA = process.env.REACT_APP_OLLIE_WHATSAPP || 'https://wa.me/447901837771';
+const OLLIE_WA = OLLIE_WHATSAPP_URL;
 const SESSION_KEY = 'callguard_onboarding';
 
 const POLL_INTERVAL = 3000;
@@ -12,18 +14,6 @@ const POLL_MAX_ATTEMPTS = 15;
 
 function buildTelLink(code) {
   return `tel:${code.replace(/\+/g, '%2B').replace(/#/g, '%23')}`;
-}
-
-function isValidUKMobile(number) {
-  const cleaned = number.replace(/[\s\-().]/g, '');
-  return /^07\d{9}$/.test(cleaned) || /^\+447\d{9}$/.test(cleaned);
-}
-
-function normaliseToE164(number) {
-  const cleaned = number.replace(/[\s\-().]/g, '');
-  if (cleaned.startsWith('07')) return '+44' + cleaned.slice(1);
-  if (cleaned.startsWith('+44')) return cleaned;
-  return cleaned;
 }
 
 // ─── Provisioning phase ───────────────────────────────────────────────────────

@@ -1,8 +1,8 @@
-import { DEMO_API_BASE, ApiError, request } from './client';
+import { DEMO_API_BASE, request } from './client';
 
 // POST /api/demo/start
 // Returns { success, demoId }
-// Throws ApiError — caller should handle status 409 separately
+// Throws ApiError from the shared client — caller should handle status 409 separately
 export async function startDemo({ contactName, businessName, mobileNumber }) {
   const { data } = await request(`${DEMO_API_BASE}/api/demo/start`, {
     method: 'POST',
@@ -17,5 +17,3 @@ export async function getDemoStatus(demoId) {
   const { data } = await request(`${DEMO_API_BASE}/api/demo/status/${demoId}`);
   return data;
 }
-
-export { ApiError };
