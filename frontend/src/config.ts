@@ -1,6 +1,6 @@
 const WHATSAPP_FALLBACK_URL = 'https://wa.me/447901837771';
 
-function normaliseWhatsAppUrl(value, fallback = WHATSAPP_FALLBACK_URL) {
+function normaliseWhatsAppUrl(value: string | undefined, fallback: string = WHATSAPP_FALLBACK_URL): string {
   const raw = (value || '').trim();
 
   if (!raw) return fallback;
@@ -14,16 +14,16 @@ function normaliseWhatsAppUrl(value, fallback = WHATSAPP_FALLBACK_URL) {
   return `https://wa.me/${digits}`;
 }
 
-export const DEMO_API_BASE =
+export const DEMO_API_BASE: string =
   process.env.REACT_APP_DEMO_API_URL || 'https://callguard-server.onrender.com';
 
-export const API_BASE =
+export const API_BASE: string =
   process.env.REACT_APP_API_URL || 'https://api.callguard360.com';
 
-export const SUPPORT_WHATSAPP_URL = normaliseWhatsAppUrl(
+export const SUPPORT_WHATSAPP_URL: string = normaliseWhatsAppUrl(
   process.env.REACT_APP_SUPPORT_WHATSAPP,
 );
 
-export const OLLIE_WHATSAPP_URL = normaliseWhatsAppUrl(
+export const OLLIE_WHATSAPP_URL: string = normaliseWhatsAppUrl(
   process.env.REACT_APP_OLLIE_WHATSAPP,
 );
