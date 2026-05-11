@@ -5,13 +5,7 @@ const PageTitle = (): null => {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname === '/system') {
-      document.title = 'CallGuard';
-    } else if (location.pathname === '/demo-electrician-site') {
-      document.title = 'CallGuard';
-    } else {
-      document.title = 'CallGuard';
-    }
+    document.title = 'CallGuard';
   }, [location]);
 
   return null;
